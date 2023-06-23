@@ -8,6 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import java.util.HashMap;
@@ -20,12 +21,33 @@ public final class Constants {
     public static HashMap<String, Command> eventMap = new HashMap<String, Command>();
 
     public static final class LEDs {
-        public static final int CANdleID = 0; //TODO: This must be tuned to robot
+        public static final int CANdleID = 8; //TODO: This must be tuned to robot
 
     }
 
+    public static final class Intake {
+        public static final int IntakeID = 20;
+
+        public static final double intakeSpeed = 1;
+        public static final double outakeSpeed = -1;
+    }
+
+    public static final class Wrist {
+        public static final int WristID = 15;
+
+        public static final double wristAxis = XboxController.Axis.kRightTrigger.value;
+        public static final double revWristAxis = XboxController.Axis.kLeftTrigger.value;
+    }
+
+    public static final class OI {
+        public static final int intake = XboxController.Button.kRightBumper.value;
+        public static final int outake = XboxController.Button.kLeftBumper.value;
+
+        public static final double deadband = 0.1;
+    }
+
     public static final class Swerve {
-        public static final int pigeonID = 0;
+        public static final int pigeonID = 6;
         public static final boolean invertGyro = false; // TODO: Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule = 

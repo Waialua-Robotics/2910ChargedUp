@@ -6,11 +6,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
+import org.WaialuaRobotics359.robot.commands.Manual.ManualIntake;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 /**
@@ -22,6 +24,8 @@ import org.WaialuaRobotics359.robot.subsystems.*;
 public class RobotContainer {
     /* Controllers */
     private final Joystick driver = new Joystick(0);
+    private final Joystick operator = new Joystick(1);
+
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -33,8 +37,16 @@ public class RobotContainer {
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kStart.value); 
 
+    /* Operator Controls */
+
+    /* Operator Buttons */
+    private final JoystickButton intake = new JoystickButton(operator, Constants.OI.intake);
+    private final JoystickButton outake = new JoystickButton(operator, Constants.OI.outake);
+
+
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
+    private final Intake s_Intake = new Intake();
     //private final LEDsSubsystem s_LEDs = new LEDsSubsystem();
 
     /*The autonomous routines*/
@@ -57,6 +69,14 @@ public class RobotContainer {
             () -> robotCentric.getAsBoolean()
             )
         );
+
+        CommandScheduler.getInstance().setDefaultCommand(s_Intake, 
+        new ManualIntake(
+            s_Intake,
+            () -> intake.getAsBoolean(),
+            () -> outake.getAsBoolean()
+        )
+    );
 
         // Configure the button bindings
         configureButtonBindings();
