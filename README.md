@@ -38,6 +38,17 @@ Robot | BrakeMode | Button |
 Robot | Zero | Button |
 Robot | Coast | Button |
 
+Scoring sequence (In sequence mode) :
+while scoring button pressed 
+  the rebot goes to a position
+    when the button in released and the left d-pad isnt held, the robot scores & stows
+    if it is held, skip over the outake command and continue to stow
+
+Scoring sequence (Sequence False mode) :
+when scoring button pressed 
+  the rebot goes to a position
+    then manually outake and stow
+
 
 <h2> Id's/Location </h2>
 
