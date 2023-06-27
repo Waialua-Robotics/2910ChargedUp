@@ -49,6 +49,10 @@ when scoring button pressed
   the rebot goes to a position
     then manually outake and stow
 
+Scoring sequence (manual mode) :
+disable the soft limits
+allow the joysticks and triggerst t control the different axis in percent mode
+
 
 <h2> Id's/Location </h2>
 
