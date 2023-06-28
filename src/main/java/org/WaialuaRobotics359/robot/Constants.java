@@ -166,4 +166,39 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+
+    public static final class PhotonConstants {
+        public static final double nodeHeight = 0;
+        public static final double cameraHeight = 0;
+
+        public static final class Camera1 {
+            public static final double xOffset = 0;
+            public static final double yOffset = 0;
+            public static final double zOffset = 0;
+
+            public static final double rollOffset = 0;
+            public static final double pitchOffset = 0;
+            public static final double yawOffset = 0;
+
+            public static final int LEDPipe = 0;
+            public static final int LEDOff = 1;
+            public static final int LEDBlink = 2;
+            public static final int LEDOn = 3;
+        }
+
+        public static final class Camera2 {
+            public static final double xOffset = 0;
+            public static final double yOffset = 0;
+            public static final double zOffset = 0;
+
+            public static final double rollOffset = 0;
+            public static final double pitchOffset = 0;
+            public static final double yawOffset = 0;
+
+            public static final int LEDPipe = 0;
+            public static final int LEDOff = 1;
+            public static final int LEDBlink = 2;
+            public static final int LEDOn = 3;
+        }
+    }
 }
