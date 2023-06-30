@@ -4,6 +4,7 @@
 
 package org.WaialuaRobotics359.robot;
 
+import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -25,6 +26,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -36,7 +38,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     PathPlannerServer.startServer(5811);
-  }
+    }
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -59,7 +61,9 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    m_robotContainer.getLeds().blue();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override

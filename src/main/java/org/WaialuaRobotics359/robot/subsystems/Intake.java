@@ -3,7 +3,10 @@ package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.playingwithfusion.TimeOfFlight;
+import com.playingwithfusion.TimeOfFlight.RangingMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -12,10 +15,40 @@ public class Intake extends SubsystemBase{
 
     private TalonFX m_Intake;
 
+
+    private int desiredPosition = 0;
+
     public Intake (){
         m_Intake = new TalonFX(Constants.Intake.IntakeID);
+        m_Intake.setNeutralMode(NeutralMode.Brake);
 
+
+  
+
+        //Motion magic
+        m_Intake.setSelectedSensorPosition(0);
         m_Intake.configFactoryDefault();
+        m_Intake.configMotionCruiseVelocity(15000);
+        m_Intake.configMotionAcceleration(30000);
+        m_Intake.configMotionSCurveStrength(6);
+ 
+ 
+    }
+
+    public void setDesiredPosition (int position) {
+        desiredPosition = position;
+    }
+
+    public void goToPosition(){
+        m_Intake.set(ControlMode.MotionMagic, desiredPosition);
+    }
+
+    public void getPercentOutput(){
+        m_Intake.getMotorOutputPercent();
+    }
+
+    public void percentOutput(double value){
+        m_Intake.set(ControlMode.PercentOutput, value);
     }
 
     public void intake(double speed){
@@ -26,10 +59,6 @@ public class Intake extends SubsystemBase{
         m_Intake.set(ControlMode.PercentOutput, -speed);
     }
 
-    public void getPercentOutput(){
-        m_Intake.getMotorOutputPercent();
-    }
-
     public void getCurrent(){
         m_Intake.getStatorCurrent();
     } 
@@ -37,6 +66,7 @@ public class Intake extends SubsystemBase{
     public void stop() {
         m_Intake.set(ControlMode.PercentOutput, 0);
     }
+
 
     @Override
     public void periodic(){

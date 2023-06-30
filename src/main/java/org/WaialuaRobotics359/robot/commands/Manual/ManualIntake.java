@@ -1,24 +1,24 @@
 package org.WaialuaRobotics359.robot.commands.Manual;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.subsystems.Intake;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualIntake extends CommandBase{
 
     private Intake s_Intake;
-    private BooleanSupplier intake;
-    private BooleanSupplier outake;
-    double intakeSpeed;
-    double outakeSpeed;
     private boolean finished = false;
+    private DoubleSupplier intakeAxis;
+    private DoubleSupplier outakeAxis;
     
-    public ManualIntake(Intake s_Intake, BooleanSupplier intake, BooleanSupplier outake){
-        this.intake = intake;
-        this.outake = outake;
+    public ManualIntake(Intake s_Intake, DoubleSupplier intakeAxis, DoubleSupplier outakeAxis){
+        this.intakeAxis = intakeAxis;
+        this.outakeAxis = outakeAxis;
         this.s_Intake = s_Intake;
         addRequirements(s_Intake);
     }
@@ -27,20 +27,18 @@ public class ManualIntake extends CommandBase{
 
     @Override
     public void execute(){
-        boolean rBumperValue = intake.getAsBoolean();
-        boolean lBumberValue = outake.getAsBoolean();
+        double rTriggerControl = MathUtil.applyDeadband(intakeAxis.getAsDouble(), Constants.OI.deadband);
+        double lTriggerControl = MathUtil.applyDeadband(outakeAxis.getAsDouble(), Constants.OI.deadband);
 
-        intakeSpeed = Constants.Intake.intakeSpeed;
-        outakeSpeed = Constants.Intake.outakeSpeed;
-
-        if (rBumperValue){
-            s_Intake.intake(intakeSpeed);
-        }else if (lBumberValue){
-            s_Intake.intake(outakeSpeed);
-        }else{
+        if(Math.abs(rTriggerControl) > 0){
+            s_Intake.percentOutput(rTriggerControl);
+        } else if(Math.abs(lTriggerControl) > 0){
+            s_Intake.percentOutput(lTriggerControl);
+        } else {
             s_Intake.stop();
         }
     }
+
 
     @Override
     public boolean isFinished(){

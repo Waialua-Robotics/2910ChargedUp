@@ -26,22 +26,100 @@ public final class Constants {
     }
 
     public static final class Intake {
-        public static final int IntakeID = 20;
+        public static final int IntakeID = 16;
 
         public static final double intakeSpeed = 1;
         public static final double outakeSpeed = -1;
+
     }
 
     public static final class Wrist {
-        public static final int WristID = 15;
+        public static final int WristID = 14;
+        public static final int stowPosition = 0;
 
-        public static final double wristAxis = XboxController.Axis.kRightTrigger.value;
-        public static final double revWristAxis = XboxController.Axis.kLeftTrigger.value;
+        public static final class Cone {
+        public static final int groundPosition = 230000;
+        public static final int standingPosition = 35000;
+        public static final int lowPosition = 100000;
+        public static final int midPosition = 300000;
+        public static final int highPosition = 750000;
+        public static final int feederPosition = 500000;
+        }
+        
+        public static final class Cube {
+        public static final int groundPosition = 24000;
+        public static final int lowPosition = 80000;
+        public static final int midPosition = 200000;
+        public static final int highPosition = 500000;
+        public static final int feederPosition = 500000;
+
+        }
+    }
+
+    public static final class Arm {
+        public static final int lArmID = 10;
+        public static final int rArmID = 8;
+        public static final int stowPosition = 0;
+
+
+        public static final class Cone {
+            public static final int groundPosition = 25000;
+            public static final int standingPosition = 40000;
+            public static final int lowPosition = 100000;
+            public static final int midPosition = 300000;
+            public static final int highPosition = 750000;
+            public static final int feederPosition = 500000;
+        }
+        
+        public static final class Cube {
+            public static final int groundPosition = 20000;
+            public static final int lowPosition = 80000;
+            public static final int midPosition = 200000;
+            public static final int highPosition = 500000;
+            public static final int feederPosition = 500000;
+        }
+    }
+
+    public static final class Pivot {
+        public static final int lPivotID = 6;
+        public static final int rPivotID = 4;
+        public static final int stowPosition = 0;
+
+
+        public static final class Cone {
+            public static final int groundPosition = 2000;
+            public static final int standingposition = 8000;
+            public static final int lowPosition = 100000;
+            public static final int midPosition = 300000;
+            public static final int highPosition = 750000;
+            public static final int feederPosition = 500000;
+
+        }
+        
+        public static final class Cube {
+            public static final int groundPosition = 0;
+            public static final int lowPosition = 80000;
+            public static final int midPosition = 200000;
+            public static final int highPosition = 500000;
+            public static final int feederPosition = 500000;
+        }
+    }
+
+    public static final class Leds {
+        public static final int CandleID = 12;
     }
 
     public static final class OI {
-        public static final int intake = XboxController.Button.kRightBumper.value;
-        public static final int outake = XboxController.Button.kLeftBumper.value;
+
+        public static final int intakeAxis = XboxController.Axis.kRightTrigger.value;
+        public static final int outakeAxis = XboxController.Axis.kLeftTrigger.value;
+
+        public static final int isCube = XboxController.Button.kLeftStick.value;
+        public static final int isCone = XboxController.Button.kRightStick.value;
+        public static final int lowPickup = XboxController.Button.kLeftBumper.value;
+        public static final int midPckup = XboxController.Button.kRightBumper.value;
+
+        public static final int stow = XboxController.Button.kStart.value;
 
         public static final double deadband = 0.1;
     }
