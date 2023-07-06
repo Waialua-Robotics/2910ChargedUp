@@ -29,7 +29,7 @@ import org.WaialuaRobotics359.robot.subsystems.*;
  */
 public class RobotContainer {
 
-    public static boolean isCube;
+    public static boolean isCube = true;
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
