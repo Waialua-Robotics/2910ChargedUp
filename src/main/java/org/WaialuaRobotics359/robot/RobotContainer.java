@@ -12,13 +12,16 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.FeederPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.MidPickupPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.PickupPosition;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.Score;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 /**
@@ -58,7 +61,15 @@ public class RobotContainer {
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
 
+    private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPickup);
+    private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPckup);
+    private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
+    private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
+
+    private final POVButton kill = new POVButton(operator, 270);
+
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
+
 
 
 
@@ -144,6 +155,12 @@ public class RobotContainer {
             
             midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
             midPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+
+            feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+            feedPos.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+
+            lowPickup.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+            lowPickup.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
 
             stow.onTrue(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));

@@ -23,4 +23,8 @@ public class Leds {
     public void blue(){
         LED.setLEDs(0, 0, 255);
     }
+
+    public void red(){
+        LED.setLEDs(255, 0, 0);
+    }
 }

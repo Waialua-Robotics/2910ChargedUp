@@ -59,5 +59,7 @@ public class Wrist extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
+            SmartDashboard.putNumber("aDesiredPos", desiredPosition);
+            SmartDashboard.putNumber("aPosition", m_Wrist.getSelectedSensorPosition());
     }
 }

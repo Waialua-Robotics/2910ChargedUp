@@ -52,12 +52,12 @@ public class StowPosition extends CommandBase{
 
         System.out.println("ex");
 
-
                 s_Arm.setDesiredPosition(0);
                 s_Arm.goToPosition();
                 s_Wrist.setDesiredPosition(0);
                 s_Wrist.goToPosition();
                 s_Intake.stop();
+
 
 
                             
