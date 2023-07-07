@@ -57,10 +57,7 @@ public class StowPosition extends CommandBase{
                 s_Wrist.setDesiredPosition(0);
                 s_Wrist.goToPosition();
                 s_Intake.stop();
-
-
-
-                            
+                  
     }
     
     @Override

@@ -21,6 +21,9 @@ import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.FeederPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.MidPickupPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.PickupPosition;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.HighPosition;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.LowPosition;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.MidPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.Score;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
@@ -159,8 +162,14 @@ public class RobotContainer {
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
             feedPos.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
 
-            lowPickup.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+            lowPickup.whileTrue(new LowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
             lowPickup.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+
+            midPickup.whileTrue(new MidPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            midPickup.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+
+            highPos.whileTrue(new HighPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            highPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
 
             stow.onTrue(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
