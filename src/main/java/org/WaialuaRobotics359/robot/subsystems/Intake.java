@@ -51,12 +51,12 @@ public class Intake extends SubsystemBase{
         m_Intake.set(ControlMode.PercentOutput, value);
     }
 
-    public void intake(double speed){
-        m_Intake.set(ControlMode.PercentOutput, speed);
+    public void intake(){
+        m_Intake.set(ControlMode.PercentOutput, 100);
     }
 
-    public void outake(double speed){
-        m_Intake.set(ControlMode.PercentOutput, -speed);
+    public void outake(){
+        m_Intake.set(ControlMode.PercentOutput, -100);
     }
 
     public void getCurrent(){

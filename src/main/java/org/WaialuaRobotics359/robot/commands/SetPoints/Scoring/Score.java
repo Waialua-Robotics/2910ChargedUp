@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Score extends CommandBase{
     private Arm s_Arm;
     private Intake s_Intake;
-    private Pivot s_Pivot;
     private Wrist s_Wrist; 
     private Flight s_Flight;
     private Leds s_Leds;
@@ -57,54 +56,51 @@ public class Score extends CommandBase{
         Timer.reset();
         Timer.start();
 
-        System.out.println("initialize");
 
         finished = false;
-        System.out.println("initialize2");
 
     }
 
     @Override
     public void execute(){
 
-        System.out.println("ex");
 
         if(RobotContainer.isCube){
-                s_Intake.outake(100);
+        
+                    s_Intake.outake();
 
-                if(Timer.hasElapsed(.2)){
-                    s_Intake.stop();
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-                }
-                if(Timer.hasElapsed(.3)){
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                }
-                if(Timer.hasElapsed(.6)){
-                    s_Wrist.setDesiredPosition(WristPosition);
-                    s_Wrist.goToPosition();
-                    s_Leds.purple();
-                    finished = true;
-                }       
-            }else {
-                s_Intake.outake(100);
+                    if(Timer.hasElapsed(.2)){
+                        s_Intake.stop();
+                    }
+                    if(Timer.hasElapsed(.3)){
+                        s_Arm.setDesiredPosition(ArmPosition);
+                        s_Arm.goToPosition();
+                    }
+                    if(Timer.hasElapsed(.6)){
+                        s_Wrist.setDesiredPosition(WristPosition);
+                        s_Wrist.goToPosition();
+                        s_Leds.purple();
+                        finished = true;
+                    }
+                }    else {
+                
+              
+            s_Intake.outake();
 
-                if(Timer.hasElapsed(.2)){
-                    s_Intake.stop();
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-                }
-                if(Timer.hasElapsed(.3)){
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                }
-                if(Timer.hasElapsed(.6)){
-                    s_Wrist.setDesiredPosition(WristPosition);
-                    s_Wrist.goToPosition();
-                    s_Leds.yellow();
-                    finished = true;
-            }   
+            if(Timer.hasElapsed(.2)){
+                s_Intake.stop();
+            }
+            if(Timer.hasElapsed(.3)){
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
+            }
+            if(Timer.hasElapsed(.6)){
+                s_Wrist.setDesiredPosition(WristPosition);
+                s_Wrist.goToPosition();
+                s_Leds.purple();
+                finished = true;
+            
+        }
         }        
     }
 

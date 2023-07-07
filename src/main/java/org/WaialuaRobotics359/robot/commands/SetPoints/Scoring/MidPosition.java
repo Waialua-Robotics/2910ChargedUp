@@ -43,28 +43,25 @@ public class MidPosition extends CommandBase {
 
     public void initialize(){
         if (RobotContainer.isCube){
-            ArmPosition = Constants.Arm.Cube.highPosition;
-            PivotPosition = Constants.Pivot.Cube.highPosition;
-            WristPosition = Constants.Wrist.Cube.highPosition;
+            ArmPosition = Constants.Arm.Cube.midPosition;
+            PivotPosition = Constants.Pivot.Cube.midPosition;
+            WristPosition = Constants.Wrist.Cube.midPosition;
         } else {
-            ArmPosition = Constants.Arm.Cone.highPosition;
-            PivotPosition = Constants.Arm.Cone.highPosition;
-            WristPosition = Constants.Arm.Cone.highPosition;
+            ArmPosition = Constants.Arm.Cone.midPosition;
+            PivotPosition = Constants.Arm.Cone.midPosition;
+            WristPosition = Constants.Arm.Cone.midPosition;
         }
         Timer.reset();
         Timer.start();
 
-        System.out.println("initialize");
 
         finished = false;
-        System.out.println("initialize2");
 
     }
 
     @Override
     public void execute(){
 
-        System.out.println("ex");
 
         if(RobotContainer.isCube){
 
@@ -77,15 +74,6 @@ public class MidPosition extends CommandBase {
                     finished = true;
                 }
 
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
-                    finished = true;
-
-                }
 
             } else {
                 s_Arm.setDesiredPosition(ArmPosition);
@@ -97,15 +85,6 @@ public class MidPosition extends CommandBase {
                     finished = true;
                 }
 
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
-                    finished = true;
-
-                }
             }
 
                             

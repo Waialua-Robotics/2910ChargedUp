@@ -2,11 +2,8 @@ package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
-import org.WaialuaRobotics359.robot.subsystems.Arm;
-import org.WaialuaRobotics359.robot.subsystems.Flight;
-import org.WaialuaRobotics359.robot.subsystems.Intake;
-import org.WaialuaRobotics359.robot.subsystems.Pivot;
-import org.WaialuaRobotics359.robot.subsystems.Wrist;
+import org.WaialuaRobotics359.robot.subsystems.*;
+
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -58,17 +55,15 @@ public class LowPosition extends CommandBase{
         Timer.reset();
         Timer.start();
 
-        System.out.println("initialize");
 
         finished = false;
-        System.out.println("initialize2");
+   
 
     }
 
     @Override
     public void execute(){
 
-        System.out.println("ex");
 
         if(RobotContainer.isCube){
 
@@ -78,17 +73,10 @@ public class LowPosition extends CommandBase{
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(ArmPosition);
                     s_Wrist.goToPosition();
+                    finished = true;
                 }
                 
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
-                    finished = true;
-
-                }
+        
             } else {
                 s_Arm.setDesiredPosition(ArmPosition);
                 s_Arm.goToPosition();
@@ -96,17 +84,9 @@ public class LowPosition extends CommandBase{
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(ArmPosition);
                     s_Wrist.goToPosition();
-                }
-                
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
                     finished = true;
-
                 }
+  
             }
 
                             

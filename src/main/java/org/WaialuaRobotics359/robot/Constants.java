@@ -107,6 +107,7 @@ public final class Constants {
 
     public static final class Leds {
         public static final int CandleID = 12;
+        public static final int LEDCount = 128;
     }
 
     public static final class OI {

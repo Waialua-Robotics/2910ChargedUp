@@ -1,13 +1,9 @@
-package org.WaialuaRobotics359.robot.commands.SetPoints.Pickup;
+package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
-import org.WaialuaRobotics359.robot.subsystems.Arm;
-import org.WaialuaRobotics359.robot.subsystems.Flight;
-import org.WaialuaRobotics359.robot.subsystems.Intake;
-import org.WaialuaRobotics359.robot.subsystems.Leds;
-import org.WaialuaRobotics359.robot.subsystems.Pivot;
-import org.WaialuaRobotics359.robot.subsystems.Wrist;
+import org.WaialuaRobotics359.robot.subsystems.*;
+
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -19,13 +15,11 @@ public class FeederPosition extends CommandBase {
 
     private Arm s_Arm;
     private Intake s_Intake;
-    private Pivot s_Pivot;
     private Wrist s_Wrist; 
     private Flight s_Flight;
     private Leds s_Leds;
 
     private static int ArmPosition;
-    private static int PivotPosition;
     private static int WristPosition;
 
     public FeederPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds){
@@ -47,27 +41,21 @@ public class FeederPosition extends CommandBase {
     public void initialize(){
         if (RobotContainer.isCube){
             ArmPosition = Constants.Arm.Cube.feederPosition;
-            PivotPosition = Constants.Pivot.Cube.feederPosition;
             WristPosition = Constants.Wrist.Cube.feederPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.feederPosition;
-            PivotPosition = Constants.Arm.Cone.feederPosition;
             WristPosition = Constants.Arm.Cone.feederPosition;
         }
         Timer.reset();
         Timer.start();
 
-        System.out.println("initialize");
 
         finished = false;
-        System.out.println("initialize2");
 
     }
 
     @Override
     public void execute(){
-
-        System.out.println("ex");
 
         if(RobotContainer.isCube){
 
@@ -75,13 +63,12 @@ public class FeederPosition extends CommandBase {
                 s_Arm.goToPosition();
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
-                    finished = true;
                 }
 
                 if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
+                    s_Intake.intake();
                 }
 
                 if(s_Flight.getSensorRange() < 500){
@@ -96,13 +83,12 @@ public class FeederPosition extends CommandBase {
                 s_Arm.goToPosition();
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
-                    finished = true;
                 }
 
                 if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
+                    s_Intake.intake();
                 }
 
                 if(s_Flight.getSensorRange() < 500){

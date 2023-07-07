@@ -18,9 +18,9 @@ import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.FeederPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.MidPickupPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.PickupPosition;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.FeederPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.HighPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.LowPosition;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.MidPosition;
@@ -36,6 +36,7 @@ import org.WaialuaRobotics359.robot.subsystems.*;
 public class RobotContainer {
 
     public static boolean isCube = true;
+    public static boolean allowScore = false;
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
@@ -64,8 +65,8 @@ public class RobotContainer {
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
 
-    private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPickup);
-    private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPckup);
+    private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
+    private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
     private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
@@ -142,6 +143,9 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     private void configureButtonBindings() {
+
+        
+
         /* Driver Buttons */
         //zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         //ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
@@ -153,24 +157,24 @@ public class RobotContainer {
                 new ParallelCommandGroup( new InstantCommand(() -> isCube = false),
                 new InstantCommand(() -> s_Leds.yellow())));
 
-            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+
+            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
             lowPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
             
-            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
             midPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
 
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
             feedPos.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
 
-            lowPickup.whileTrue(new LowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
-            lowPickup.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+            lowPos.whileTrue(new LowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            lowPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
-            midPickup.whileTrue(new MidPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
-            midPickup.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
+            midPos.whileTrue(new MidPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            midPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
             highPos.whileTrue(new HighPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
-
 
             stow.onTrue(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
     }
@@ -179,6 +183,10 @@ public class RobotContainer {
     public Leds getLeds(){
         return s_Leds;
     }
+
+   
+
+  
 
     public void setEventMap() {
     //Constants.eventMap.put("LedBlue", new InstantCommand(() -> s_LEDs.LEDsBlue()));

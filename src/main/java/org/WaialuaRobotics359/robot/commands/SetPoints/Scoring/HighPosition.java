@@ -54,17 +54,14 @@ public class HighPosition extends CommandBase {
         Timer.reset();
         Timer.start();
 
-        System.out.println("initialize");
 
         finished = false;
-        System.out.println("initialize2");
 
     }
 
     @Override
     public void execute(){
 
-        System.out.println("ex");
 
         if(RobotContainer.isCube){
 
@@ -72,19 +69,9 @@ public class HighPosition extends CommandBase {
                 s_Arm.goToPosition();
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                     finished = true;
-                }
-
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
-                    finished = true;
-
                 }
 
             } else {
@@ -92,19 +79,9 @@ public class HighPosition extends CommandBase {
                 s_Arm.goToPosition();
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                     finished = true;
-                }
-
-                if(Timer.hasElapsed(.6)){
-                    s_Intake.intake(100);
-                }
-
-                if(s_Flight.getSensorRange() < 500){
-                    s_Intake.stop();
-                    finished = true;
-
                 }
             }
 

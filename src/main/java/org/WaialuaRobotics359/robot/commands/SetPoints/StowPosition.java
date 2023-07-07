@@ -50,7 +50,6 @@ public class StowPosition extends CommandBase{
     @Override
     public void execute(){
 
-        System.out.println("ex");
 
                 s_Arm.setDesiredPosition(0);
                 s_Arm.goToPosition();

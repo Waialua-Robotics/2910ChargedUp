@@ -27,4 +27,12 @@ public class Leds {
     public void red(){
         LED.setLEDs(255, 0, 0);
     }
+
+    public void green(){
+        LED.setLEDs(0, 255, 0);
+    }
+
+    public void white(){
+        LED.setLEDs(255, 255, 255);
+    }
 }
