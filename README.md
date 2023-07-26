@@ -22,4 +22,19 @@ Operator | 10* | NA |
 
 **Name** | **Number** | **PDH** |
 ----------|:----------:|---------|
-
+Front Left Drive | 0* |  |
+Front Left Pivot | 10* | NA |
+Front Left CanCoder | 20* | NA |
+Front Left Drive 2 | 30* |  |
+Front Right Drive | 1* | NA |
+Front Right Pivot | 11* |NA |
+Front Right CanCoder | 21* |NA |
+Front Right Drive 2 | 31* |  |
+Back Left Drive |2*| NA |
+Back Left Pivot |12*| NA |
+Back Left CanCoder |22*| NA |
+Back Left Drive 2 | 32* |  |
+Back Right Drive |3*| NA |
+Back Right Pivot |13*| NA |
+Back Right CanCoder |23*| NA |
+Back Right Drive 2 | 33* |  |
