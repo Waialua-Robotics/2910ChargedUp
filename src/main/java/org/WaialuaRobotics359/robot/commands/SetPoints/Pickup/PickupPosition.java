@@ -19,6 +19,8 @@ public class PickupPosition extends CommandBase{
     private Flight s_Flight;
     private Leds s_Leds;
 
+    
+
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
@@ -28,16 +30,18 @@ public class PickupPosition extends CommandBase{
     private static int MidWristPosition;
 
 
-    public PickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds){
+    public PickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
         this.s_Wrist = s_Wrist;
         this.s_Leds = s_Leds;
+        this.s_Pivot = s_Pivot;
         addRequirements(s_Arm);
         addRequirements(s_Intake);
         addRequirements(s_Flight);
         addRequirements(s_Wrist);
+        addRequirements(s_Pivot);
     }
 
     private boolean finished = false;
@@ -68,9 +72,13 @@ public class PickupPosition extends CommandBase{
 
 
         if(RobotContainer.isCube){
+            s_Pivot.setDesiredPosition(PivotPosition);
+            s_Pivot.goToPosition();
 
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
+                if(Timer.hasElapsed(.2)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(ArmPosition);
@@ -81,15 +89,20 @@ public class PickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 500){
+                if(s_Intake.current() > 25){
                     s_Intake.stop();
-                    s_Leds.red();
+                    s_Leds.green();
                     finished = true;
 
                 }
             } else {
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+    
+                if(Timer.hasElapsed(.2)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(ArmPosition);
@@ -100,9 +113,9 @@ public class PickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 500){
+                if(s_Flight.getSensorRange() < 200){
                     s_Intake.stop();
-                    s_Leds.red();
+                    s_Leds.green();
                     finished = true;
 
                 }

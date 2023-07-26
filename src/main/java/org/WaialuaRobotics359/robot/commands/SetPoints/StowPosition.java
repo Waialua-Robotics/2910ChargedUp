@@ -30,15 +30,17 @@ public class StowPosition extends CommandBase{
     private static int MidWristPosition;
 
 
-    public StowPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist){
+    public StowPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
         this.s_Wrist = s_Wrist;
+        this.s_Pivot = s_Pivot;
         addRequirements(s_Arm);
         addRequirements(s_Intake);
         addRequirements(s_Flight);
         addRequirements(s_Wrist);
+        addRequirements(s_Pivot);
     }
 
     private boolean finished = false;
@@ -55,6 +57,8 @@ public class StowPosition extends CommandBase{
                 s_Arm.goToPosition();
                 s_Wrist.setDesiredPosition(0);
                 s_Wrist.goToPosition();
+                s_Pivot.setDesiredPosition(0);
+                s_Pivot.goToPosition();
                 s_Intake.stop();
                   
     }

@@ -62,6 +62,10 @@ public class Intake extends SubsystemBase{
     public void getCurrent(){
         m_Intake.getStatorCurrent();
     } 
+
+    public int current(){
+        return (int) m_Intake.getStatorCurrent();
+    } 
     
     public void stop() {
         m_Intake.set(ControlMode.PercentOutput, 0);

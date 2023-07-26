@@ -40,6 +40,10 @@ public class Wrist extends SubsystemBase{
         m_Wrist.set(ControlMode.MotionMagic, desiredPosition);
     }
 
+    public int getPosition(){
+        return (int) m_Wrist.getSelectedSensorPosition();
+    }
+
     public void getPercentOutput(){
         m_Wrist.getMotorOutputPercent();
     }

@@ -18,20 +18,24 @@ public class FeederPosition extends CommandBase {
     private Wrist s_Wrist; 
     private Flight s_Flight;
     private Leds s_Leds;
+    private Pivot s_Pivot;
 
     private static int ArmPosition;
     private static int WristPosition;
+    private static int PivotPosition;
 
-    public FeederPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds){
+    public FeederPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
         this.s_Wrist = s_Wrist;
         this.s_Leds = s_Leds;
+        this.s_Pivot = s_Pivot;
         addRequirements(s_Arm);
         addRequirements(s_Intake);
         addRequirements(s_Flight);
         addRequirements(s_Wrist);
+        addRequirements(s_Pivot);
     }
 
     private boolean finished = false;
@@ -42,9 +46,12 @@ public class FeederPosition extends CommandBase {
         if (RobotContainer.isCube){
             ArmPosition = Constants.Arm.Cube.feederPosition;
             WristPosition = Constants.Wrist.Cube.feederPosition;
+            PivotPosition = Constants.Pivot.Cube.feederPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.feederPosition;
             WristPosition = Constants.Arm.Cone.feederPosition;
+            PivotPosition = Constants.Pivot.Cone.feederPosition;
+
         }
         Timer.reset();
         Timer.start();
@@ -57,10 +64,14 @@ public class FeederPosition extends CommandBase {
     @Override
     public void execute(){
 
-        if(RobotContainer.isCube){
+     if(RobotContainer.isCube){
+            s_Pivot.setDesiredPosition(PivotPosition);
+            s_Pivot.goToPosition();
 
+            if(Timer.hasElapsed(.2)){
                 s_Arm.setDesiredPosition(ArmPosition);
                 s_Arm.goToPosition();
+            }
 
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(WristPosition);
@@ -71,16 +82,21 @@ public class FeederPosition extends CommandBase {
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 500){
+                if(s_Intake.current() > 25){
                     s_Intake.stop();
-                    s_Leds.red();
+                    s_Leds.green();
                     finished = true;
 
                 }
 
             } else {
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+
+                if(Timer.hasElapsed(.2)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(WristPosition);
@@ -91,13 +107,14 @@ public class FeederPosition extends CommandBase {
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 500){
+                if(s_Flight.getSensorRange() < 200){
                     s_Intake.stop();
-                    s_Leds.red();
+                    s_Leds.green();
                     finished = true;
 
                 }
             }
+            
 
                             
     }

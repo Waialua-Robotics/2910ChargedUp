@@ -22,6 +22,8 @@ public class Score extends CommandBase{
     private Flight s_Flight;
     private Leds s_Leds;
 
+    private static int wristPos;
+
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
@@ -52,6 +54,8 @@ public class Score extends CommandBase{
             ArmPosition = Constants.Arm.stowPosition;;
             PivotPosition = Constants.Pivot.stowPosition;
             WristPosition = Constants.Wrist.stowPosition;
+
+            wristPos = s_Wrist.getPosition();
      
         Timer.reset();
         Timer.start();
@@ -64,45 +68,82 @@ public class Score extends CommandBase{
     @Override
     public void execute(){
 
+        if(wristPos < 60000){
 
-        if(RobotContainer.isCube){
-        
-                    s_Intake.outake();
 
-                    if(Timer.hasElapsed(.2)){
-                        s_Intake.stop();
-                    }
-                    if(Timer.hasElapsed(.3)){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                    }
-                    if(Timer.hasElapsed(.6)){
-                        s_Wrist.setDesiredPosition(WristPosition);
-                        s_Wrist.goToPosition();
-                        s_Leds.purple();
-                        finished = true;
-                    }
-                }    else {
-                
-              
-            s_Intake.outake();
+               if(RobotContainer.isCube){
 
-            if(Timer.hasElapsed(.2)){
-                s_Intake.stop();
-            }
-            if(Timer.hasElapsed(.3)){
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
-            }
-            if(Timer.hasElapsed(.6)){
-                s_Wrist.setDesiredPosition(WristPosition);
-                s_Wrist.goToPosition();
-                s_Leds.purple();
-                finished = true;
+
+                           if(Timer.hasElapsed(.2)){
+                               s_Intake.stop();
+                           }
+                           if(Timer.hasElapsed(.3)){
+                               s_Arm.setDesiredPosition(ArmPosition);
+                               s_Arm.goToPosition();
+                           }
+                           if(Timer.hasElapsed(.6)){
+                               s_Wrist.setDesiredPosition(WristPosition);
+                               s_Wrist.goToPosition();
+                               finished = true;
+                           }
+                       }    else {
+
+
+
+                   if(Timer.hasElapsed(.2)){
+                       s_Intake.stop();
+                   }
+                   if(Timer.hasElapsed(.3)){
+                       s_Arm.setDesiredPosition(ArmPosition);
+                       s_Arm.goToPosition();
+                   }
+                   if(Timer.hasElapsed(.6)){
+                       s_Wrist.setDesiredPosition(WristPosition);
+                       s_Wrist.goToPosition();
+                       finished = true;
+
+               }
+               }        
+    } else {
+            if(RobotContainer.isCube){
+
+                s_Intake.outake();
+
+                if(Timer.hasElapsed(.2)){
+                    s_Intake.stop();
+                }
+                if(Timer.hasElapsed(.3)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
+                if(Timer.hasElapsed(.6)){
+                    s_Wrist.setDesiredPosition(WristPosition);
+                    s_Wrist.goToPosition();
+                    s_Leds.purple();
+                    finished = true;
+                }
+            }    else{
             
+  
+                s_Intake.outake();
+
+                if(Timer.hasElapsed(.2)){
+                    s_Intake.stop();
+                }
+                if(Timer.hasElapsed(.3)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
+                if(Timer.hasElapsed(.6)){
+                    s_Wrist.setDesiredPosition(WristPosition);
+                    s_Wrist.goToPosition();
+                    s_Leds.yellow();
+                    finished = true;
+                
         }
-        }        
     }
+   }    
+}
 
     
     

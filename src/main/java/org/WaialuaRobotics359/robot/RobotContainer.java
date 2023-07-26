@@ -37,6 +37,7 @@ public class RobotContainer {
 
     public static boolean isCube = true;
     public static boolean allowScore = false;
+
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
@@ -83,7 +84,10 @@ public class RobotContainer {
     private final Wrist s_Wrist = new Wrist();
     private final Arm s_Arm = new Arm();
     private final Flight s_Flight = new Flight();
+    private final Pivot s_Pivot = new Pivot();
     private final Leds s_Leds = new Leds();
+
+
     //private final LEDsSubsystem s_LEDs = new LEDsSubsystem();
 
     /*The autonomous routines*/
@@ -158,25 +162,25 @@ public class RobotContainer {
                 new InstantCommand(() -> s_Leds.yellow())));
 
 
-            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
-            lowPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            lowPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
             
-            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
-            midPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            midPickup.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
 
-            feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
-            feedPos.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            feedPos.onFalse(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist,s_Pivot));
 
-            lowPos.whileTrue(new LowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            lowPos.whileTrue(new LowPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
             lowPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
-            midPos.whileTrue(new MidPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            midPos.whileTrue(new MidPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
             midPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
-            highPos.whileTrue(new HighPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            highPos.whileTrue(new HighPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds));
 
-            stow.onTrue(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist));
+            stow.onTrue(new StowPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Pivot));
     }
     
 

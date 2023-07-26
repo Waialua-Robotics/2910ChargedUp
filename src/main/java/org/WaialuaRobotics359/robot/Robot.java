@@ -4,7 +4,6 @@
 
 package org.WaialuaRobotics359.robot;
 
-import org.WaialuaRobotics359.robot.commands.usa;
 import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
@@ -62,7 +61,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_robotContainer.getLeds().blue();
+    m_robotContainer.getLeds().twinkAnimation(.6);;
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -89,7 +88,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+     m_robotContainer.getLeds().clearAnimation();
      m_robotContainer.getLeds().purple();
+    
   }
 
   /** This function is called periodically during operator control. */
