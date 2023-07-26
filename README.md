@@ -38,8 +38,8 @@ Back Right Drive |3*| NA |
 Back Right Pivot |13*| NA |
 Back Right CanCoder |23*| NA |
 Back Right Drive 2 | 33* |  |
-Left Intake | 1 |  |
-Right Intake | 2 |  |
+Rist | 1 |  |
+Intake | 2 |  |
 Front Left Pivot | 3 |  |
 Back Left Pivot | 4 |  |
 Front Arm | 5 |  |
