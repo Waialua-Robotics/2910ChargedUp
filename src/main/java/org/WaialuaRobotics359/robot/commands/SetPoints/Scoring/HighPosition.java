@@ -2,39 +2,27 @@ package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
-import org.WaialuaRobotics359.robot.subsystems.Arm;
-import org.WaialuaRobotics359.robot.subsystems.Flight;
-import org.WaialuaRobotics359.robot.subsystems.Intake;
-import org.WaialuaRobotics359.robot.subsystems.Pivot;
-import org.WaialuaRobotics359.robot.subsystems.Wrist;
-
+import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HighPosition extends CommandBase {
 
     private Arm s_Arm;
-    private Intake s_Intake;
     private Pivot s_Pivot;
     private Wrist s_Wrist; 
-    private Flight s_Flight;
+    private Leds s_Leds;
 
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
 
-    public HighPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Pivot s_Pivot){
+    public HighPosition(Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
         this.s_Arm = s_Arm;
-        this.s_Intake = s_Intake;
-        this.s_Flight = s_Flight;
         this.s_Wrist = s_Wrist;
         this.s_Pivot = s_Pivot;
+        this.s_Leds = s_Leds;
         addRequirements(s_Arm);
-        addRequirements(s_Intake);
-        addRequirements(s_Flight);
         addRequirements(s_Wrist);
         addRequirements(s_Pivot);
     }
@@ -53,6 +41,7 @@ public class HighPosition extends CommandBase {
             PivotPosition = Constants.Arm.Cone.highPosition;
             WristPosition = Constants.Arm.Cone.highPosition;
         }
+        
         Timer.reset();
         Timer.start();
 
@@ -65,9 +54,10 @@ public class HighPosition extends CommandBase {
     public void execute(){
 
 
-        if(RobotContainer.isCube){
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
+            if(RobotContainer.isCube){
+
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -77,12 +67,17 @@ public class HighPosition extends CommandBase {
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
+                }
+
+                if(Timer.hasElapsed(5.7)){
+                    s_Leds.purpleBlinkAnimation(.4);
                     finished = true;
                 }
 
             } else {
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
+
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -92,12 +87,14 @@ public class HighPosition extends CommandBase {
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
+                }
+
+                if(Timer.hasElapsed(5.7)){
+                    s_Leds.yellowBlinkAnimation(.4);
                     finished = true;
                 }
             }
-
-                            
-    }
+        }
 
     
     

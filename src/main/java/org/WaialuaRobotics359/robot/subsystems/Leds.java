@@ -1,7 +1,5 @@
 package org.WaialuaRobotics359.robot.subsystems;
-
 import org.WaialuaRobotics359.robot.Constants;
-
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.ColorFlowAnimation;
@@ -33,11 +31,11 @@ public class Leds extends SubsystemBase{
     }
 
     public void yellow(){
-        LED.setLEDs(225, 225, 0);
+        LED.setLEDs(200, 90, 0);
     }
 
     public void purple(){
-        LED.setLEDs(160, 32, 240);
+        LED.setLEDs(205, 0, 185, 150, 0, 98);
     }
 
     public void blue(){
@@ -53,7 +51,7 @@ public class Leds extends SubsystemBase{
     }
 
     public void white(){
-        LED.setLEDs(255, 255, 255);
+        LED.setLEDs(255, 250, 255);
     }
 
     public void rainbowAnimation(double speed){
@@ -61,7 +59,15 @@ public class Leds extends SubsystemBase{
     }
 
     public void warningAnimation(double speed){
-        setAnimation(new StrobeAnimation(255, 50, 0, 255, speed, 68));
+        setAnimation(new StrobeAnimation(255, 50, 0, 255, speed, 98));
+    }
+
+    public void yellowBlinkAnimation(double speed){
+        setAnimation(new StrobeAnimation(200, 90, 0, 255, speed, 98));
+    }
+
+    public void purpleBlinkAnimation(double speed){
+        setAnimation(new StrobeAnimation(205, 0, 185, 255, speed, 98));
     }
 
     public void zoomAnimation(double speed){
@@ -69,7 +75,7 @@ public class Leds extends SubsystemBase{
     }
 
     public void flowAnimation(double speed){
-        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 68, Direction.Forward));
+        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 98, Direction.Forward));
     }
 
     public void fadeAnimation(double speed){
@@ -88,5 +94,15 @@ public class Leds extends SubsystemBase{
 
     public void clearAnimation(){
         LED.clearAnimation(animationSlot);
+    }
+
+    public void clearAnimationYellow(){
+        LED.clearAnimation(animationSlot);
+        LED.setLEDs(200, 90, 0);
+    }
+
+    public void clearAnimationPurple(){
+        LED.clearAnimation(animationSlot);
+        LED.setLEDs(205, 0, 185, 150, 0, 98);
     }
 }

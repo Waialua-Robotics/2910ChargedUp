@@ -1,10 +1,8 @@
 package org.WaialuaRobotics359.robot.subsystems;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.WaialuaRobotics359.robot.Constants;
-
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
 

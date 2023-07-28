@@ -17,12 +17,12 @@ import org.WaialuaRobotics359.lib.util.COTSFalconSwerveConstants;
 import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
 
 public final class Constants {
+
     public static final double stickDeadband = 0.1;
     public static HashMap<String, Command> eventMap = new HashMap<String, Command>();
 
     public static final class LEDs {
         public static final int CANdleID = 8; //TODO: This must be tuned to robot
-
     }
 
     public static final class Intake {
@@ -30,37 +30,36 @@ public final class Constants {
 
         public static final double intakeSpeed = 1;
         public static final double outakeSpeed = -1;
-
     }
 
     public static final class Wrist {
+
         public static final int WristID = 1;
         public static final int stowPosition = 0;
 
         public static final class Cone {
-        public static final int groundPosition = 60000;
-        public static final int standingPosition = 75000;
-        public static final int lowPosition = 100000;
-        public static final int midPosition = 300000;
-        public static final int highPosition = 750000;
-        public static final int feederPosition = 500000;
+            public static final int groundPosition = 60000;
+            public static final int standingPosition = 75000;
+            public static final int lowPosition = 100000;
+            public static final int midPosition = 300000;
+            public static final int highPosition = 750000;
+            public static final int feederPosition = 500000;
         }
         
         public static final class Cube {
-        public static final int groundPosition = 60000;
-        public static final int lowPosition = 80000;
-        public static final int midPosition = 200000;
-        public static final int highPosition = 500000;
-        public static final int feederPosition = 500000;
-
+            public static final int groundPosition = 60000;
+            public static final int lowPosition = 80000;
+            public static final int midPosition = 200000;
+            public static final int highPosition = 500000;
+            public static final int feederPosition = 500000;
         }
     }
 
     public static final class Arm {
+
         public static final int lArmID = 5;
         public static final int rArmID = 6;
         public static final int stowPosition = 0;
-
 
         public static final class Cone {
             public static final int groundPosition = 60000;
@@ -230,7 +229,7 @@ public final class Constants {
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //TODO: This must be tuned to robot
-            public static final int driveMotorID = 1;
+            public static final int driveMotorID = 10;
             public static final int angleMotorID = 11;
             public static final int canCoderID = 21;
             public static final int driveMotor2ID = 31;

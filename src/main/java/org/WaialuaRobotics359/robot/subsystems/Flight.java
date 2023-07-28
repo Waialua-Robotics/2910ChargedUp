@@ -1,8 +1,6 @@
 package org.WaialuaRobotics359.robot.subsystems;
-
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -18,7 +16,6 @@ public class Flight extends SubsystemBase {
         return m_Flight.getRange();
     }
 
-    
     public void periodic(){
         SmartDashboard.putNumber("PWF Distance", getSensorRange());
         SmartDashboard.putNumber("pid", m_Flight.pidGet());

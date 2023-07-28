@@ -3,13 +3,8 @@ package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class FeederPosition extends CommandBase {
 
@@ -51,27 +46,26 @@ public class FeederPosition extends CommandBase {
             ArmPosition = Constants.Arm.Cone.feederPosition;
             WristPosition = Constants.Arm.Cone.feederPosition;
             PivotPosition = Constants.Pivot.Cone.feederPosition;
-
         }
+
         Timer.reset();
         Timer.start();
 
-
         finished = false;
-
     }
 
     @Override
     public void execute(){
 
-     if(RobotContainer.isCube){
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
+            if(RobotContainer.isCube){
 
-            if(Timer.hasElapsed(.2)){
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
-            }
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+
+                if(Timer.hasElapsed(.2)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
                 if(Timer.hasElapsed(.4)){
                     s_Wrist.setDesiredPosition(WristPosition);
@@ -84,14 +78,15 @@ public class FeederPosition extends CommandBase {
 
                 if(s_Intake.current() > 25){
                     s_Intake.stop();
-                    s_Leds.green();
+                    s_Leds.purpleBlinkAnimation(.4);
                     finished = true;
 
                 }
 
             } else {
-                s_Pivot.setDesiredPosition(PivotPosition);
-                s_Pivot.goToPosition();
+
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -109,15 +104,12 @@ public class FeederPosition extends CommandBase {
 
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.stop();
-                    s_Leds.green();
+                    s_Leds.yellowBlinkAnimation(.4);
                     finished = true;
 
                 }
             }
-            
-
-                            
-    }
+        }
 
     
     

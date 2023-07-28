@@ -1,18 +1,13 @@
 package org.WaialuaRobotics359.robot.commands.Manual;
-
-import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.subsystems.Intake;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualIntake extends CommandBase{
 
     private Intake s_Intake;
-    private boolean finished = false;
     private DoubleSupplier intakeAxis;
     private DoubleSupplier outakeAxis;
     
@@ -23,10 +18,9 @@ public class ManualIntake extends CommandBase{
         addRequirements(s_Intake);
     }
 
-    
-
     @Override
     public void execute(){
+
         double rTriggerControl = MathUtil.applyDeadband(intakeAxis.getAsDouble(), Constants.OI.deadband);
         double lTriggerControl = MathUtil.applyDeadband(outakeAxis.getAsDouble(), Constants.OI.deadband);
 
@@ -38,7 +32,6 @@ public class ManualIntake extends CommandBase{
             s_Intake.stop();
         }
     }
-
 
     @Override
     public boolean isFinished(){

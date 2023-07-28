@@ -1,17 +1,14 @@
 package org.WaialuaRobotics359.robot.subsystems;
-
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
-
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.Robot;
 import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.lib.util.CTREModuleState;
 import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
-
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;

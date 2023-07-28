@@ -1,12 +1,9 @@
 package org.WaialuaRobotics359.robot.subsystems;
-
 import org.WaialuaRobotics359.robot.Constants;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -35,14 +32,14 @@ public class Pivot extends SubsystemBase{
         m_BlPivot.configFactoryDefault();
         m_BrPivot.configFactoryDefault();
 
-         m_FrPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);
-         m_FrPivot.setInverted(TalonFXInvertType.OpposeMaster);
+        m_FrPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);
+        m_FrPivot.setInverted(TalonFXInvertType.OpposeMaster);
 
-         m_BlPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);
-         m_BlPivot.setInverted(TalonFXInvertType.FollowMaster);
+        m_BlPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);
+        m_BlPivot.setInverted(TalonFXInvertType.FollowMaster);
 
-         m_BrPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);    
-         m_BrPivot.setInverted(TalonFXInvertType.OpposeMaster);
+        m_BrPivot.set(ControlMode.Follower, Constants.Pivot.Fl_PivotID);    
+        m_BrPivot.setInverted(TalonFXInvertType.OpposeMaster);
 
 
         //Motion Magic

@@ -4,7 +4,6 @@
 
 package org.WaialuaRobotics359.robot;
 
-import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -61,7 +60,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_robotContainer.getLeds().twinkAnimation(.6);;
+    m_robotContainer.getLeds().flowAnimation(.4);;
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

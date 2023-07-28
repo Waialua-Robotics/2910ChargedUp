@@ -3,13 +3,8 @@ package org.WaialuaRobotics359.robot.commands.SetPoints.Pickup;
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
-
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MidPickupPosition extends CommandBase{
     private Arm s_Arm;
@@ -22,11 +17,6 @@ public class MidPickupPosition extends CommandBase{
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
-
-    private static int MidArmPosition;
-    private static int MidPivotPosition;
-    private static int MidWristPosition;
-
 
     public MidPickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
@@ -56,23 +46,21 @@ public class MidPickupPosition extends CommandBase{
             PivotPosition = Constants.Arm.Cone.standingPosition;
             WristPosition = Constants.Arm.Cone.standingPosition;
         }
+
         Timer.reset();
         Timer.start();
 
-   
-
         finished = false;
- 
-
     }
 
     @Override
     public void execute(){
 
 
-        if(RobotContainer.isCube){
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
+            if(RobotContainer.isCube){
+
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -80,7 +68,7 @@ public class MidPickupPosition extends CommandBase{
                 }
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                 }
                 
@@ -90,21 +78,22 @@ public class MidPickupPosition extends CommandBase{
 
                 if(s_Intake.current() > 25){
                     s_Intake.stop();
-                    s_Leds.green();
+                    s_Leds.purpleBlinkAnimation(.4);
                     finished = true;
-
                 }
+
             } else {
-                s_Pivot.setDesiredPosition(PivotPosition);
-                s_Pivot.goToPosition();
+
+                     s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
     
-                    if(Timer.hasElapsed(.2)){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                    }
+                if(Timer.hasElapsed(.2)){
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
                 if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(ArmPosition);
+                    s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                 }
                 
@@ -114,14 +103,11 @@ public class MidPickupPosition extends CommandBase{
 
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.stop();
-                    s_Leds.green();
+                    s_Leds.yellowBlinkAnimation(.4);
                     finished = true;
-
                 }
             }
-
-                            
-    }
+        }
 
     
     
