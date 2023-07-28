@@ -1,8 +1,4 @@
 # 2910ChargedUp
-- Updated to 2023
-- Hold button to extend arm
-- When you release the buttton it score
-
 <h2> Controller Binding </h2>
 
  **Controller** | **Operation** | **Control** |
@@ -81,9 +77,3 @@ when scoring button pressed
 Scoring sequence (manual mode) :
 disable the soft limits
 allow the joysticks and triggerst t control the different axis in percent mode
-
-
-<h2> Id's/Location </h2>
-
-**Name** | **Number** | **PDH** |
-----------|:----------:|---------|
