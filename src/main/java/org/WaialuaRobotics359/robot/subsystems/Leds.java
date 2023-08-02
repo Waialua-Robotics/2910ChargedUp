@@ -75,7 +75,7 @@ public class Leds extends SubsystemBase{
     }
 
     public void flowAnimation(double speed){
-        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 98, Direction.Forward));
+        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 38, Direction.Forward));
     }
 
     public void fadeAnimation(double speed){

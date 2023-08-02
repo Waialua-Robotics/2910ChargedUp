@@ -166,7 +166,6 @@ public class RobotContainer {
             kill.onFalse(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = true)));
 
-
             lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             lowPickup.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             
