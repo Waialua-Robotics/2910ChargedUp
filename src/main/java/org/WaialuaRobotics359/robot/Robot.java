@@ -60,7 +60,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_robotContainer.getLeds().flowAnimation(.2);;
+    m_robotContainer.getLeds().flowAnimation(.2);
+    
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */

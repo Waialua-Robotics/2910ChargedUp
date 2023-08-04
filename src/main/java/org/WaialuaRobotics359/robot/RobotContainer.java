@@ -1,10 +1,13 @@
 package org.WaialuaRobotics359.robot;
 
+import edu.wpi.first.hal.simulation.DIODataJNI;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,6 +45,8 @@ public class RobotContainer {
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
 
+    private final DigitalInput brakeToggle;
+
 
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -76,14 +81,14 @@ public class RobotContainer {
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
 
-    //private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
+    private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
     //private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
     //private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     //private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
     private final POVButton kill = new POVButton(operator, 270);
 
-    //private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
+    private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
 
 
 
@@ -131,7 +136,7 @@ public class RobotContainer {
             )
         );
 
-        s_Intake.setDefaultCommand(
+        /*s_Intake.setDefaultCommand(
             new ManualIntake(
                 s_Intake,
                 () -> intake.getAsBoolean(),
@@ -144,7 +149,7 @@ public class RobotContainer {
                 s_Pivot,
                 () -> -operator.getRawAxis(pivot)
             )
-        );
+        );*/
 
         s_Arm.setDefaultCommand(
             new ManualArm(
@@ -202,12 +207,12 @@ public class RobotContainer {
             //lowPickup.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             //
             //midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            //midPickup.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            lowPos.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 //
             //feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             //feedPos.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
 //
-            //lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
+            lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
             //lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 //
             //midPos.whileTrue(new MidPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));

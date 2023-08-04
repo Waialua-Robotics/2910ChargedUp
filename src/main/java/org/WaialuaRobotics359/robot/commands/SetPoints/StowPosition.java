@@ -46,6 +46,14 @@ public class StowPosition extends CommandBase{
     @Override
     public void execute(){
 
+        s_Arm.setDesiredPosition(ArmPosition);
+        s_Arm.goToPosition();
+
+        if(s_Arm.isRetracted()){
+            s_Pivot.setDesiredPosition(PivotPosition);
+            s_Pivot.goToPosition();
+        }
+/* 
         if(RobotContainer.isCube){
 
             s_Pivot.setDesiredPosition(PivotPosition);
@@ -88,6 +96,7 @@ public class StowPosition extends CommandBase{
             finished = true;
         }
     }
+    */
 }
     
     @Override

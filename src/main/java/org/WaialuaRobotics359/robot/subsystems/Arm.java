@@ -55,6 +55,10 @@ public class Arm extends SubsystemBase{
         return (int) m_lArm.getSelectedSensorPosition();
     }
 
+    public boolean isRetracted(){
+        return Math.abs(getPosition() - desiredPosition) < 100;
+    }
+
     public void goToPosition(){
         m_lArm.set(ControlMode.MotionMagic, desiredPosition);
     }

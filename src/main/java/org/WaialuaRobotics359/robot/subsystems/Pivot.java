@@ -46,15 +46,15 @@ public class Pivot extends SubsystemBase{
 
         //Motion Magic
         m_FlPivot.setSelectedSensorPosition(0);
-        m_FlPivot.configMotionCruiseVelocity(15000);
-        m_FlPivot.configMotionAcceleration(30000);
+        m_FlPivot.configMotionCruiseVelocity(50000);
+        m_FlPivot.configMotionAcceleration(60000);
         m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configForwardSoftLimitEnable(true);
         m_FlPivot.configReverseSoftLimitEnable(true);
         m_FlPivot.configForwardSoftLimitThreshold(116000);
         m_FlPivot.configReverseSoftLimitThreshold(100);
-        m_FlPivot.configPeakOutputForward(.2);
-        m_FlPivot.configPeakOutputReverse(-.2);
+        m_FlPivot.configPeakOutputForward(1);
+        m_FlPivot.configPeakOutputReverse(-1);
  
         m_FlPivot.config_kP(0, .25);
         m_FlPivot.config_kI(0, 0);
@@ -68,6 +68,10 @@ public class Pivot extends SubsystemBase{
 
     public void goToPosition(){
         m_FlPivot.set(ControlMode.MotionMagic, desiredPosition);
+    }
+
+    public boolean inPosition(){
+        return Math.abs(getPosition() - desiredPosition) < 100; 
     }
 
     public int getPosition(){

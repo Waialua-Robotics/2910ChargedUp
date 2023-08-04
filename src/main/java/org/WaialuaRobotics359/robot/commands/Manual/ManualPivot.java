@@ -27,7 +27,7 @@ public class ManualPivot extends CommandBase {
         if (Math.abs(joystickControl) > 0) {
             s_Pivot.percentOutput(joystickControl);
         }  else {
-            s_Pivot.stop(); 
+            s_Pivot.goToPosition(); 
            }
 
     }
