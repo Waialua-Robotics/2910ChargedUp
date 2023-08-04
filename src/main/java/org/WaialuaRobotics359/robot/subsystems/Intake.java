@@ -22,6 +22,8 @@ public class Intake extends SubsystemBase{
         m_Intake.configMotionCruiseVelocity(15000);
         m_Intake.configMotionAcceleration(30000);
         m_Intake.configMotionSCurveStrength(6);
+        m_Intake.configPeakOutputForward(.2);
+        m_Intake.configPeakOutputReverse(-.2);
     }
 
     public void setDesiredPosition (int position) {

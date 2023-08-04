@@ -23,14 +23,23 @@ public class Arm extends SubsystemBase{
         m_lArm.configFactoryDefault();
         m_rArm.configFactoryDefault();
 
+        m_lArm.setInverted(TalonFXInvertType.Clockwise);
+
         m_rArm.set(ControlMode.Follower, Constants.Arm.lArmID);    
-        m_rArm.setInverted(TalonFXInvertType.OpposeMaster);
+        m_rArm.setInverted(TalonFXInvertType.FollowMaster);
        
         //Motion Magic
         m_lArm.setSelectedSensorPosition(0);
         m_lArm.configMotionCruiseVelocity(15000);
         m_lArm.configMotionAcceleration(30000);
         m_lArm.configMotionSCurveStrength(0);
+        m_lArm.configForwardSoftLimitEnable(true);
+        m_lArm.configReverseSoftLimitEnable(true);
+        m_lArm.configForwardSoftLimitThreshold(24500);
+        m_lArm.configReverseSoftLimitThreshold(100);
+        m_lArm.configPeakOutputForward(.25);
+        m_lArm.configPeakOutputReverse(-.1);
+
 
         m_lArm.config_kP(0, .25);
         m_lArm.config_kI(0, 0);
@@ -40,6 +49,10 @@ public class Arm extends SubsystemBase{
 
     public void setDesiredPosition (int position) {
         desiredPosition = position;
+    }
+
+    public int getPosition(){
+        return (int) m_lArm.getSelectedSensorPosition();
     }
 
     public void goToPosition(){
@@ -65,6 +78,7 @@ public class Arm extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("aDesiredPos", desiredPosition);
-        SmartDashboard.putNumber("aPosition", m_lArm.getSelectedSensorPosition());
+        SmartDashboard.putNumber("aPosition", getPosition());
+        SmartDashboard.putNumber("aPercentOutput", m_lArm.getMotorOutputPercent());
     }
 }

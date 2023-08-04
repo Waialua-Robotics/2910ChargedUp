@@ -59,7 +59,7 @@ public class Leds extends SubsystemBase{
     }
 
     public void warningAnimation(double speed){
-        setAnimation(new StrobeAnimation(255, 50, 0, 255, speed, 98));
+        setAnimation(new StrobeAnimation(255, 50, 0, 255, speed, 68));
     }
 
     public void yellowBlinkAnimation(double speed){
@@ -75,7 +75,7 @@ public class Leds extends SubsystemBase{
     }
 
     public void flowAnimation(double speed){
-        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 38, Direction.Forward));
+        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 68, Direction.Forward));
     }
 
     public void fadeAnimation(double speed){
@@ -98,11 +98,11 @@ public class Leds extends SubsystemBase{
 
     public void clearAnimationYellow(){
         LED.clearAnimation(animationSlot);
-        LED.setLEDs(200, 90, 0);
+        LED.setLEDs(200, 90, 0, 255, 0, 68);
     }
 
     public void clearAnimationPurple(){
         LED.clearAnimation(animationSlot);
-        LED.setLEDs(205, 0, 185, 150, 0, 98);
+        LED.setLEDs(205, 0, 185, 150, 0, 68);
     }
 }

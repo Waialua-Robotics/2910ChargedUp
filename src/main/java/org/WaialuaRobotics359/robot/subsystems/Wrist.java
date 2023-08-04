@@ -2,6 +2,7 @@ package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,13 +15,20 @@ public class Wrist extends SubsystemBase{
     public Wrist(){
         m_Wrist = new TalonFX(Constants.Wrist.WristID);
         m_Wrist.setNeutralMode(NeutralMode.Brake);
-
+        
+        m_Wrist.setInverted(TalonFXInvertType.Clockwise);
 
         m_Wrist.setSelectedSensorPosition(0);
         m_Wrist.configFactoryDefault();
         m_Wrist.configMotionCruiseVelocity(15000);
         m_Wrist.configMotionAcceleration(30000);
         m_Wrist.configMotionSCurveStrength(0);
+        m_Wrist.configForwardSoftLimitEnable(true);
+        m_Wrist.configReverseSoftLimitEnable(true);
+        m_Wrist.configForwardSoftLimitThreshold(42000);
+        m_Wrist.configReverseSoftLimitThreshold(50);
+        m_Wrist.configPeakOutputForward(.2);
+        m_Wrist.configPeakOutputReverse(-.2);
 
         m_Wrist.config_kP(0, .25);
         m_Wrist.config_kI(0, 0);
@@ -61,6 +69,8 @@ public class Wrist extends SubsystemBase{
     public void periodic(){
         SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
             SmartDashboard.putNumber("wDesiredPos", desiredPosition);
-            SmartDashboard.putNumber("wPosition", m_Wrist.getSelectedSensorPosition());
+            SmartDashboard.putNumber("wPosition", getPosition());
+            SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
+
     }
 }

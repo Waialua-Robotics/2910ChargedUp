@@ -33,7 +33,8 @@ public final class Constants {
     }
 
     public static final class Wrist {
-
+        public static final int softMax = 0;
+        public static final int softMin = 0;
         public static final int WristID = 1;
         public static final int stowPosition = 0;
 
@@ -56,7 +57,8 @@ public final class Constants {
     }
 
     public static final class Arm {
-
+        public static final int softMax = 0;
+        public static final int softMin = 0;
         public static final int lArmID = 5;
         public static final int rArmID = 6;
         public static final int stowPosition = 0;
@@ -80,12 +82,12 @@ public final class Constants {
     }
 
     public static final class Pivot {
+        public static final int softMax = 0;
+        public static final int softMin = 0;
         public static final int Fl_PivotID = 3;
         public static final int Bl_PivotID = 4;
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
-        
-       
         
         public static final int stowPosition = 0;
 
@@ -110,28 +112,38 @@ public final class Constants {
     }
 
     public static final class Leds {
-        public static final int CandleID = 12;
-        public static final int LEDCount = 128;
+        public static final int CandleID = 26;
+        public static final int LEDCount = 68;
     }
 
     public static final class OI {
 
-        public static final int intakeAxis = XboxController.Axis.kRightTrigger.value;
-        public static final int outakeAxis = XboxController.Axis.kLeftTrigger.value;
+        public static final int wristAxis = XboxController.Axis.kRightTrigger.value;
+        public static final int revWristAxis = XboxController.Axis.kLeftTrigger.value;
 
         public static final int isCube = XboxController.Button.kLeftStick.value;
         public static final int isCone = XboxController.Button.kRightStick.value;
-        public static final int lowPickup = XboxController.Button.kLeftBumper.value;
-        public static final int midPckup = XboxController.Button.kRightBumper.value;
 
-        public static final int lowPos = XboxController.Button.kA.value;
-        public static final int midPos = XboxController.Button.kB.value;
-        public static final int highPos = XboxController.Button.kY.value;
-        public static final int feedPos = XboxController.Button.kX.value;
+        public static final int intake = XboxController.Button.kRightBumper.value;
+        public static final int outake = XboxController.Button.kLeftBumper.value;
 
-        public static final int stow = XboxController.Button.kStart.value;
+        public static final int pivot = XboxController.Axis.kLeftY.value;
 
-        public static final double deadband = 0.1;
+        public static final int arm = XboxController.Axis.kRightY.value;
+
+
+
+       // public static final int lowPickup = XboxController.Button.kLeftBumper.value;
+        // public static final int midPckup = XboxController.Button.kRightBumper.value;
+
+        //public static final int lowPos = XboxController.Button.kA.value;
+        //public static final int midPos = XboxController.Button.kB.value;
+        //public static final int highPos = XboxController.Button.kY.value;
+        //public static final int feedPos = XboxController.Button.kX.value;
+
+        //public static final int stow = XboxController.Button.kStart.value;
+
+        public static final double deadband = 0;
     }
 
     public static final class Swerve {
@@ -229,7 +241,7 @@ public final class Constants {
 
         /* Front Right Module - Module 1 */
         public static final class Mod1 { //TODO: This must be tuned to robot
-            public static final int driveMotorID = 10;
+            public static final int driveMotorID = 1;
             public static final int angleMotorID = 11;
             public static final int canCoderID = 21;
             public static final int driveMotor2ID = 31;
