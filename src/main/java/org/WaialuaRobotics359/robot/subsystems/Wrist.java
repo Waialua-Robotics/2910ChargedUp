@@ -37,6 +37,18 @@ public class Wrist extends SubsystemBase{
 
     }
 
+    public void setCoast(){
+        m_Wrist.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void setBrake(){
+        m_Wrist.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void setPosition(double pos){
+        m_Wrist.setSelectedSensorPosition(pos);
+    }
+
     public void setDesiredPosition (int position) {
         desiredPosition = position;
     }

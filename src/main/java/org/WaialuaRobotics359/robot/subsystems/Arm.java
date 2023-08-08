@@ -12,6 +12,7 @@ public class Arm extends SubsystemBase{
     private TalonFX m_rArm;
 
     private int desiredPosition = 0;
+    private boolean brakeMode = true;
 
     public Arm(){
         m_lArm = new TalonFX(Constants.Arm.lArmID);
@@ -31,20 +32,34 @@ public class Arm extends SubsystemBase{
         //Motion Magic
         m_lArm.setSelectedSensorPosition(0);
         m_lArm.configMotionCruiseVelocity(15000);
-        m_lArm.configMotionAcceleration(30000);
+        m_lArm.configMotionAcceleration(5000);
         m_lArm.configMotionSCurveStrength(0);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
         m_lArm.configForwardSoftLimitThreshold(24500);
         m_lArm.configReverseSoftLimitThreshold(100);
-        m_lArm.configPeakOutputForward(.25);
-        m_lArm.configPeakOutputReverse(-.1);
+        m_lArm.configPeakOutputForward(1);
+        m_lArm.configPeakOutputReverse(-1);
 
 
         m_lArm.config_kP(0, .25);
         m_lArm.config_kI(0, 0);
         m_lArm.config_kD(0, 0);
         m_lArm.config_kF(0, 0);
+    }
+
+    public void setCoast(){
+        m_lArm.setNeutralMode(NeutralMode.Coast);
+        m_rArm.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void setBrake(){
+        m_lArm.setNeutralMode(NeutralMode.Brake);
+        m_rArm.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void setPosition(double pos){
+        m_lArm.setSelectedSensorPosition(pos);
     }
 
     public void setDesiredPosition (int position) {
@@ -56,7 +71,7 @@ public class Arm extends SubsystemBase{
     }
 
     public boolean isRetracted(){
-        return Math.abs(getPosition() - desiredPosition) < 100;
+        return Math.abs(getPosition() - desiredPosition) < 150;
     }
 
     public void goToPosition(){

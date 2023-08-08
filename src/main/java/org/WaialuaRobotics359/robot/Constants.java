@@ -89,10 +89,11 @@ public final class Constants {
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
         
-        public static final int stowPosition = 1000;
+        public static final int stowPosition = 0;
 
 
         public static final class Cone {
+
             public static final int groundPosition = 60000;
             public static final int standingposition = 80000;
             public static final int lowPosition = 58000;

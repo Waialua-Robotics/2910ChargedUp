@@ -9,6 +9,7 @@ import org.WaialuaRobotics359.robot.util.CTREConfigs;
 import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -60,9 +61,52 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    m_robotContainer.getLeds().flowAnimation(.2);
+    m_robotContainer.getLeds().flowAnimation(.1);
+
+    if (!m_robotContainer.brakeToggle.get() && m_robotContainer.toggleMode){
+
+        m_robotContainer.toggleMode = false;
+
+        if(m_robotContainer.brakeMode){
+          m_robotContainer.getArm().setBrake();
+          m_robotContainer.getPivot().setBrake();
+          m_robotContainer.getWrist().setBrake();
+        }else if(!m_robotContainer.brakeMode){
+          m_robotContainer.getArm().setCoast();
+          m_robotContainer.getPivot().setCoast();
+          m_robotContainer.getWrist().setCoast();
+        }
+        
+        m_robotContainer.brakeMode = !m_robotContainer.brakeMode;
+      } 
+      
+      if (m_robotContainer.brakeToggle.get()){
+        m_robotContainer.toggleMode = true;
+      }
+
+      
+
+      if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode){
+        m_robotContainer.zeroMode = false;
+        m_robotContainer.getArm().setPosition(0);
+        m_robotContainer.getArm().setDesiredPosition(0);
+        m_robotContainer.getPivot().setPosition(0);
+        m_robotContainer.getPivot().setDesiredPosition(0);
+        m_robotContainer.getWrist().setPosition(0);
+        m_robotContainer.getWrist().setDesiredPosition(0);
+      } else {
+        m_robotContainer.zeroMode = true;
+      }
     
-  }
+    }
+
+  /*
+   * if pressed && firsttime
+   *  first time = false
+   *  set toogle oppisite true 
+   * else 
+   * first time = true
+   */
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override

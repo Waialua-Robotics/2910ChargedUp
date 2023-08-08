@@ -40,12 +40,19 @@ public class RobotContainer {
 
     public static boolean isCube = true;
     public static boolean allowScore = true;
+    public boolean toggleMode = true;
+    public boolean brakeMode = false;
+    public boolean zeroMode = true;
+    
+
 
     /* Controllers */
     private final Joystick driver = new Joystick(0);
     private final Joystick operator = new Joystick(1);
 
-    private final DigitalInput brakeToggle;
+    public final DigitalInput brakeToggle = new DigitalInput(0);
+    public final DigitalInput zero = new DigitalInput(1);
+
 
 
     /* Drive Controls */
@@ -149,14 +156,14 @@ public class RobotContainer {
                 s_Pivot,
                 () -> -operator.getRawAxis(pivot)
             )
-        );*/
+        );
 
         s_Arm.setDefaultCommand(
             new ManualArm(
                 s_Arm,
                 () -> -operator.getRawAxis(arm)
             )
-        );
+        );*/
 
       
         
@@ -227,6 +234,19 @@ public class RobotContainer {
     public Leds getLeds(){
         return s_Leds;
     }
+
+    public Pivot getPivot(){
+        return s_Pivot;
+    }
+
+    public Wrist getWrist(){
+        return s_Wrist;
+    }
+
+    public Arm getArm(){
+        return s_Arm;
+    }
+
 
     public void setEventMap() {
     //Constants.eventMap.put("LedBlue", new InstantCommand(() -> s_LEDs.LEDsBlue()));

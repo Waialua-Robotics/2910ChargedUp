@@ -46,13 +46,13 @@ public class Pivot extends SubsystemBase{
 
         //Motion Magic
         m_FlPivot.setSelectedSensorPosition(0);
-        m_FlPivot.configMotionCruiseVelocity(50000);
-        m_FlPivot.configMotionAcceleration(60000);
+        m_FlPivot.configMotionCruiseVelocity(70000);
+        m_FlPivot.configMotionAcceleration(70000);
         m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configForwardSoftLimitEnable(true);
         m_FlPivot.configReverseSoftLimitEnable(true);
         m_FlPivot.configForwardSoftLimitThreshold(116000);
-        m_FlPivot.configReverseSoftLimitThreshold(100);
+        m_FlPivot.configReverseSoftLimitThreshold(0);
         m_FlPivot.configPeakOutputForward(1);
         m_FlPivot.configPeakOutputReverse(-1);
  
@@ -60,6 +60,32 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.config_kI(0, 0);
         m_FlPivot.config_kD(0, 0);
         m_FlPivot.config_kF(0, 0);
+    }
+
+    public int scoreRetract(){
+        return desiredPosition - 10000;
+    }
+
+    public boolean isRetracted(){
+        return Math.abs(getPosition() - scoreRetract()) < 100;
+    }
+
+    public void setCoast(){
+        m_FlPivot.setNeutralMode(NeutralMode.Coast);
+        m_FrPivot.setNeutralMode(NeutralMode.Coast);
+        m_BlPivot.setNeutralMode(NeutralMode.Coast);
+        m_BrPivot.setNeutralMode(NeutralMode.Coast);
+    }
+
+    public void setBrake(){
+        m_FlPivot.setNeutralMode(NeutralMode.Brake);
+        m_FrPivot.setNeutralMode(NeutralMode.Brake);
+        m_BlPivot.setNeutralMode(NeutralMode.Brake);
+        m_BrPivot.setNeutralMode(NeutralMode.Brake);
+    }
+
+    public void setPosition(double pos){
+        m_FlPivot.setSelectedSensorPosition(pos);
     }
 
     public void setDesiredPosition (int position) {
