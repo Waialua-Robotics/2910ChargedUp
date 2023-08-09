@@ -17,18 +17,19 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
+import java.util.HashMap;
+
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.MidPickupPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.PickupPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.FeederPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.HighPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.LowPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.MidPosition;
-import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.Score;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
+import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.*;
+import org.WaialuaRobotics359.robot.commands.autonomous.*;
 import org.WaialuaRobotics359.robot.subsystems.*;
+
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -61,26 +62,26 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     /* Driver Buttons */
-    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kY.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-    private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kStart.value); 
+    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
+    private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kBack.value); 
+    private final JoystickButton Angle0 = new JoystickButton(driver, XboxController.Button.kY.value);
+    private final JoystickButton Angle180 = new JoystickButton(driver, XboxController.Button.kA.value);
+    private final JoystickButton setDriveSlowMode = new JoystickButton(driver, XboxController.Button.kRightBumper.value); 
+    private final JoystickButton Angle90 = new JoystickButton(driver, XboxController.Button.kX.value);
+    private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
+    private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
+    private final POVButton robotCentric = new POVButton(driver, 270);
 
     /* Operator Controls */
-
-    /* Operator Buttons */
-   
-
     private final int wristAxis = (Constants.OI.wristAxis);
     private final int revWristAxis = (Constants.OI.revWristAxis);
-
-  
     private final int pivot = (Constants.OI.pivot);
-
     private final int arm = (Constants.OI.arm);
+
+    /* Operator Buttons */
 
     private final JoystickButton intake = new JoystickButton(operator, Constants.OI.intake);
     private final JoystickButton outake = new JoystickButton(operator, Constants.OI.outake);
-
 
     //private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
     //private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
@@ -98,24 +99,18 @@ public class RobotContainer {
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
 
 
-
-
     /* Subsystems */
-    //private final Swerve s_Swerve = new Swerve();
+    private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
     private final Wrist s_Wrist = new Wrist();
     private final Arm s_Arm = new Arm();
     private final Flight s_Flight = new Flight();
     private final Pivot s_Pivot = new Pivot();
     private final Leds s_Leds = new Leds();
+    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve);
 
-
-    //private final LEDsSubsystem s_LEDs = new LEDsSubsystem();
-
-    /*The autonomous routines*/
-
-    //private final Command m_twomAuto = new twomAuto(s_Swerve);
-    //private final Command m_SwerveBuilderAuto = new swerveBuilderAuto(s_Swerve);
+    /* Auto Builder */
+    private SwerveAutoBuilder autoBuilder;
 
     /*chooser for autonomous commands*/
     SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -123,7 +118,7 @@ public class RobotContainer {
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
-        /* 
+         
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
             s_Swerve, 
@@ -132,8 +127,7 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis), 
             () -> robotCentric.getAsBoolean()
             )
-        );*/
-
+        );  
 
         s_Wrist.setDefaultCommand(
             new ManualWrist(
@@ -165,23 +159,15 @@ public class RobotContainer {
             )
         );*/
 
-      
-        
-
-        
 
         // Configure the button bindings
         configureButtonBindings();
 
-        // Add commands to the autonomous command chooser
-        //m_chooser.setDefaultOption("swerveBuilderAuto", m_SwerveBuilderAuto);
-        //m_chooser.addOption("twomAuto", m_twomAuto);
+        //cingifure the auto chooser and event map
+        configAuto();
 
-        // Put the chooser on the dashboard
-        Shuffleboard.getTab("Autonomous").add(m_chooser);
 
-        // Populate the autonomous event map
-        setEventMap();
+
     }
 
     /**
@@ -192,12 +178,19 @@ public class RobotContainer {
      */
     private void configureButtonBindings() {
 
-        
-
         /* Driver Buttons */
-        //zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
-        //ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+            /* Reset Gyro */
+            zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+            /* Reset Swerve Modules */
+            ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
+            /* Snap-to Swerve Angle */
+            setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.setCurrentAngle()));
+            Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));
+            Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(270)));
+            Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
+            Angle270.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
 
+        /* Operator Buttons */
             setCube.onTrue(
                 new ParallelCommandGroup( new InstantCommand(() -> isCube = true),
                 new InstantCommand(() -> s_Leds.clearAnimationPurple())));
@@ -248,9 +241,35 @@ public class RobotContainer {
     }
 
 
-    public void setEventMap() {
-    //Constants.eventMap.put("LedBlue", new InstantCommand(() -> s_LEDs.LEDsBlue()));
-    //SystemConstants.eventMap.put("intakeRetract", new InstantCommand(m_robotIntake::intakeRetract, m_robotIntake));
+    public void configAuto() {
+
+        /* Populate Event Map */
+        HashMap<String, Command> eventMap = new HashMap<String, Command>();
+        eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
+        eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
+
+        /*Wait Times */
+        eventMap.put("Wait5", new AutoWait(5));
+        eventMap.put("Wait1", new AutoWait(1));
+        eventMap.put("Wait1.5",new AutoWait(1.5));
+
+        /* End Event Map */
+
+
+        /* Auto Builder */
+        autoBuilder = new SwerveAutoBuilder(
+            s_PoseEstimator::getPose,
+            s_PoseEstimator::resetPose,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.translationPID.kP, Constants.AutoConstants.translationPID.kI,
+                Constants.AutoConstants.translationPID.kD),
+            new PIDConstants(Constants.AutoConstants.rotationPID.kP, Constants.AutoConstants.rotationPID.kI,
+                Constants.AutoConstants.rotationPID.kD),
+            s_Swerve::setModuleStates,
+            eventMap,
+            s_Swerve
+        );
+
       }
 
     /**

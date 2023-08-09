@@ -90,15 +90,6 @@ public class Swerve extends SubsystemBase {
         desiredAngle = getYaw().getDegrees();
     }
 
-    /*public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
-    }
-
-    public void resetOdometry(Pose2d pose) {
-        swerveOdometry.resetPosition(getYaw(), getModulePositions(), pose);
-    }
-    */
-
     public SwerveModuleState[] getModuleStates(){
         SwerveModuleState[] states = new SwerveModuleState[4];
         for(SwerveModule mod : mSwerveMods){

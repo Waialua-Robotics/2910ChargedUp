@@ -103,4 +103,33 @@ public class Conversions {
     public static double MetersToFalcon(double meters, double circumference, double gearRatio){
         return meters / (circumference / (gearRatio * 2048.0));
     }
+
+        /**
+     * @param angle1 current angle
+     * @param angle2 desired angle
+     * @return angle to desired
+     */
+    public static double wrap(double angle1, double angle2) {
+        double difference = angle1 - angle2;
+        if (difference > 180) {
+            difference -= 360;
+            //difference = -difference;
+        } else if (difference < -180) {
+            difference += 360;
+            //difference = -difference;
+        }
+        return difference;
+    }
+
+    /**
+     * @param value current value
+     * @param min min value  
+     * @param max max value
+     * @return true if value is between min and max
+     */
+    public static boolean isBetween(double value, double min, double max)
+    {
+      return((value > min) && (value < max));
+    }
+    
 }
