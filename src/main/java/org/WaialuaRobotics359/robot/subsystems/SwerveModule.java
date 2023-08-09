@@ -1,14 +1,17 @@
 package org.WaialuaRobotics359.robot.subsystems;
+
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
+
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.Robot;
 import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.lib.util.CTREModuleState;
 import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
+
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -54,6 +57,10 @@ public class SwerveModule {
         setSpeed(desiredState, isOpenLoop);
     }
 
+    public void ForceAngle(int angle){
+        mAngleMotor.set(ControlMode.Position, Conversions.degreesToFalcon(angle, Constants.Swerve.angleGearRatio));
+    }
+
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
         if(isOpenLoop){
             double percentOutput = desiredState.speedMetersPerSecond / Constants.Swerve.maxSpeed;
@@ -89,9 +96,10 @@ public class SwerveModule {
          * CANcoder before we have received any position signal
          * from the CANcoder.
          */
+        //encodeTimer.start();
         for (int i = 0; i < 100; ++i) {
             angleEncoder.getAbsolutePosition();
-            if (angleEncoder.getLastError() == ErrorCode.OK) {
+            if (angleEncoder.getLastError() == ErrorCode.OK && mAngleMotor.getLastError() == ErrorCode.OK) {
                 break;
             }
             Timer.delay(0.010);            
