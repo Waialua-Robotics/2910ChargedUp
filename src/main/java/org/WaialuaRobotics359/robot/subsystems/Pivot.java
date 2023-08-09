@@ -46,15 +46,16 @@ public class Pivot extends SubsystemBase{
 
         //Motion Magic
         m_FlPivot.setSelectedSensorPosition(0);
-        m_FlPivot.configMotionCruiseVelocity(70000);
-        m_FlPivot.configMotionAcceleration(70000);
-        m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configForwardSoftLimitEnable(true);
         m_FlPivot.configReverseSoftLimitEnable(true);
         m_FlPivot.configForwardSoftLimitThreshold(116000);
         m_FlPivot.configReverseSoftLimitThreshold(0);
+
+        m_FlPivot.configMotionCruiseVelocity(70000);
+        m_FlPivot.configMotionAcceleration(40000);
+        m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configPeakOutputForward(1);
-        m_FlPivot.configPeakOutputReverse(-1);
+        m_FlPivot.configPeakOutputReverse(-.4);
  
         m_FlPivot.config_kP(0, .25);
         m_FlPivot.config_kI(0, 0);
@@ -97,7 +98,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public boolean inPosition(){
-        return Math.abs(getPosition() - desiredPosition) < 100; 
+        return Math.abs(getPosition() - desiredPosition) < 1000; 
     }
 
     public int getPosition(){

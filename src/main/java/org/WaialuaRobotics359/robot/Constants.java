@@ -41,7 +41,7 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 60000;
             public static final int standingPosition = 75000;
-            public static final int lowPosition = 100000;
+            public static final int lowPosition = 18000;
             public static final int midPosition = 300000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
@@ -49,7 +49,7 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 80000;
+            public static final int lowPosition = 18000;
             public static final int midPosition = 200000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;
@@ -66,7 +66,7 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 60000;
             public static final int standingPosition = 80000;
-            public static final int lowPosition = 12000;
+            public static final int lowPosition = 22000;
             public static final int midPosition = 300000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
@@ -74,7 +74,7 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 12000;
+            public static final int lowPosition = 22000;
             public static final int midPosition = 200000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;
@@ -88,15 +88,16 @@ public final class Constants {
         public static final int Bl_PivotID = 4;
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
+        public static final int lowStart = 10000;
         
-        public static final int stowPosition = 0;
+        public static final int stowPosition = 1500;
 
 
         public static final class Cone {
 
             public static final int groundPosition = 60000;
             public static final int standingposition = 80000;
-            public static final int lowPosition = 58000;
+            public static final int lowPosition = 82000;
             public static final int midPosition = 300000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
@@ -105,7 +106,7 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 58000;
+            public static final int lowPosition = 82000;
             public static final int midPosition = 200000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;

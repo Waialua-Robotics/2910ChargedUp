@@ -27,8 +27,8 @@ public class Wrist extends SubsystemBase{
         m_Wrist.configReverseSoftLimitEnable(true);
         m_Wrist.configForwardSoftLimitThreshold(42000);
         m_Wrist.configReverseSoftLimitThreshold(50);
-        m_Wrist.configPeakOutputForward(.2);
-        m_Wrist.configPeakOutputReverse(-.2);
+        m_Wrist.configPeakOutputForward(.75);
+        m_Wrist.configPeakOutputReverse(-.75);
 
         m_Wrist.config_kP(0, .25);
         m_Wrist.config_kI(0, 0);

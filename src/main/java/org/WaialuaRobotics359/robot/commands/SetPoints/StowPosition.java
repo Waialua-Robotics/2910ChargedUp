@@ -48,6 +48,8 @@ public class StowPosition extends CommandBase{
 
         s_Arm.setDesiredPosition(ArmPosition);
         s_Arm.goToPosition();
+        s_Wrist.setDesiredPosition(WristPosition);
+        s_Wrist.goToPosition();
 
         if(s_Arm.isRetracted()){
             s_Pivot.setDesiredPosition(PivotPosition);
