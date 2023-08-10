@@ -34,6 +34,10 @@ public class Intake extends SubsystemBase{
         m_Intake.set(ControlMode.MotionMagic, desiredPosition);
     }
 
+    public void intakeIdle(){
+        m_Intake.set(ControlMode.Velocity, 0.001);
+    }
+
     public void getPercentOutput(){
         m_Intake.getMotorOutputPercent();
     }
@@ -43,7 +47,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void intake(){
-        m_Intake.set(ControlMode.PercentOutput, 100);
+        m_Intake.set(ControlMode.PercentOutput, 1);
     }
 
     public void outake(){

@@ -31,13 +31,13 @@ public class Arm extends SubsystemBase{
        
         //Motion Magic
         m_lArm.setSelectedSensorPosition(0);
-        m_lArm.configMotionCruiseVelocity(15000);
-        m_lArm.configMotionAcceleration(10000);
-        m_lArm.configMotionSCurveStrength(4);
+        m_lArm.configMotionCruiseVelocity(65000);
+        m_lArm.configMotionAcceleration(75000);
+        m_lArm.configMotionSCurveStrength(8);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
         m_lArm.configForwardSoftLimitThreshold(24500);
-        m_lArm.configReverseSoftLimitThreshold(100);
+        m_lArm.configReverseSoftLimitThreshold(0);
         m_lArm.configPeakOutputForward(.5);
         m_lArm.configPeakOutputReverse(-.5);
 
@@ -71,7 +71,7 @@ public class Arm extends SubsystemBase{
     }
 
     public boolean isRetracted(){
-        return Math.abs(getPosition() - desiredPosition) < 500;
+        return Math.abs(getPosition() - desiredPosition) < 300;
     }
 
     public void goToPosition(){

@@ -23,7 +23,7 @@ public class ManualArm extends CommandBase{
         double joystickControl = MathUtil.applyDeadband(arm.getAsDouble(), Constants.OI.deadband);
 
         if(Math.abs(joystickControl) > 0){
-            s_Arm.percentOutput(joystickControl);
+            s_Arm.percentOutput(joystickControl*.01);
         } else {
             s_Arm.stop();
         }

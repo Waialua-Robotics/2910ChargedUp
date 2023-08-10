@@ -25,7 +25,7 @@ public class ManualPivot extends CommandBase {
         double joystickControl = MathUtil.applyDeadband(pivot.getAsDouble(), Constants.OI.deadband);
 
         if (Math.abs(joystickControl) > 0) {
-            s_Pivot.percentOutput(joystickControl);
+            s_Pivot.percentOutput(joystickControl*.1);
         }  else {
             s_Pivot.goToPosition(); 
            }

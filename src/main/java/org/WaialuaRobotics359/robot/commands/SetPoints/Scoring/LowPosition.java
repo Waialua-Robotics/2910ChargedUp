@@ -51,15 +51,15 @@ public class LowPosition extends CommandBase{
     @Override
     public void execute(){
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-
-                    if(s_Pivot.getPosition() > Constants.Pivot.lowStart){
+                   s_Pivot.setDesiredPosition(PivotPosition);
+                   s_Pivot.goToPosition();
+//
+                   // if(s_Pivot.getPosition() > Constants.Pivot.lowStart){
                         s_Arm.setDesiredPosition(ArmPosition);
                         s_Arm.goToPosition();
-                        s_Wrist.setDesiredPosition(WristPosition);
-                        s_Wrist.goToPosition();
-                    }
+                       s_Wrist.setDesiredPosition(WristPosition);
+                       s_Wrist.goToPosition();
+                  // }
 
            /*  if(RobotContainer.isCube){
 

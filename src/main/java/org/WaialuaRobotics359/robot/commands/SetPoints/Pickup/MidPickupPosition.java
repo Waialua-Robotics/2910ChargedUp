@@ -56,6 +56,18 @@ public class MidPickupPosition extends CommandBase{
     @Override
     public void execute(){
 
+        s_Pivot.setDesiredPosition(PivotPosition);
+        s_Pivot.goToPosition();
+        s_Arm.setDesiredPosition(ArmPosition);
+        s_Arm.goToPosition();
+
+        if(Timer.hasElapsed(.3)){
+            s_Wrist.setDesiredPosition(WristPosition);
+            s_Wrist.goToPosition();
+            s_Intake.intake();
+        }
+
+        /* 
 
             if(RobotContainer.isCube){
 
@@ -107,6 +119,7 @@ public class MidPickupPosition extends CommandBase{
                     finished = true;
                 }
             }
+            */
         }
 
     

@@ -91,7 +91,7 @@ public class RobotContainer {
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
 
     private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
-    //private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
+    private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
     //private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     //private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
@@ -213,7 +213,7 @@ public class RobotContainer {
             //lowPickup.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             //
             //midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            lowPos.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            lowPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 //
             //feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             //feedPos.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
@@ -221,8 +221,8 @@ public class RobotContainer {
             lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
             //lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 //
-            //midPos.whileTrue(new MidPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
-            //midPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
+            midPos.whileTrue(new MidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+            midPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 //
             //highPos.whileTrue(new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
             //highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
