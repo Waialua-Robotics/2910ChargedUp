@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -98,7 +99,6 @@ public class RobotContainer {
 
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
 
-
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
     private final Intake s_Intake = new Intake();
@@ -114,6 +114,10 @@ public class RobotContainer {
 
     /*chooser for autonomous commands*/
     SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+    /* Autos */
+    //private final ConeL1DualCube a_ConeL1DualCube = new ConeL1DualCube(autoBuilder, s_PoseEstimator);
+    private final PurpleYellow a_PurpleYellow;
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -165,6 +169,8 @@ public class RobotContainer {
 
         //cingifure the auto chooser and event map
         configAuto();
+
+        a_PurpleYellow = new PurpleYellow(autoBuilder, s_PoseEstimator);
 
 
 
@@ -243,10 +249,19 @@ public class RobotContainer {
 
     public void configAuto() {
 
+        /* AutoChosser */
+        m_chooser.setDefaultOption("PurpleYellow", a_PurpleYellow);
+
+        Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0).withSize(2, 1);
+
         /* Populate Event Map */
         HashMap<String, Command> eventMap = new HashMap<String, Command>();
         eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
         eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
+
+        eventMap.put("LedYellow", new InstantCommand(()-> s_Leds.yellow()));
+        eventMap.put("LedPurple", new InstantCommand(()-> s_Leds.purple()));
+        eventMap.put("LedClear", new InstantCommand(()-> s_Leds.clearAnimation()));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));
@@ -279,6 +294,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // selected auto will run
-        return m_chooser.getSelected();
+        //return m_chooser.getSelected();
+        return a_PurpleYellow;
     }
 }

@@ -63,42 +63,42 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     m_robotContainer.getLeds().flowAnimation(.1);
 
-    if (!m_robotContainer.brakeToggle.get() && m_robotContainer.toggleMode){
+    //SmartDashboard.putString("auto", m_autonomousCommand.getName());
 
-        m_robotContainer.toggleMode = false;
+    if (!m_robotContainer.brakeToggle.get() && m_robotContainer.toggleMode) {
 
-        if(m_robotContainer.brakeMode){
-          m_robotContainer.getArm().setBrake();
-          m_robotContainer.getPivot().setBrake();
-          m_robotContainer.getWrist().setBrake();
-        }else if(!m_robotContainer.brakeMode){
-          m_robotContainer.getArm().setCoast();
-          m_robotContainer.getPivot().setCoast();
-          m_robotContainer.getWrist().setCoast();
-        }
-        
-        m_robotContainer.brakeMode = !m_robotContainer.brakeMode;
-      } 
-      
-      if (m_robotContainer.brakeToggle.get()){
-        m_robotContainer.toggleMode = true;
+      m_robotContainer.toggleMode = false;
+
+      if (m_robotContainer.brakeMode) {
+        m_robotContainer.getArm().setBrake();
+        m_robotContainer.getPivot().setBrake();
+        m_robotContainer.getWrist().setBrake();
+      } else if (!m_robotContainer.brakeMode) {
+        m_robotContainer.getArm().setCoast();
+        m_robotContainer.getPivot().setCoast();
+        m_robotContainer.getWrist().setCoast();
       }
 
-      
-
-      if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode){
-        m_robotContainer.zeroMode = false;
-        m_robotContainer.getArm().setPosition(0);
-        m_robotContainer.getArm().setDesiredPosition(0);
-        m_robotContainer.getPivot().setPosition(0);
-        m_robotContainer.getPivot().setDesiredPosition(0);
-        m_robotContainer.getWrist().setPosition(0);
-        m_robotContainer.getWrist().setDesiredPosition(0);
-      } else {
-        m_robotContainer.zeroMode = true;
-      }
-    
+      m_robotContainer.brakeMode = !m_robotContainer.brakeMode;
     }
+
+    if (m_robotContainer.brakeToggle.get()) {
+      m_robotContainer.toggleMode = true;
+    }
+
+    if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode) {
+      m_robotContainer.zeroMode = false;
+      m_robotContainer.getArm().setPosition(0);
+      m_robotContainer.getArm().setDesiredPosition(0);
+      m_robotContainer.getPivot().setPosition(0);
+      m_robotContainer.getPivot().setDesiredPosition(0);
+      m_robotContainer.getWrist().setPosition(0);
+      m_robotContainer.getWrist().setDesiredPosition(0);
+    } else {
+      m_robotContainer.zeroMode = true;
+    }
+
+  }
 
   /*
    * if pressed && firsttime
