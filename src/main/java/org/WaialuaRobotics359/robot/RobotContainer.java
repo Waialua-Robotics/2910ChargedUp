@@ -84,16 +84,16 @@ public class RobotContainer {
     private final JoystickButton intake = new JoystickButton(operator, Constants.OI.intake);
     private final JoystickButton outake = new JoystickButton(operator, Constants.OI.outake);
 
-    //private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
-    //private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
+    private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
+    private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
 
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
 
     private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
     private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
-    //private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
-    //private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
+    private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
+    private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
     private final POVButton kill = new POVButton(operator, 270);
 
@@ -132,7 +132,7 @@ public class RobotContainer {
             () -> robotCentric.getAsBoolean()
             )
         );  
-
+/* 
         s_Wrist.setDefaultCommand(
             new ManualWrist(
                 s_Wrist,
@@ -141,7 +141,7 @@ public class RobotContainer {
             )
         );
 
-        /*s_Intake.setDefaultCommand(
+        s_Intake.setDefaultCommand(
             new ManualIntake(
                 s_Intake,
                 () -> intake.getAsBoolean(),
@@ -209,25 +209,25 @@ public class RobotContainer {
             kill.onFalse(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = true)));
 
-            //lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            //lowPickup.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
-            //
-            //midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            lowPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
-//
-            //feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            //feedPos.onFalse(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
-//
+            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            lowPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            
+            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            midPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
+            feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
+
             lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
-            //lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
-//
+            lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
+
             midPos.whileTrue(new MidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
             midPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
-//
-            //highPos.whileTrue(new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
-            //highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
-//
-            //stow.onTrue(new StowPosition(s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
+            highPos.whileTrue(new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
+            highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
+
+            stow.onTrue(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
     }   
 
     public Leds getLeds(){

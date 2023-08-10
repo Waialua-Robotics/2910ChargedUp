@@ -54,19 +54,7 @@ public class MidPosition extends CommandBase {
 
     @Override
     public void execute(){
-        s_Intake.intakeIdle();
         
-        s_Pivot.setDesiredPosition(PivotPosition);
-        s_Pivot.goToPosition();
-        s_Arm.setDesiredPosition(ArmPosition);
-        s_Arm.goToPosition();
-
-        if(Timer.hasElapsed(.3)){
-            //s_Wrist.setDesiredPosition(WristPosition);
-            //s_Wrist.goToPosition();
-                }
-
-/*
         if(RobotContainer.isCube){
 
                 s_Pivot.setDesiredPosition(PivotPosition);
@@ -107,7 +95,7 @@ public class MidPosition extends CommandBase {
                 finished = true;
             }
         }
-        */
+        
     }
 
     
