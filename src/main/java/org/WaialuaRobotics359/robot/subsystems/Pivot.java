@@ -1,6 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -51,11 +52,11 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.configForwardSoftLimitThreshold(116000);
         m_FlPivot.configReverseSoftLimitThreshold(0);
 
-        m_FlPivot.configMotionCruiseVelocity(70000);
-        m_FlPivot.configMotionAcceleration(40000);
+        m_FlPivot.configMotionCruiseVelocity(50000); //70000
+        m_FlPivot.configMotionAcceleration(20000); //40000
         m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configPeakOutputForward(1);
-        m_FlPivot.configPeakOutputReverse(-.4);
+        m_FlPivot.configPeakOutputReverse(-1);
  
         m_FlPivot.config_kP(0, .25);
         m_FlPivot.config_kI(0, 0);
@@ -68,7 +69,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public boolean isRetracted(){
-        return Math.abs(getPosition() - scoreRetract()) < 100;
+        return Math.abs(getPosition() - desiredPosition) < 300;
     }
 
     public void setCoast(){
@@ -93,8 +94,17 @@ public class Pivot extends SubsystemBase{
         desiredPosition = position;
     }
 
+    public double feedForwardValue(){
+        double maxGravity = .05;
+        double degrees = getPosition() / Constants.Pivot.kTicksPerDegree;
+        double radiants = java.lang.Math.toRadians(degrees);
+        double cosineSclaar = java.lang.Math.cos(radiants);
+
+        return maxGravity * cosineSclaar;
+    }
+
     public void goToPosition(){
-        m_FlPivot.set(ControlMode.MotionMagic, desiredPosition);
+        m_FlPivot.set(ControlMode.MotionMagic, desiredPosition, DemandType.ArbitraryFeedForward, feedForwardValue());
     }
 
     public boolean inPosition(){

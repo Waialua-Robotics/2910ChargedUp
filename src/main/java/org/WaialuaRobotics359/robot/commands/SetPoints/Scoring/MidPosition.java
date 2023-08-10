@@ -12,19 +12,22 @@ public class MidPosition extends CommandBase {
     private Pivot s_Pivot;
     private Wrist s_Wrist; 
     private Leds s_Leds;
+    private Intake s_Intake;
 
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
 
-    public MidPosition(Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
+    public MidPosition(Intake s_Intake, Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
         this.s_Arm = s_Arm;
         this.s_Wrist = s_Wrist;
         this.s_Pivot = s_Pivot;
         this.s_Leds = s_Leds;
+        this.s_Intake = s_Intake;
         addRequirements(s_Arm);
         addRequirements(s_Wrist);
         addRequirements(s_Pivot);
+        addRequirements(s_Intake);
     }
 
     private boolean finished = false;
@@ -51,8 +54,19 @@ public class MidPosition extends CommandBase {
 
     @Override
     public void execute(){
+        s_Intake.intakeIdle();
+        
+        s_Pivot.setDesiredPosition(PivotPosition);
+        s_Pivot.goToPosition();
+        s_Arm.setDesiredPosition(ArmPosition);
+        s_Arm.goToPosition();
 
+        if(Timer.hasElapsed(.3)){
+            //s_Wrist.setDesiredPosition(WristPosition);
+            //s_Wrist.goToPosition();
+                }
 
+/*
         if(RobotContainer.isCube){
 
                 s_Pivot.setDesiredPosition(PivotPosition);
@@ -93,6 +107,7 @@ public class MidPosition extends CommandBase {
                 finished = true;
             }
         }
+        */
     }
 
     

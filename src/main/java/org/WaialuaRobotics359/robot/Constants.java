@@ -44,16 +44,16 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 60000;
             public static final int standingPosition = 75000;
-            public static final int lowPosition = 18000;
-            public static final int midPosition = 300000;
+            public static final int lowPosition = 30000;
+            public static final int midPosition = 30000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
         }
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 18000;
-            public static final int midPosition = 200000;
+            public static final int lowPosition = 30000;
+            public static final int midPosition = 30000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;
         }
@@ -69,16 +69,16 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 60000;
             public static final int standingPosition = 80000;
-            public static final int lowPosition = 22000;
-            public static final int midPosition = 300000;
+            public static final int lowPosition = 10000;
+            public static final int midPosition = 20000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
         }
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 22000;
-            public static final int midPosition = 200000;
+            public static final int lowPosition = 10000;
+            public static final int midPosition = 20000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;
         }
@@ -95,13 +95,15 @@ public final class Constants {
         
         public static final int stowPosition = 1500;
 
+        public static final double kTicksPerDegree = 636.4;
+
 
         public static final class Cone {
 
             public static final int groundPosition = 60000;
             public static final int standingposition = 80000;
-            public static final int lowPosition = 82000;
-            public static final int midPosition = 300000;
+            public static final int lowPosition = 10000;
+            public static final int midPosition = 80000;
             public static final int highPosition = 750000;
             public static final int feederPosition = 500000;
 
@@ -109,8 +111,8 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 60000;
-            public static final int lowPosition = 82000;
-            public static final int midPosition = 200000;
+            public static final int lowPosition = 10000;
+            public static final int midPosition = 80000;
             public static final int highPosition = 500000;
             public static final int feederPosition = 500000;
         }
@@ -142,7 +144,7 @@ public final class Constants {
         // public static final int midPckup = XboxController.Button.kRightBumper.value;
 
         public static final int lowPos = XboxController.Button.kA.value;
-        //public static final int midPos = XboxController.Button.kB.value;
+        public static final int midPos = XboxController.Button.kB.value;
         //public static final int highPos = XboxController.Button.kY.value;
         //public static final int feedPos = XboxController.Button.kX.value;
 

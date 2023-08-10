@@ -90,10 +90,13 @@ public class Robot extends TimedRobot {
       m_robotContainer.zeroMode = false;
       m_robotContainer.getArm().setPosition(0);
       m_robotContainer.getArm().setDesiredPosition(0);
+      m_robotContainer.getArm().goToPosition();
       m_robotContainer.getPivot().setPosition(0);
       m_robotContainer.getPivot().setDesiredPosition(0);
+      m_robotContainer.getPivot().goToPosition();
       m_robotContainer.getWrist().setPosition(0);
       m_robotContainer.getWrist().setDesiredPosition(0);
+      m_robotContainer.getWrist().goToPosition();
     } else {
       m_robotContainer.zeroMode = true;
     }
