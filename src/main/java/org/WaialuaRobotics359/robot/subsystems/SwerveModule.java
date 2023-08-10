@@ -15,6 +15,7 @@ import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -25,8 +26,10 @@ public class SwerveModule {
 
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
+    private TalonFX mDriveMotorFollow;
     private CANCoder angleEncoder;
-
+    
+    private int driveMotorID;
     public double CANcoderInitTime = 0.0;
 
     SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
@@ -34,6 +37,7 @@ public class SwerveModule {
     public SwerveModule(int moduleNumber, SwerveModuleConstants moduleConstants){
         this.moduleNumber = moduleNumber;
         this.angleOffset = moduleConstants.angleOffset;
+        this.driveMotorID = moduleConstants.driveMotorID;
         
         /* Angle Encoder Config */
         angleEncoder = new CANCoder(moduleConstants.cancoderID, "Drivetrain");
@@ -46,6 +50,10 @@ public class SwerveModule {
         /* Drive Motor Config */
         mDriveMotor = new TalonFX(moduleConstants.driveMotorID, "Drivetrain");
         configDriveMotor();
+
+        /* Drive Motor 2 Config */
+        mDriveMotorFollow = new TalonFX(moduleConstants.driveMotorFollowID, "Drivetrain");
+        configDriveMotorFollow();
 
         lastAngle = getState().angle;
     }
@@ -133,6 +141,15 @@ public class SwerveModule {
         mDriveMotor.setInverted(Constants.Swerve.driveMotorInvert);
         mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
         mDriveMotor.setSelectedSensorPosition(0);
+    }
+
+    private void configDriveMotorFollow(){        
+        mDriveMotor.configFactoryDefault();
+        mDriveMotor.configAllSettings(Robot.ctreConfigs.swerveDriveFXConfig);
+        mDriveMotor.setInverted(TalonFXInvertType.FollowMaster);
+        mDriveMotor.setNeutralMode(Constants.Swerve.driveNeutralMode);
+        mDriveMotor.setSelectedSensorPosition(0);
+        mDriveMotorFollow.set(ControlMode.Follower, driveMotorID);
     }
 
     public SwerveModuleState getState(){
