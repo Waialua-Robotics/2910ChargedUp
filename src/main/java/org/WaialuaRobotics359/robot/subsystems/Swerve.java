@@ -144,6 +144,11 @@ public class Swerve extends SubsystemBase {
         desiredAngle = desired;
     }
 
+    public void snapRightAngle() {
+        //set desired to nearest 90 degrees
+        setDesired( Math.round(getYaw360()/90)*90);
+    }
+
     public void resetModulesToAbsolute(){
         for(SwerveModule mod : mSwerveMods){
             mod.resetToAbsolute();
@@ -164,7 +169,6 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
-        //swerveOdometry.update(getYaw(), getModulePositions());  
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import java.util.HashMap;
 
@@ -62,6 +63,8 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
+    private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
+
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kBack.value); 
@@ -72,6 +75,7 @@ public class RobotContainer {
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final POVButton robotCentric = new POVButton(driver, 270);
+    
 
     /* Operator Controls */
     private final int wristAxis = (Constants.OI.wristAxis);
@@ -114,10 +118,6 @@ public class RobotContainer {
 
     /*chooser for autonomous commands*/
     SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-    /* Autos */
-    //private final ConeL1DualCube a_ConeL1DualCube = new ConeL1DualCube(autoBuilder, s_PoseEstimator);
-    private final PurpleYellow a_PurpleYellow;
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -167,11 +167,10 @@ public class RobotContainer {
         // Configure the button bindings
         configureButtonBindings();
 
-        //cingifure the auto chooser and event map
+        //cingifure event map and autoBuilder
         configAuto();
 
-        a_PurpleYellow = new PurpleYellow(autoBuilder, s_PoseEstimator);
-
+        configRoutine();
 
 
     }
@@ -190,11 +189,16 @@ public class RobotContainer {
             /* Reset Swerve Modules */
             ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
             /* Snap-to Swerve Angle */
+            snapRightAngle.onTrue(new InstantCommand(() -> s_Swerve.snapRightAngle()));
             setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.setCurrentAngle()));
             Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));
             Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(270)));
             Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
             Angle270.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
+
+            /* Toggle Swerve Slow Mode */
+            setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
+            setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
         /* Operator Buttons */
             setCube.onTrue(
@@ -249,11 +253,6 @@ public class RobotContainer {
 
     public void configAuto() {
 
-        /* AutoChosser */
-        m_chooser.setDefaultOption("PurpleYellow", a_PurpleYellow);
-
-        Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0).withSize(2, 1);
-
         /* Populate Event Map */
         HashMap<String, Command> eventMap = new HashMap<String, Command>();
         eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
@@ -284,7 +283,17 @@ public class RobotContainer {
             eventMap,
             s_Swerve
         );
+      }
 
+      public void configRoutine() {
+
+          /* AutoChosser */
+          m_chooser.setDefaultOption("PurpleYellow", new PurpleYellow(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("PurpleYellowTwo", new PurpleYellow(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("None", null);
+
+          Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
+                  .withSize(2, 1);
       }
 
     /**
@@ -294,7 +303,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // selected auto will run
-        //return m_chooser.getSelected();
-        return a_PurpleYellow;
+        return m_chooser.getSelected();
+        //return a_PurpleYellow;
     }
 }

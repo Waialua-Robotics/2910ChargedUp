@@ -15,7 +15,7 @@ public class PurpleYellow extends SequentialCommandGroup {
 
     public PurpleYellow (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory ConeL1Dual = PathPlanner.loadPath("purpleYellow", new PathConstraints(3, 1)); 
+        PathPlannerTrajectory ConeL1Dual = PathPlanner.loadPath("purpleYellow", new PathConstraints(1, .5)); 
         Pose2d startpose = ConeL1Dual.getInitialHolonomicPose();
 
         addCommands(new SequentialCommandGroup(

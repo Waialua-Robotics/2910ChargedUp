@@ -44,8 +44,8 @@ public class TeleopSwerve extends CommandBase {
             ControllerGain = s_Swerve.slowMode ? 0.5 : 1;
 
             /* Get Values, Deadband*/
-            double translationVal = -MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.OI.deadband);
-            double strafeVal = -MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.OI.deadband);
+            double translationVal = -MathUtil.applyDeadband(translationSup.getAsDouble(), .05);
+            double strafeVal = -MathUtil.applyDeadband(strafeSup.getAsDouble(), .05);
             double omega = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.OI.deadband);
 
             /* Square Values */
