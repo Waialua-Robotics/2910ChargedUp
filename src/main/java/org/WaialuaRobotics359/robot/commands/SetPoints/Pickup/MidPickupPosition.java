@@ -42,9 +42,9 @@ public class MidPickupPosition extends CommandBase{
             PivotPosition = Constants.Pivot.Cube.groundPosition;
             WristPosition = Constants.Wrist.Cube.groundPosition;
         } else {
-            ArmPosition = Constants.Arm.Cone.standingPosition;
-            PivotPosition = Constants.Arm.Cone.standingPosition;
-            WristPosition = Constants.Arm.Cone.standingPosition;
+            ArmPosition = Constants.Arm.Cone.groundPosition;
+            PivotPosition = Constants.Pivot.Cone.groundPosition;
+            WristPosition = Constants.Wrist.Cone.groundPosition;
         }
 
         Timer.reset();
