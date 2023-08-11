@@ -77,7 +77,7 @@ public class FeederPosition extends CommandBase {
                 }
 
                 if(s_Intake.current() > 25){
-                    s_Intake.stop();
+                    s_Intake.intakeIdle();
                     s_Leds.purpleBlinkAnimation(.4);
                     finished = true;
 
@@ -103,7 +103,7 @@ public class FeederPosition extends CommandBase {
                 }
 
                 if(s_Flight.getSensorRange() < 200){
-                    s_Intake.stop();
+                    s_Intake.intakeIdle();
                     s_Leds.yellowBlinkAnimation(.4);
                     finished = true;
 

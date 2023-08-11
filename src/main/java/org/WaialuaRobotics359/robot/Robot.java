@@ -65,6 +65,10 @@ public class Robot extends TimedRobot {
 
     //SmartDashboard.putString("auto", m_autonomousCommand.getName());
 
+    m_robotContainer.getArm().setCurrentPosition();
+    m_robotContainer.getPivot().setCurrentPosition();
+    m_robotContainer.getWrist().setCurrentPosition();
+
     if (!m_robotContainer.brakeToggle.get() && m_robotContainer.toggleMode) {
 
       m_robotContainer.toggleMode = false;

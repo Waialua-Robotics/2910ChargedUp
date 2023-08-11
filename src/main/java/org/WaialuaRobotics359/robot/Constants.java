@@ -21,6 +21,22 @@ import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
 
 public final class Constants {
 
+//conepickup - a = 5400 p = 790 w = 32620
+//cubepickup - a = 5400 p = 2275 w = 21500
+//backLowCone - a = 100 p = 16300 w = 43150
+//low cone - a = 0 p = 21300 w = 2325
+//mid cone - a = 13225 p = 83290 w = 6730
+//high cone - a = 26525 p = 8680 w = 13000
+//backlowcube - a = 0 p = 62200 w = 155
+//backmidcube - a = 2790 p = 85630 w = 5110
+//backhigh cube - a = 25020 p = 88410 w = 6880
+//lowcube - a = 0 p = 0 w = 0
+//midCube - a - 1665 p = 20630 w = 9200
+//highcube - a = 26470 p = 22000 w = 2580
+//feederCone - a = 20350 p = 71150 w = 0
+//downfeederCone - a = 0 p = 69500 w = 14885
+//feederCube - a = 18120 p = 39050 w = 37440
+
     public static final double stickDeadband = 0.1;
     public static HashMap<String, Command> eventMap = new HashMap<String, Command>();
 
@@ -42,20 +58,19 @@ public final class Constants {
         public static final int stowPosition = 0;
 
         public static final class Cone {
-            public static final int groundPosition = 60000;
-            public static final int standingPosition = 75000;
-            public static final int lowPosition = 30000;
-            public static final int midPosition = 30000;
-            public static final int highPosition = 750000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 32620;
+            public static final int lowPosition = 2325;
+            public static final int midPosition = 6730;
+            public static final int highPosition = 13000;
+            public static final int feederPosition = 0;
         }
         
         public static final class Cube {
-            public static final int groundPosition = 60000;
-            public static final int lowPosition = 30000;
-            public static final int midPosition = 30000;
-            public static final int highPosition = 500000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 21500;
+            public static final int lowPosition = 0;
+            public static final int midPosition = 9200;
+            public static final int highPosition = 2580;
+            public static final int feederPosition = 37440;
         }
     }
 
@@ -67,20 +82,19 @@ public final class Constants {
         public static final int stowPosition = 0;
 
         public static final class Cone {
-            public static final int groundPosition = 60000;
-            public static final int standingPosition = 80000;
-            public static final int lowPosition = 10000;
-            public static final int midPosition = 20000;
-            public static final int highPosition = 750000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 5400;
+            public static final int lowPosition = 0;
+            public static final int midPosition = 13225;
+            public static final int highPosition = 26525;
+            public static final int feederPosition = 20350;
         }
         
         public static final class Cube {
-            public static final int groundPosition = 60000;
-            public static final int lowPosition = 10000;
-            public static final int midPosition = 20000;
-            public static final int highPosition = 500000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 5400;
+            public static final int lowPosition = 0;
+            public static final int midPosition = 1665;
+            public static final int highPosition = 26470;
+            public static final int feederPosition = 18120;
         }
     }
 
@@ -100,21 +114,20 @@ public final class Constants {
 
         public static final class Cone {
 
-            public static final int groundPosition = 60000;
-            public static final int standingposition = 80000;
-            public static final int lowPosition = 10000;
-            public static final int midPosition = 80000;
-            public static final int highPosition = 750000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 790;
+            public static final int lowPosition = 21300;
+            public static final int midPosition = 83290;
+            public static final int highPosition = 86800;
+            public static final int feederPosition = 71150;
 
         }
         
         public static final class Cube {
-            public static final int groundPosition = 60000;
-            public static final int lowPosition = 10000;
-            public static final int midPosition = 80000;
-            public static final int highPosition = 500000;
-            public static final int feederPosition = 500000;
+            public static final int groundPosition = 2275;
+            public static final int lowPosition = 0;
+            public static final int midPosition = 20630;
+            public static final int highPosition = 22000;
+            public static final int feederPosition = 39050;
         }
     }
 
@@ -140,13 +153,13 @@ public final class Constants {
 
 
 
-       // public static final int lowPickup = XboxController.Button.kLeftBumper.value;
-        // public static final int midPckup = XboxController.Button.kRightBumper.value;
+        public static final int lowPickup = XboxController.Button.kLeftBumper.value;
+        public static final int midPckup = XboxController.Button.kRightBumper.value;
 
         public static final int lowPos = XboxController.Button.kA.value;
         public static final int midPos = XboxController.Button.kB.value;
-        //public static final int highPos = XboxController.Button.kY.value;
-        //public static final int feedPos = XboxController.Button.kX.value;
+        public static final int highPos = XboxController.Button.kY.value;
+        public static final int feedPos = XboxController.Button.kX.value;
 
         public static final int stow = XboxController.Button.kStart.value;
 
@@ -226,7 +239,7 @@ public final class Constants {
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
-        public static final NeutralMode driveNeutralMode = NeutralMode.Coast;
+        public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Module Specific Constants */
 

@@ -45,6 +45,12 @@ public class Wrist extends SubsystemBase{
         m_Wrist.setNeutralMode(NeutralMode.Brake);
     }
 
+    public void setCurrentPosition(){
+        double currentPosition = getPosition();
+
+        currentPosition = desiredPosition;
+    }
+
     public void setPosition(double pos){
         m_Wrist.setSelectedSensorPosition(pos);
     }

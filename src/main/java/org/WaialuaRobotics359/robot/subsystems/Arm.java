@@ -62,6 +62,12 @@ public class Arm extends SubsystemBase{
         m_lArm.setSelectedSensorPosition(pos);
     }
 
+    public void setCurrentPosition(){
+        double currentPosition = getPosition();
+
+        currentPosition = desiredPosition;
+    }
+
     public void setDesiredPosition (int position) {
         desiredPosition = position;
     }

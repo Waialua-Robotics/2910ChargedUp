@@ -72,6 +72,12 @@ public class Pivot extends SubsystemBase{
         return Math.abs(getPosition() - desiredPosition) < 300;
     }
 
+    public void setCurrentPosition(){
+        double currentPosition = getPosition();
+
+        currentPosition = desiredPosition;
+    }
+
     public void setCoast(){
         m_FlPivot.setNeutralMode(NeutralMode.Coast);
         m_FrPivot.setNeutralMode(NeutralMode.Coast);
