@@ -1,5 +1,8 @@
 package org.WaialuaRobotics359.robot.subsystems;
+import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.ColorFlowAnimation;
@@ -20,32 +23,38 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import java.awt.Color;
+
 public class Leds extends SubsystemBase{
     
     private CANdle LED;
     private int animationSlot;
 
     //Const
-    private static final boolean partyMode = false;
+    private static final boolean paradeMode = false;
     private static final int length = 68;
 
-    // States in America
-    public boolean isCube;
-    public boolean hpDoubleSubstation = false;
-    public boolean hpThrowGamePiece = false;
-    public boolean intakeReady = false;
-    public boolean autoScore = false;
+    // States
+    //disabled
+    public boolean lowBatteryAlert = false;
+    public boolean bothControllers = false; //conected
+    private Alliance alliance = Alliance.Invalid; //conected
+    //teleop
+    public boolean isCube; //conected
+    public boolean actionReady = false; //conected
+    public boolean autoScore = false; 
     public boolean distraction = false;
-    public boolean fallen = false;
-    public boolean endgameAlert = false;
+    public boolean endgameAlert = false; //conected
+    public boolean hasPiece = false; //coneccted
+
+    //auto Maybe?
     public boolean autoFinished = false;
     public double autoFinishedTime = 0.0;
-    public boolean lowBatteryAlert = false;
-
-    private Alliance alliance = Alliance.Invalid;
     private boolean lastEnabledAuto = false;
-    private double lastEnabledTime = 0.0;
-    private boolean estopped = false;
+    private double lastEnabledTime = 0.0;   
+
+    //Both
+    private boolean estopped = false; //conected
     
 
 
@@ -53,23 +62,34 @@ public class Leds extends SubsystemBase{
         LED = new CANdle(8);
     }
 
-    public void redFront(){
-        setColor(0, 0, 0, Section.All);
-    }
-
     public void allOff(){
-        setColor(0, 0, 0, Section.All);
+        solid(0, 0, 0, Section.All);
     }
 
-    public void setColor(int R, int G, int B, Section section){
-        clearAnimation();
+  
+    public void solid(Color color, Section section){
+        solid(color.getRed(), color.getGreen(), color.getBlue(), section);
+    }
 
-        LED.setLEDs(R, G, B, 0, section.startOne(), section.lengthOne());
-        LED.setLEDs(R, G, B, 0, section.startTwo(), section.lengthOne());
+    public void solid(int R, int G, int B, Section section){
+        LED.setLEDs(R, G, B, 0, section.startOne(), section.length());
+        LED.setLEDs(R, G, B, 0, section.startTwo(), section.length());
+    }
+
+    public void hasPiece(){
+        hasPiece = true;
+    }
+
+    public void noPiece(){
+        hasPiece = false;
     }
 
 
     public void periodic() {
+
+        //sync states
+        isCube = RobotContainer.isCube;
+
         // Update alliance color
         if (DriverStation.isFMSAttached()) {
             alliance = DriverStation.getAlliance();
@@ -86,6 +106,20 @@ public class Leds extends SubsystemBase{
         // Update estop state
         if (DriverStation.isEStopped()) {
             estopped = true;
+        }
+
+        //update controller state
+        if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)){
+            bothControllers = true;
+        }else{
+            bothControllers = false;
+        }
+
+        //endgame alert
+        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 20, 30))){
+            endgameAlert = true;
+        }else{
+            endgameAlert = false;
         }
         
         /*
@@ -245,87 +279,6 @@ public class Leds extends SubsystemBase{
     /*End Periodic */
 
 
-
-
-
-
-    public void setAnimation(Animation animation){
-        LED.animate(animation, animationSlot);
-    }
-
-    public void yellow(){
-        LED.setLEDs(200, 90, 0);
-    }
-
-    public void purple(){
-        LED.setLEDs(205, 0, 185, 150, 0, 98);
-    }
-
-    public void blue(){
-        LED.setLEDs(0, 0, 255);
-    }
-
-    public void red(){
-        LED.setLEDs(255, 0, 0);
-    }
-
-    public void green(){
-        LED.setLEDs(0, 255, 0);
-    }
-
-    public void white(){
-        LED.setLEDs(255, 250, 255);
-    }
-
-    public void rainbowAnimation(double speed){
-        setAnimation(new RainbowAnimation(1, speed, 68, true, 0));
-    }
-
-    public void warningAnimation(double speed){
-        setAnimation(new StrobeAnimation(255, 50, 0, 255, speed, 68));
-    }
-
-    public void yellowBlinkAnimation(double speed){
-        setAnimation(new StrobeAnimation(200, 90, 0, 255, speed, 98));
-    }
-
-    public void purpleBlinkAnimation(double speed){
-        setAnimation(new StrobeAnimation(205, 0, 185, 255, speed, 98));
-    }
-
-    public void zoomAnimation(double speed){
-        setAnimation(new LarsonAnimation(0, 0, 255, 255, speed, 68, BounceMode.Front, 3));
-    }
-
-    public void flowAnimation(double speed){
-        setAnimation(new ColorFlowAnimation(255, 0, 0, 255, speed, 68, Direction.Forward));
-    }
-
-    public void fadeAnimation(double speed){
-        setAnimation(new RgbFadeAnimation(1, speed, 68, 0));
-    }
-
-    public void fireAnimation(double speed){
-        setAnimation(new FireAnimation(1, speed, 68, .5, .8, false, 0));
-    }
-    public void twinkAnimation(double speed){
-        setAnimation(new TwinkleAnimation(255, 0, 0, 255, speed, 68, TwinklePercent.Percent64 , 0));
-    }
-    public void twinkOffAnimation(double speed){
-        setAnimation(new TwinkleOffAnimation(255, 0, 0, 255, speed, 68, TwinkleOffPercent.Percent42 , 0));
-    }
-
-    public void clearAnimationYellow(){
-        LED.clearAnimation(animationSlot);
-        LED.setLEDs(200, 90, 0, 255, 0, 68);
-    }
-
-    public void clearAnimationPurple(){
-        LED.clearAnimation(animationSlot);
-        LED.setLEDs(205, 0, 185, 150, 0, 68);
-    }
-    
-
     public void clearAnimation(){
         LED.clearAnimation(animationSlot);
     }
@@ -377,7 +330,7 @@ public class Leds extends SubsystemBase{
             }
         }
 
-        private int lengthOne(){
+        private int length(){
             switch(this){
                 case OnBoard:
                     return 8;

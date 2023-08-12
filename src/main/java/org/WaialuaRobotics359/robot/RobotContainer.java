@@ -201,12 +201,9 @@ public class RobotContainer {
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
         /* Operator Buttons */
-            setCube.onTrue(
-                new ParallelCommandGroup( new InstantCommand(() -> isCube = true),
-                new InstantCommand(() -> s_Leds.clearAnimationPurple())));
-            setCone.onTrue(
-                new ParallelCommandGroup( new InstantCommand(() -> isCube = false),
-                new InstantCommand(() -> s_Leds.clearAnimationYellow())));
+            setCube.onTrue(new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
+            setCone.onTrue(new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
+
 
             kill.whileTrue(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = false)));
@@ -258,9 +255,6 @@ public class RobotContainer {
         eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
         eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
 
-        eventMap.put("LedYellow", new InstantCommand(()-> s_Leds.yellow()));
-        eventMap.put("LedPurple", new InstantCommand(()-> s_Leds.purple()));
-        eventMap.put("LedClear", new InstantCommand(()-> s_Leds.clearAnimation()));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));

@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 
@@ -73,12 +74,14 @@ public class PickupPosition extends CommandBase{
                 }
                 
                 if(Timer.hasElapsed(.6)){
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     s_Intake.intake();
                 }
 
                 if(s_Intake.current() > 25){
                     s_Intake.intakeIdle();
-                    s_Leds.purpleBlinkAnimation(.4);
+                    s_Leds.hasPiece();
+                    new InstantCommand(()-> s_Leds.actionReady = false);
                     finished = true;
                 }
 
@@ -98,12 +101,14 @@ public class PickupPosition extends CommandBase{
                 }
                 
                 if(Timer.hasElapsed(.6)){
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     s_Intake.intake();
                 }
 
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.intakeIdle();
-                    s_Leds.yellowBlinkAnimation(.4);
+                    s_Leds.hasPiece();
+                    new InstantCommand(()-> s_Leds.actionReady = false);
                     finished = true;
 
                 }

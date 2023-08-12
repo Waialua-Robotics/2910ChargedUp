@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 public class FeederPosition extends CommandBase {
@@ -78,7 +79,7 @@ public class FeederPosition extends CommandBase {
 
                 if(s_Intake.current() > 25){
                     s_Intake.intakeIdle();
-                    s_Leds.purpleBlinkAnimation(.4);
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
 
                 }
@@ -104,7 +105,7 @@ public class FeederPosition extends CommandBase {
 
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.intakeIdle();
-                    s_Leds.yellowBlinkAnimation(.4);
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
 
                 }

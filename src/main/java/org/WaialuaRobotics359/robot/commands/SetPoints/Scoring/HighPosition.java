@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 public class HighPosition extends CommandBase {
@@ -70,7 +71,7 @@ public class HighPosition extends CommandBase {
                 }
 
                 if(Timer.hasElapsed(5.7)){
-                    s_Leds.purpleBlinkAnimation(.4);
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
                 }
 
@@ -90,7 +91,7 @@ public class HighPosition extends CommandBase {
                 }
 
                 if(Timer.hasElapsed(5.7)){
-                    s_Leds.yellowBlinkAnimation(.4);
+                    new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
                 }
             }

@@ -101,7 +101,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public double feedForwardValue(){
-        double maxGravity = .05;
+        double maxGravity = .05; //percent to hold arm up
         double degrees = getPosition() / Constants.Pivot.kTicksPerDegree;
         double radiants = java.lang.Math.toRadians(degrees);
         double cosineSclaar = java.lang.Math.cos(radiants);

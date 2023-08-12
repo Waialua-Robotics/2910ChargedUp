@@ -61,10 +61,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    //m_robotContainer.getLeds().flowAnimation(.1);
-    m_robotContainer.getLeds().redFront();
-
-    //SmartDashboard.putString("auto", m_autonomousCommand.getName());
 
     m_robotContainer.getArm().setCurrentPosition();
     m_robotContainer.getPivot().setCurrentPosition();
@@ -140,8 +136,6 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-     m_robotContainer.getLeds().clearAnimation();
-     m_robotContainer.getLeds().purple();
     
   }
 

@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Score extends CommandBase{
@@ -114,7 +115,8 @@ public class Score extends CommandBase{
                         s_Pivot.setDesiredPosition(PivotPosition);
                         s_Pivot.goToPosition();
                         s_Leds.clearAnimation();
-                        s_Leds.purple();
+                        s_Leds.noPiece();
+                        new InstantCommand(()-> s_Leds.actionReady = true);
                         finished = true;
                     }
                 
@@ -139,7 +141,8 @@ public class Score extends CommandBase{
                         s_Pivot.setDesiredPosition(PivotPosition);
                         s_Pivot.goToPosition();
                         s_Leds.clearAnimation();
-                        s_Leds.yellow();
+                        s_Leds.noPiece();
+                        new InstantCommand(()-> s_Leds.actionReady = true);
                         finished = true;                        
                     }
                 }   
