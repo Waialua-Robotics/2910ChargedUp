@@ -57,7 +57,6 @@ public class Leds extends SubsystemBase{
     private boolean estopped = false; //conected
     
 
-
     public Leds(){
         LED = new CANdle(8);
     }
@@ -121,6 +120,32 @@ public class Leds extends SubsystemBase{
         }else{
             endgameAlert = false;
         }
+
+        /* Set Leds */
+        if (estopped) {
+            solid(Color.RED, Section.All);
+        } else {
+            if (DriverStation.isDisabled()) {
+                if (!bothControllers) {
+                    solid(Color.BLUE, Section.Right);
+                    solid(Color.RED, Section.Left);
+                } else if (alliance == DriverStation.Alliance.Red) {
+                    solid(Color.RED, Section.OffBoard);
+                } else if (alliance == DriverStation.Alliance.Blue) {
+                    solid(Color.BLUE, Section.OffBoard);
+                }
+            } else {
+                if (isCube) {
+                    solid(Color.MAGENTA, Section.OffBoard);
+                } else {
+                    solid(Color.YELLOW, Section.OffBoard);
+                }
+            }
+        }
+    }
+
+        /*End Periodic */
+
         
         /*
          * 
@@ -274,9 +299,6 @@ public class Leds extends SubsystemBase{
          * // Update LEDs
          * leds.setData(buffer);
          */
-    } 
-
-    /*End Periodic */
 
 
     public void clearAnimation(){
@@ -286,6 +308,7 @@ public class Leds extends SubsystemBase{
     /*Sections*/
     enum Section {
         OnBoard,
+        OffBoard,
         Front,
         Back,
         Left,
@@ -296,6 +319,8 @@ public class Leds extends SubsystemBase{
             switch(this){
                 case OnBoard:
                     return 0;
+                case OffBoard:
+                    return 8;
                 case Front:
                     return 8;
                 case Back:
@@ -315,6 +340,8 @@ public class Leds extends SubsystemBase{
             switch(this){
                 case OnBoard:
                     return 0;
+                case OffBoard:
+                    return 8;
                 case Front:
                     return 50;
                 case Back:
@@ -334,6 +361,8 @@ public class Leds extends SubsystemBase{
             switch(this){
                 case OnBoard:
                     return 8;
+                case OffBoard:
+                    return 60;
                 case Front:
                     return 18;
                 case Back:
