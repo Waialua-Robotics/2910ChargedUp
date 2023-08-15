@@ -64,8 +64,12 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.config_kF(0, 0);
     }
 
-    public int scoreRetract(){
+    public int backScoreRetract(){
         return desiredPosition - 10000;
+    }
+
+    public int frontScoreRetract(){
+        return desiredPosition + 10000;
     }
 
     public boolean isRetracted(){

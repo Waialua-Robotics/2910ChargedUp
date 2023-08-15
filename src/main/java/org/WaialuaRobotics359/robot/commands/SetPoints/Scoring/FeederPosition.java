@@ -45,7 +45,7 @@ public class FeederPosition extends CommandBase {
             PivotPosition = Constants.Pivot.Cube.feederPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.feederPosition;
-            WristPosition = Constants.Arm.Cone.feederPosition;
+            WristPosition = Constants.Wrist.Cone.feederPosition;
             PivotPosition = Constants.Pivot.Cone.feederPosition;
         }
 

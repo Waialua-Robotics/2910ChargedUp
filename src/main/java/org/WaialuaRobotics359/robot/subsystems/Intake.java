@@ -1,5 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -22,8 +24,13 @@ public class Intake extends SubsystemBase{
         m_Intake.configMotionCruiseVelocity(15000);
         m_Intake.configMotionAcceleration(30000);
         m_Intake.configMotionSCurveStrength(6);
-        m_Intake.configPeakOutputForward(.2);
-        m_Intake.configPeakOutputReverse(-.2);
+        m_Intake.configPeakOutputForward(.5);
+        m_Intake.configPeakOutputReverse(-.5);
+
+        m_Intake.config_kP(0, .25);
+        m_Intake.config_kI(0, 0);
+        m_Intake.config_kD(0, 0);
+        m_Intake.config_kF(0, 0);
     }
 
     public void setDesiredPosition (int position) {
@@ -35,7 +42,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void intakeIdle(){
-        m_Intake.set(ControlMode.Velocity, 0.001);
+        m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 205 : -205);
     }
 
     public void getPercentOutput(){
@@ -47,11 +54,11 @@ public class Intake extends SubsystemBase{
     }
 
     public void intake(){
-        m_Intake.set(ControlMode.PercentOutput, 1);
+        m_Intake.set(ControlMode.PercentOutput, RobotContainer.isCube ? 1 : -1);
     }
 
     public void outake(){
-        m_Intake.set(ControlMode.PercentOutput, -100);
+        m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -1 : 1);
     }
 
     public void getCurrent(){
@@ -70,5 +77,10 @@ public class Intake extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("iPercentOutput", m_Intake.getMotorOutputPercent());
+        SmartDashboard.putNumber("Ivelocity", m_Intake.getSelectedSensorVelocity());
+        SmartDashboard.putBoolean("Mode", RobotContainer.isCube);
+        SmartDashboard.putBoolean("KillSwitch", RobotContainer.allowScore);
+
+
     }
 }

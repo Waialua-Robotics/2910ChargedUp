@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 public class LowPosition extends CommandBase{
@@ -37,8 +38,8 @@ public class LowPosition extends CommandBase{
             WristPosition = Constants.Wrist.Cube.lowPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.lowPosition;
-            PivotPosition = Constants.Arm.Cone.lowPosition;
-            WristPosition = Constants.Arm.Cone.lowPosition;
+            PivotPosition = Constants.Pivot.Cone.lowPosition;
+            WristPosition = Constants.Wrist.Cone.lowPosition;
         }
 
         Timer.reset();
@@ -51,58 +52,47 @@ public class LowPosition extends CommandBase{
     @Override
     public void execute(){
 
-                   s_Pivot.setDesiredPosition(PivotPosition);
-                   s_Pivot.goToPosition();
-//
-                   // if(s_Pivot.getPosition() > Constants.Pivot.lowStart){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                       s_Wrist.setDesiredPosition(WristPosition);
-                       s_Wrist.goToPosition();
-                  // }
+        if(RobotContainer.isCube){
 
-           /*  if(RobotContainer.isCube){
+            s_Pivot.setDesiredPosition(PivotPosition);
+            s_Pivot.goToPosition();
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-
-                if(Timer.hasElapsed(.2)){
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                }
-
-                if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(WristPosition);
-                    s_Wrist.goToPosition();
-                }  
-
-                if(Timer.hasElapsed(1.3)){
-                    s_Leds.purpleBlinkAnimation(.4);
-                    finished = true;
-                }
-        
-            } else {
-
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-
-                if(Timer.hasElapsed(.2)){
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                }
-
-                if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(WristPosition);
-                    s_Wrist.goToPosition();
-                }
-
-                if(Timer.hasElapsed(1.3)){
-                    s_Leds.yellowBlinkAnimation(.4);
-                    finished = true;
-                }
-            }
-            */
+        if(Timer.hasElapsed(.2)){
+            s_Arm.setDesiredPosition(ArmPosition);
+            s_Arm.goToPosition();
         }
+
+        if(Timer.hasElapsed(.4)){
+            s_Wrist.setDesiredPosition(WristPosition);
+            s_Wrist.goToPosition();
+        }
+
+        if(Timer.hasElapsed(5.7)){
+            new InstantCommand(()-> s_Leds.actionReady = true);
+            finished = true;
+        }
+
+    } else {
+
+            s_Pivot.setDesiredPosition(PivotPosition);
+            s_Pivot.goToPosition();
+
+        if(Timer.hasElapsed(.2)){
+            s_Arm.setDesiredPosition(ArmPosition);
+            s_Arm.goToPosition();
+        }
+
+        if(Timer.hasElapsed(.4)){
+            s_Wrist.setDesiredPosition(WristPosition);
+            s_Wrist.goToPosition();
+        }
+
+        if(Timer.hasElapsed(5.7)){
+            new InstantCommand(()-> s_Leds.actionReady = true);
+            finished = true;
+        }
+    }
+}
 
     
     

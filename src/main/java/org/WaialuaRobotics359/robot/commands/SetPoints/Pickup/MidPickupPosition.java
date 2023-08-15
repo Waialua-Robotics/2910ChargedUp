@@ -77,7 +77,7 @@ public class MidPickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 25){
+                if(s_Intake.current() > 50){
                     s_Intake.intakeIdle();
                     s_Leds.hasPiece();
                     new InstantCommand(()-> s_Leds.actionReady = false);
@@ -112,6 +112,8 @@ public class MidPickupPosition extends CommandBase{
                 }
             }
         }
+
+        
 
     
     

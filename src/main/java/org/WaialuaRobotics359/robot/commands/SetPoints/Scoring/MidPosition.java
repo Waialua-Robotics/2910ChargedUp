@@ -42,8 +42,8 @@ public class MidPosition extends CommandBase {
             WristPosition = Constants.Wrist.Cube.midPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.midPosition;
-            PivotPosition = Constants.Arm.Cone.midPosition;
-            WristPosition = Constants.Arm.Cone.midPosition;
+            PivotPosition = Constants.Pivot.Cone.midPosition;
+            WristPosition = Constants.Wrist.Cone.midPosition;
         }
         Timer.reset();
         Timer.start();

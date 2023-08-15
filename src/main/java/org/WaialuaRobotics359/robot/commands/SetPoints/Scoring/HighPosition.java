@@ -39,8 +39,8 @@ public class HighPosition extends CommandBase {
             WristPosition = Constants.Wrist.Cube.highPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.highPosition;
-            PivotPosition = Constants.Arm.Cone.highPosition;
-            WristPosition = Constants.Arm.Cone.highPosition;
+            PivotPosition = Constants.Pivot.Cone.highPosition;
+            WristPosition = Constants.Wrist.Cone.highPosition;
         }
         
         Timer.reset();

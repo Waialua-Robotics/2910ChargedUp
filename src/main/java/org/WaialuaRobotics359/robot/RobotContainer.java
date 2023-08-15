@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -201,8 +202,10 @@ public class RobotContainer {
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
         /* Operator Buttons */
-            setCube.onTrue(new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
-            setCone.onTrue(new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
+        setCone.whileTrue(
+            new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
+        setCube.onFalse(
+            new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
 
 
             kill.whileTrue(
@@ -251,9 +254,9 @@ public class RobotContainer {
     public void configAuto() {
 
         /* Populate Event Map */
-        HashMap<String, Command> eventMap = new HashMap<String, Command>();
-        eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
-        eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
+       HashMap<String, Command> eventMap = new HashMap<String, Command>();
+       //eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
+       //eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
 
 
         /*Wait Times */

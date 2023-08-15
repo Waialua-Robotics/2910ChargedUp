@@ -67,9 +67,9 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 21500;
-            public static final int lowPosition = 0;
-            public static final int midPosition = 9200;
-            public static final int highPosition = 2580;
+            public static final int lowPosition = 155;
+            public static final int midPosition = 5110;
+            public static final int highPosition = 6880;
             public static final int feederPosition = 37440;
         }
     }
@@ -92,8 +92,9 @@ public final class Constants {
         public static final class Cube {
             public static final int groundPosition = 5400;
             public static final int lowPosition = 0;
-            public static final int midPosition = 1665;
-            public static final int highPosition = 26470;
+            public static final int midPosition = 2790;
+            public static final int highPosition = 25020
+            ;
             public static final int feederPosition = 18120;
         }
     }
@@ -107,7 +108,7 @@ public final class Constants {
         public static final int Br_PivotID = 8;
         public static final int lowStart = 10000;
         
-        public static final int stowPosition = 1500;
+        public static final int stowPosition = 0;
 
         public static final double kTicksPerDegree = 636.4;
 
@@ -124,9 +125,9 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 2275;
-            public static final int lowPosition = 0;
-            public static final int midPosition = 20630;
-            public static final int highPosition = 22000;
+            public static final int lowPosition = 62200;
+            public static final int midPosition = 85630;
+            public static final int highPosition = 88410;
             public static final int feederPosition = 39050;
         }
     }

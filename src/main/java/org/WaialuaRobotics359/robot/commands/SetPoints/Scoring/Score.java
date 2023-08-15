@@ -54,13 +54,13 @@ public class Score extends CommandBase{
 
                 if(RobotContainer.isCube){
 
-                        s_Pivot.setDesiredPosition(s_Pivot.scoreRetract());
-                        s_Pivot.goToPosition();
+                        //s_Pivot.setDesiredPosition(s_Pivot.frontScoreRetract());
+                        //s_Pivot.goToPosition();
 
-                    if(s_Pivot.isRetracted()){
+                    //if(s_Pivot.isRetracted()){
                         s_Arm.setDesiredPosition(ArmPosition);
                         s_Arm.goToPosition();
-                    }
+                    //}
                          
                     if(Timer.hasElapsed(.3)){
                         s_Wrist.setDesiredPosition(WristPosition);
@@ -73,13 +73,13 @@ public class Score extends CommandBase{
                         }
                     } else {
 
-                        s_Pivot.setDesiredPosition(s_Pivot.scoreRetract());
-                        s_Pivot.goToPosition();
+                        //s_Pivot.setDesiredPosition(s_Pivot.backScoreRetract());
+                        //s_Pivot.goToPosition();
 
-                    if(s_Pivot.isRetracted()){
+                    //if(s_Pivot.isRetracted()){
                         s_Arm.setDesiredPosition(ArmPosition);
                         s_Arm.goToPosition();
-                    }
+                    //}
                          
                     if(Timer.hasElapsed(.3)){
                         s_Wrist.setDesiredPosition(WristPosition);
@@ -98,16 +98,14 @@ public class Score extends CommandBase{
 
                     s_Intake.outake();
 
-                    s_Pivot.setDesiredPosition(s_Pivot.scoreRetract());
-                    s_Pivot.goToPosition();
+                   // s_Pivot.setDesiredPosition(s_Pivot.frontScoreRetract());
+                   // s_Pivot.goToPosition();
 
-                if(s_Pivot.isRetracted()){
-                    s_Intake.stop();
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
-                }
                      
                 if(Timer.hasElapsed(.3)){
+                    s_Intake.stop();
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                 }
@@ -124,18 +122,18 @@ public class Score extends CommandBase{
 
                         s_Intake.outake();
 
-                        s_Pivot.setDesiredPosition(s_Pivot.scoreRetract());
-                        s_Pivot.goToPosition();
+                        //s_Pivot.setDesiredPosition(s_Pivot.backScoreRetract());
+                        //s_Pivot.goToPosition();
 
-                    if(s_Pivot.isRetracted()){
-                        s_Intake.stop();
+                    //if(s_Pivot.isRetracted()){
                         s_Arm.setDesiredPosition(ArmPosition);
                         s_Arm.goToPosition();
-                    }
+                    //}
                          
                     if(Timer.hasElapsed(.3)){
                         s_Wrist.setDesiredPosition(WristPosition);
                         s_Wrist.goToPosition();
+                        s_Intake.stop();
                     }
                     if(Timer.hasElapsed(.6)){
                         s_Pivot.setDesiredPosition(PivotPosition);

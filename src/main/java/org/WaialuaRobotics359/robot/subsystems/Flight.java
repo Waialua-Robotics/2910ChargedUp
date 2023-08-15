@@ -9,7 +9,7 @@ public class Flight extends SubsystemBase {
     public Flight () {
         m_Flight = new TimeOfFlight(1);
 
-        m_Flight.setRangingMode(RangingMode.Long, 200); //time 24 -1000 msec
+        m_Flight.setRangingMode(RangingMode.Short, 200); //time 24 -1000 msec
     }
 
     public double getSensorRange(){

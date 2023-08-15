@@ -45,8 +45,8 @@ public class PickupPosition extends CommandBase{
             WristPosition = Constants.Wrist.Cube.groundPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.groundPosition;
-            PivotPosition = Constants.Arm.Cone.groundPosition;
-            WristPosition = Constants.Arm.Cone.groundPosition;
+            PivotPosition = Constants.Pivot.Cone.groundPosition;
+            WristPosition = Constants.Wrist.Cone.groundPosition;
         }
 
         Timer.reset();
@@ -86,7 +86,6 @@ public class PickupPosition extends CommandBase{
                 }
 
             } else {
-
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
     
