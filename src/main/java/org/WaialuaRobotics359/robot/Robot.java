@@ -4,6 +4,7 @@
 
 package org.WaialuaRobotics359.robot;
 
+import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
 import com.pathplanner.lib.server.PathPlannerServer;
@@ -12,6 +13,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -57,7 +59,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.getLeds().allOff();
+  }
 
   @Override
   public void disabledPeriodic() {
@@ -101,6 +105,8 @@ public class Robot extends TimedRobot {
     } else {
       m_robotContainer.zeroMode = true;
     }
+
+    m_robotContainer.getLeds().DisabledLed(!m_robotContainer.zero.get(),m_robotContainer.brakeMode );
 
   }
 

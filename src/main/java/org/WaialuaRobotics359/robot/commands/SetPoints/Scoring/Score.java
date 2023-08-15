@@ -112,7 +112,6 @@ public class Score extends CommandBase{
                 if(Timer.hasElapsed(.6)){
                         s_Pivot.setDesiredPosition(PivotPosition);
                         s_Pivot.goToPosition();
-                        s_Leds.clearAnimation();
                         s_Leds.noPiece();
                         new InstantCommand(()-> s_Leds.actionReady = true);
                         finished = true;
@@ -138,7 +137,6 @@ public class Score extends CommandBase{
                     if(Timer.hasElapsed(.6)){
                         s_Pivot.setDesiredPosition(PivotPosition);
                         s_Pivot.goToPosition();
-                        s_Leds.clearAnimation();
                         s_Leds.noPiece();
                         new InstantCommand(()-> s_Leds.actionReady = true);
                         finished = true;                        

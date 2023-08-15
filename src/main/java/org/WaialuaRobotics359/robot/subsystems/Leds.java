@@ -65,14 +65,29 @@ public class Leds extends SubsystemBase{
         solid(0, 0, 0, Section.All);
     }
 
-  
-    public void solid(Color color, Section section){
+    public void clearAnimation(int animationSlot){
+        LED.clearAnimation(animationSlot);
+    }
+    
+    /*LED Options */
+    private void solid(Color color, Section section){
         solid(color.getRed(), color.getGreen(), color.getBlue(), section);
     }
 
-    public void solid(int R, int G, int B, Section section){
+    private void solid(int R, int G, int B, Section section){
+        clearAnimation(section.animationSlot());
         LED.setLEDs(R, G, B, 0, section.startOne(), section.length());
         LED.setLEDs(R, G, B, 0, section.startTwo(), section.length());
+    }
+
+    private void strobe(Color color ,Section section,  double duration) {
+        boolean on = ((Timer.getFPGATimestamp() % duration) / duration) > 0.5;
+        solid( on ? color : color.black, section);
+    }
+
+    private void rainbow(Section section,double speed){
+        LED.animate(new RainbowAnimation(1, speed, section.length(), false, section.startOne()), section.animationSlot());
+        LED.animate(new RainbowAnimation(1, speed, section.length(), false, section.startTwo()), section.animationSlot());
     }
 
     public void hasPiece(){
@@ -83,7 +98,42 @@ public class Leds extends SubsystemBase{
         hasPiece = false;
     }
 
-    @Override
+    public void DisabledLed(boolean zeroButton, boolean inBrake){
+
+        // update controller state
+        if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)) {
+            bothControllers = true;
+        } else {
+            bothControllers = false;
+        }
+
+        // Update alliance color
+        alliance = DriverStation.getAlliance();
+
+        /*Button Leds */
+        if(zeroButton){
+            rainbow(Section.OnBoard, 1);
+            //solid(Color.GREEN, Section.OnBoard);
+        }else{
+            if(!inBrake){
+                solid(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED, Section.OnBoard);
+            }else{
+                strobe(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED , Section.OnBoard, 1);
+            }
+        }
+
+
+        if (!bothControllers) {
+            solid(Color.BLUE, Section.Right);
+            solid(Color.RED, Section.Left);
+        } else if (alliance == DriverStation.Alliance.Red) {
+            solid(Color.RED, Section.OffBoard);
+        } else if (alliance == DriverStation.Alliance.Blue) {
+            rainbow(Section.OffBoard, 1);
+            //solid(Color.BLUE, Section.OffBoard);
+        }
+    }
+
     public void periodic() {
 
         //sync states
@@ -107,13 +157,6 @@ public class Leds extends SubsystemBase{
             estopped = true;
         }
 
-        //update controller state
-        if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)){
-            bothControllers = true;
-        }else{
-            bothControllers = false;
-        }
-
         //endgame alert
         if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 20, 30))){
             endgameAlert = true;
@@ -124,31 +167,19 @@ public class Leds extends SubsystemBase{
         /* Set Leds */
         if (estopped) {
             solid(Color.RED, Section.All);
-        } else {
-            if (DriverStation.isDisabled()) {
-                if (!bothControllers) {
-                    solid(Color.BLUE, Section.Right);
-                    solid(Color.RED, Section.Left);
-                } else if (alliance == DriverStation.Alliance.Red) {
-                    solid(Color.RED, Section.OffBoard);
-                } else if (alliance == DriverStation.Alliance.Blue) {
-                    solid(Color.BLUE, Section.OffBoard);
-                }
+        } else if (endgameAlert) {
+            rainbow(Section.OffBoard, 1);
+        } else if (DriverStation.isEnabled()) {
+            if (isCube) {
+                solid(Color.MAGENTA, Section.OffBoard);
             } else {
-                if (isCube) {
-                    solid(Color.MAGENTA, Section.OffBoard);
-                } else {
-                    solid(Color.YELLOW, Section.OffBoard);
-                }
+                solid(Color.ORANGE, Section.OffBoard);
             }
         }
     }
 
         /*End Periodic */
 
-    public void clearAnimation(){
-        LED.clearAnimation(animationSlot);
-    }
 
     /*Sections*/
     enum Section {
@@ -218,6 +249,25 @@ public class Leds extends SubsystemBase{
                     return 30;
                 case All:
                     return 68;
+                default:
+                    return 0;
+            }
+        }
+
+        private int animationSlot(){
+            switch(this){
+                case OnBoard:
+                    return 0;
+                case OffBoard:
+                    return 1;
+                case Front:
+                    return 1;
+                case Back:
+                    return 1;
+                case Left:
+                    return 1;
+                case Right:
+                    return 1;
                 default:
                     return 0;
             }
