@@ -83,7 +83,7 @@ public class Leds extends SubsystemBase{
         hasPiece = false;
     }
 
-
+    @Override
     public void periodic() {
 
         //sync states
@@ -146,161 +146,6 @@ public class Leds extends SubsystemBase{
 
         /*End Periodic */
 
-        
-        /*
-         * 
-         * // Select LED mode
-         * solid(Section.FULL, Color.kBlack); // Default to off
-         * if (estopped) {
-         * solid(Section.FULL, Color.kRed);
-         * } else if (DriverStation.isDisabled()) {
-         * if (lastEnabledAuto && Timer.getFPGATimestamp() - lastEnabledTime <
-         * autoFadeMaxTime) {
-         * // Auto fade
-         * solid(1.0 - ((Timer.getFPGATimestamp() - lastEnabledTime) / autoFadeTime),
-         * Color.kGreen);
-         * 
-         * } else if (lowBatteryAlert) {
-         * // Low battery
-         * solid(Section.FULL, Color.kOrangeRed);
-         * 
-         * } else if (prideLeds) {
-         * // Pride stripes
-         * stripes(
-         * Section.FULL,
-         * List.of(
-         * Color.kBlack,
-         * Color.kRed,
-         * Color.kOrangeRed,
-         * Color.kYellow,
-         * Color.kGreen,
-         * Color.kBlue,
-         * Color.kPurple,
-         * Color.kBlack,
-         * new Color(0.15, 0.3, 1.0),
-         * Color.kDeepPink,
-         * Color.kWhite,
-         * Color.kDeepPink,
-         * new Color(0.15, 0.3, 1.0)),
-         * 3,
-         * 5.0);
-         * switch (alliance) {
-         * case Red:
-         * solid(Section.STATIC_LOW, Color.kRed);
-         * buffer.setLED(staticSectionLength, Color.kBlack);
-         * break;
-         * case Blue:
-         * solid(Section.STATIC_LOW, Color.kBlue);
-         * buffer.setLED(staticSectionLength, Color.kBlack);
-         * break;
-         * default:
-         * break;
-         * }
-         * 
-         * } else {
-         * // Default pattern
-         * switch (alliance) {
-         * case Red:
-         * wave(
-         * Section.FULL,
-         * Color.kRed,
-         * Color.kBlack,
-         * waveAllianceCycleLength,
-         * waveAllianceDuration);
-         * break;
-         * case Blue:
-         * wave(
-         * Section.FULL,
-         * Color.kBlue,
-         * Color.kBlack,
-         * waveAllianceCycleLength,
-         * waveAllianceDuration);
-         * break;
-         * default:
-         * wave(Section.FULL, Color.kGold, Color.kDarkBlue, waveSlowCycleLength,
-         * waveSlowDuration);
-         * break;
-         * }
-         * }
-         * } else if (fallen) {
-         * strobe(Section.FULL, Color.kWhite, strobeFastDuration);
-         * } else if (DriverStation.isAutonomous()) {
-         * wave(Section.FULL, Color.kGold, Color.kDarkBlue, waveFastCycleLength,
-         * waveFastDuration);
-         * if (autoFinished) {
-         * double fullTime = (double) length / waveFastCycleLength * waveFastDuration;
-         * solid((Timer.getFPGATimestamp() - autoFinishedTime) / fullTime,
-         * Color.kGreen);
-         * }
-         * } else {
-         * // Demo mode background
-         * if (demoMode) {
-         * wave(Section.FULL, Color.kGold, Color.kDarkBlue, waveSlowCycleLength,
-         * waveSlowDuration);
-         * }
-         * 
-         * // Set HP indicator
-         * Color hpColor = null;
-         * switch (hpGamePiece) {
-         * case NONE:
-         * hpColor = null;
-         * break;
-         * case CUBE:
-         * hpColor = Color.kPurple;
-         * break;
-         * case CONE:
-         * if (hpConeTipped) {
-         * hpColor = Color.kRed;
-         * } else {
-         * hpColor = Color.kGold;
-         * }
-         * break;
-         * }
-         * if (hpDoubleSubstation) {
-         * solid(Section.STATIC_LOW, hpColor);
-         * solid(Section.STATIC_HIGH, hpColor);
-         * } else if (hpThrowGamePiece) {
-         * strobe(Section.STATIC, hpColor, strobeSlowDuration);
-         * } else {
-         * solid(Section.STATIC, hpColor);
-         * }
-         * 
-         * // Set special modes
-         * if (distraction) {
-         * strobe(Section.SHOULDER, Color.kWhite, strobeFastDuration);
-         * } else if (endgameAlert) {
-         * strobe(Section.SHOULDER, Color.kBlue, strobeSlowDuration);
-         * } else if (autoScore) {
-         * rainbow(Section.SHOULDER, rainbowCycleLength, rainbowDuration);
-         * } else if (gripperStopped) {
-         * solid(Section.SHOULDER, Color.kGreen);
-         * } else if (intakeReady) {
-         * solid(Section.SHOULDER, Color.kPurple);
-         * } else if (autoSubstation) {
-         * rainbow(Section.SHOULDER, rainbowCycleLength, rainbowDuration);
-         * }
-         * }
-         * 
-         * // Arm coast alert
-         * if (armCoast) {
-         * solid(Section.STATIC, Color.kWhite);
-         * }
-         * 
-         * // Arm estop alert
-         * if (armEstopped) {
-         * strobe(Section.SHOULDER, Color.kRed, strobeFastDuration);
-         * }
-         * 
-         * // Same battery alert
-         * if (sameBattery) {
-         * breath(Section.STATIC_LOW, Color.kRed, Color.kBlack, breathDuration);
-         * }
-         * 
-         * // Update LEDs
-         * leds.setData(buffer);
-         */
-
-
     public void clearAnimation(){
         LED.clearAnimation(animationSlot);
     }
@@ -326,7 +171,7 @@ public class Leds extends SubsystemBase{
                 case Back:
                     return 26;
                 case Left:
-                    return 0;
+                    return 8;
                 case Right:
                     return 38;
                 case All:
@@ -347,7 +192,7 @@ public class Leds extends SubsystemBase{
                 case Back:
                     return 38;
                 case Left:
-                    return 0;
+                    return 8;
                 case Right:
                     return 39;
                 case All:
