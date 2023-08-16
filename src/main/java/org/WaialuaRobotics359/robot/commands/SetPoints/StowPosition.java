@@ -50,60 +50,43 @@ public class StowPosition extends CommandBase{
     public void execute(){
         s_Intake.intakeIdle();
 
-        s_Arm.setDesiredPosition(ArmPosition);
-        s_Arm.goToPosition();
-        s_Wrist.setDesiredPosition(WristPosition);
-        s_Wrist.goToPosition();
+           if (RobotContainer.isCube) {
 
-        if(Timer.hasElapsed(.4)){
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
-        }
-/* 
-        if(RobotContainer.isCube){
-
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
-
-        if(Timer.hasElapsed(.2)){
             s_Arm.setDesiredPosition(ArmPosition);
             s_Arm.goToPosition();
-        }
-
-        if(Timer.hasElapsed(.4)){
             s_Wrist.setDesiredPosition(WristPosition);
             s_Wrist.goToPosition();
-        }  
 
-        if(Timer.hasElapsed(.8)){
-            s_Leds.clearAnimation();
-            s_Leds.purple();
-            finished = true;
+            if (Timer.hasElapsed(.4)) {
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+            }
+
+        } else {
+
+            if (RobotContainer.retractOnScore) {
+                s_Pivot.setDesiredPosition(s_Pivot.feederConeScoreRetract());
+                s_Pivot.goToPosition();
+            }
+
+            if (s_Pivot.isRetracted()) {
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
+            }
+
+            if (Timer.hasElapsed(.3)) {
+                s_Wrist.setDesiredPosition(WristPosition);
+                s_Wrist.goToPosition();
+            }
+            if (Timer.hasElapsed(.6)) {
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+                RobotContainer.retractOnScore = false;
+                finished = true;
+            }
         }
-        
-    } else {
 
-            s_Pivot.setDesiredPosition(PivotPosition);
-            s_Pivot.goToPosition();
-
-        if(Timer.hasElapsed(.2)){
-            s_Arm.setDesiredPosition(ArmPosition);
-            s_Arm.goToPosition();
-        }
-
-        if(Timer.hasElapsed(.4)){
-            s_Wrist.setDesiredPosition(WristPosition);
-            s_Wrist.goToPosition();
-        } 
-
-        if(Timer.hasElapsed(.8)){
-            s_Leds.clearAnimation();
-            s_Leds.yellow();
-            finished = true;
-        }
     }
-    */
-}
     
     @Override
     public boolean isFinished(){

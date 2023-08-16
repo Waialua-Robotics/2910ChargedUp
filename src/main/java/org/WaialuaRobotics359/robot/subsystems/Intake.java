@@ -50,7 +50,8 @@ public class Intake extends SubsystemBase{
     }
 
     public void intakeIdle(){
-        m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 205 : -205);
+        m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 205 : -400);
+        
     }
 
     public void getPercentOutput(){

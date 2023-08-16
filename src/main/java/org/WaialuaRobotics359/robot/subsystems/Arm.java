@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase{
         m_lArm.configMotionSCurveStrength(8);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
-        m_lArm.configForwardSoftLimitThreshold(24500);
+        m_lArm.configForwardSoftLimitThreshold(26550);
         m_lArm.configReverseSoftLimitThreshold(0);
         m_lArm.configPeakOutputForward(.5);
         m_lArm.configPeakOutputReverse(-.5);

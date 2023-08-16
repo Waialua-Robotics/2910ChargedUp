@@ -43,9 +43,9 @@ public class MidPickupPosition extends CommandBase{
             PivotPosition = Constants.Pivot.Cube.groundPosition;
             WristPosition = Constants.Wrist.Cube.groundPosition;
         } else {
-            ArmPosition = Constants.Arm.Cone.groundPosition;
-            PivotPosition = Constants.Pivot.Cone.groundPosition;
-            WristPosition = Constants.Wrist.Cone.groundPosition;
+            ArmPosition = Constants.Arm.Cone.standingPosition;
+            PivotPosition = Constants.Pivot.Cone.standingPosition;
+            WristPosition = Constants.Wrist.Cone.standingPosition;
         }
 
         Timer.reset();
@@ -77,7 +77,7 @@ public class MidPickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 50){
+                if(s_Intake.current() > 40){
                     s_Intake.intakeIdle();
                     s_Leds.hasPiece();
                     new InstantCommand(()-> s_Leds.actionReady = false);

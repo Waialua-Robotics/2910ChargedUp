@@ -70,6 +70,10 @@ public class Pivot extends SubsystemBase{
         return Constants.Pivot.Cone.highPosition - 10000;
     }
 
+    public int feederConeScoreRetract(){
+        return Constants.Pivot.Cone.feederPosition - 10000;
+    }
+
     public int frontScoreRetract(){
         return desiredPosition + 10000;
     }

@@ -77,7 +77,7 @@ public class FeederPosition extends CommandBase {
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 25){
+                if(s_Intake.current() > 40){
                     s_Intake.intakeIdle();
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
@@ -106,6 +106,7 @@ public class FeederPosition extends CommandBase {
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.intakeIdle();
                     new InstantCommand(()-> s_Leds.actionReady = true);
+                    RobotContainer.retractOnScore = true;
                     finished = true;
 
                 }

@@ -22,18 +22,19 @@ import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
 public final class Constants {
 
 //conepickup - a = 5400 p = 790 w = 32620
+//standinCone - a = 10 w = 42900 p = 19150
 //cubepickup - a = 5400 p = 2275 w = 21500
 //backLowCone - a = 100 p = 16300 w = 43150
 //low cone - a = 0 p = 21300 w = 2325
 //mid cone - a = 13225 p = 83290 w = 6730
-//high cone - a = 26525 p = 8680 w = 13000
+//high cone - a = 27520 p = 87550 w = 13905
 //backlowcube - a = 0 p = 62200 w = 155
 //backmidcube - a = 2790 p = 85630 w = 5110
 //backhigh cube - a = 25020 p = 88410 w = 6880
 //lowcube - a = 0 p = 0 w = 0
 //midCube - a - 1665 p = 20630 w = 9200
 //highcube - a = 26470 p = 22000 w = 2580
-//feederCone - a = 20350 p = 71150 w = 0
+//feederCone - a = 19280 p = 68600 w = 300
 //downfeederCone - a = 0 p = 69500 w = 14885
 //feederCube - a = 18120 p = 39050 w = 37440
 
@@ -59,10 +60,11 @@ public final class Constants {
 
         public static final class Cone {
             public static final int groundPosition = 32620;
+            public static final int standingPosition = 42900;
             public static final int lowPosition = 2325;
             public static final int midPosition = 6730;
-            public static final int highPosition = 13000;
-            public static final int feederPosition = 0;
+            public static final int highPosition = 13905;
+            public static final int feederPosition = 300;
         }
         
         public static final class Cube {
@@ -83,10 +85,11 @@ public final class Constants {
 
         public static final class Cone {
             public static final int groundPosition = 5400;
+            public static final int standingPosition = 10;
             public static final int lowPosition = 0;
             public static final int midPosition = 13225;
             public static final int highPosition = 26525;
-            public static final int feederPosition = 20350;
+            public static final int feederPosition = 19280;
         }
         
         public static final class Cube {
@@ -116,10 +119,11 @@ public final class Constants {
         public static final class Cone {
 
             public static final int groundPosition = 790;
+            public static final int standingPosition = 19150;
             public static final int lowPosition = 21300;
             public static final int midPosition = 83290;
-            public static final int highPosition = 86800;
-            public static final int feederPosition = 71150;
+            public static final int highPosition = 87550;
+            public static final int feederPosition = 68600;
 
         }
         
