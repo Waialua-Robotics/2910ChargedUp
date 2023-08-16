@@ -12,16 +12,18 @@ public class LowPosition extends CommandBase{
     private Pivot s_Pivot;
     private Wrist s_Wrist; 
     private Leds s_Leds;
+    private PoseEstimator s_Pose;
 
     private static int ArmPosition;
     private static int PivotPosition;
     private static int WristPosition;
 
-    public LowPosition(Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
+    public LowPosition(Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds, PoseEstimator s_Pose){
         this.s_Arm = s_Arm;
         this.s_Wrist = s_Wrist;
         this.s_Pivot = s_Pivot;
         this.s_Leds = s_Leds;
+        this.s_Pose = s_Pose;
         addRequirements(s_Arm);
         addRequirements(s_Wrist);
         addRequirements(s_Pivot);
@@ -31,15 +33,27 @@ public class LowPosition extends CommandBase{
 
     private Timer Timer = new Timer();
 
-    public void initialize(){
-        if (RobotContainer.isCube){
-            ArmPosition = Constants.Arm.Cube.lowPosition;
-            PivotPosition = Constants.Pivot.Cube.lowPosition;
-            WristPosition = Constants.Wrist.Cube.lowPosition;
+    public void initialize() {
+        if (RobotContainer.isCube) {
+            if (s_Pose.isFrontScore()) {
+                ArmPosition = Constants.Arm.Cube.lowPosition;
+                PivotPosition = Constants.Pivot.Cube.lowPosition;
+                WristPosition = Constants.Wrist.Cube.lowPosition;
+            } else {
+                ArmPosition = Constants.Arm.Cube.lowPosition;
+                PivotPosition = Constants.Pivot.Cube.lowPosition;
+                WristPosition = Constants.Wrist.Cube.lowPosition;
+            }
         } else {
-            ArmPosition = Constants.Arm.Cone.lowPosition;
-            PivotPosition = Constants.Pivot.Cone.lowPosition;
-            WristPosition = Constants.Wrist.Cone.lowPosition;
+            if (s_Pose.isFrontScore()) {
+                ArmPosition = Constants.Arm.Cone.lowPosition;
+                PivotPosition = Constants.Pivot.Cone.lowPosition;
+                WristPosition = Constants.Wrist.Cone.lowPosition;
+            } else {
+                ArmPosition = Constants.Arm.Cone.lowPosition;
+                PivotPosition = Constants.Pivot.Cone.lowPosition;
+                WristPosition = Constants.Wrist.Cone.lowPosition;
+            }
         }
 
         Timer.reset();

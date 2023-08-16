@@ -223,7 +223,7 @@ public class RobotContainer {
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
 
-            lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
+            lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
             lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
             midPos.whileTrue(new MidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));

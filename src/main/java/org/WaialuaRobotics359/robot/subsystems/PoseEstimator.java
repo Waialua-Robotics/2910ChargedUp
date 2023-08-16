@@ -1,6 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 
 
+import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
 
@@ -95,6 +96,11 @@ public class PoseEstimator extends SubsystemBase {
 
   public double getXtoClosestSelectedNode(){
     return ClosestSelectedNode().getY() - getPose().getY();
+  }
+
+  public boolean isFrontScore(){
+    double angle = getPose().getRotation().getSin();
+    return angle > 0 ? true : false;
   }
 
 
