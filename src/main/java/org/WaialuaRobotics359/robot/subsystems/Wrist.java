@@ -47,7 +47,6 @@ public class Wrist extends SubsystemBase{
 
     public void setCurrentPosition(){
         double currentPosition = getPosition();
-
         currentPosition = desiredPosition;
     }
 
@@ -65,6 +64,10 @@ public class Wrist extends SubsystemBase{
 
     public int getPosition(){
         return (int) m_Wrist.getSelectedSensorPosition();
+    }
+
+    public boolean inPosition(){
+        return Math.abs(getPosition() - desiredPosition) < 1000; 
     }
 
     public void getPercentOutput(){

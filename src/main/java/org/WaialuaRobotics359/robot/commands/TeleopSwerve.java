@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -44,9 +45,9 @@ public class TeleopSwerve extends CommandBase {
             ControllerGain = s_Swerve.slowMode ? 0.5 : 1;
 
             /* Get Values, Deadband*/
-            double translationVal = -MathUtil.applyDeadband(translationSup.getAsDouble(), .05);
-            double strafeVal = -MathUtil.applyDeadband(strafeSup.getAsDouble(), .05);
-            double omega = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.OI.deadband);
+            double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), .05);
+            double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), .05);
+            double omega = -MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.OI.deadband);
 
             /* Square Values */
             translationVal = translationVal * translationVal * Math.signum(translationVal);
@@ -74,15 +75,15 @@ public class TeleopSwerve extends CommandBase {
             s_Swerve.desiredAngle += omega * rotationalIncrement;
             s_Swerve.desiredAngle = (s_Swerve.desiredAngle + 360) % 360;
 
-            //SmartDashboard.putNumber("desired", s_Swerve.desiredAngle);
-            //SmartDashboard.putNumber("current", s_Swerve.getYaw360());
+            SmartDashboard.putNumber("desired", s_Swerve.desiredAngle);
+            SmartDashboard.putNumber("current", s_Swerve.getYaw360());
 
-            double angleToDesired = -Conversions.wrap(s_Swerve.getYaw360(), s_Swerve.desiredAngle);
+            double angleToDesired = Conversions.wrap(s_Swerve.getYaw360(), s_Swerve.desiredAngle);
             double rotationVal = angleToDesired / 90;
             if (rotationVal > 1) rotationVal = 1;
             if (rotationVal < -1) rotationVal = -1;
 
-            //SmartDashboard.putNumber("rotationval", rotationVal);
+            SmartDashboard.putNumber("rotationval", rotationVal);
 
             /* Drive */
             s_Swerve.drive(

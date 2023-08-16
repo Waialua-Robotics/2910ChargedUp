@@ -41,6 +41,14 @@ public class Intake extends SubsystemBase{
         m_Intake.set(ControlMode.MotionMagic, desiredPosition);
     }
 
+    public int getPosition(){
+        return (int) m_Intake.getSelectedSensorPosition();
+    }
+
+    public boolean inPosition(){
+        return Math.abs(getPosition() - desiredPosition) < 1000; 
+    }
+
     public void intakeIdle(){
         m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 205 : -205);
     }

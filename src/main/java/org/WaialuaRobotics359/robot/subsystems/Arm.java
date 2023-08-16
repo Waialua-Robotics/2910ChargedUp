@@ -76,6 +76,10 @@ public class Arm extends SubsystemBase{
         return (int) m_lArm.getSelectedSensorPosition();
     }
 
+    public boolean inPosition(){
+        return Math.abs(getPosition() - desiredPosition) < 1000; 
+    }
+
     public boolean isRetracted(){
         return Math.abs(getPosition() - desiredPosition) < 300;
     }

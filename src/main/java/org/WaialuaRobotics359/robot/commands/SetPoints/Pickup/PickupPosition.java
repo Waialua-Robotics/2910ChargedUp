@@ -78,7 +78,7 @@ public class PickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 25){
+                if(s_Intake.current() > 40){
                     s_Intake.intakeIdle();
                     s_Leds.hasPiece();
                     new InstantCommand(()-> s_Leds.actionReady = false);

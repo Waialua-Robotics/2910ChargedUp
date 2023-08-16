@@ -90,6 +90,11 @@ public class Leds extends SubsystemBase{
         LED.animate(new RainbowAnimation(1, speed, section.length(), false, section.startTwo()), section.animationSlot());
     }
 
+    private void ColorFlow(Color color, Section section, double speed){
+        LED.animate(new ColorFlowAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), Direction.Forward, section.startOne()),section.animationSlot());
+        LED.animate(new ColorFlowAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), Direction.Forward, section.startTwo()),section.animationSlot());
+    }
+
     public void hasPiece(){
         hasPiece = true;
     }
@@ -129,8 +134,10 @@ public class Leds extends SubsystemBase{
         } else if (alliance == DriverStation.Alliance.Red) {
             solid(Color.RED, Section.OffBoard);
         } else if (alliance == DriverStation.Alliance.Blue) {
-            rainbow(Section.OffBoard, 1);
-            //solid(Color.BLUE, Section.OffBoard);
+            //ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
+            solid(Color.BLUE, Section.OffBoard);
+        } else {
+            ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
         }
     }
 
@@ -171,9 +178,17 @@ public class Leds extends SubsystemBase{
             rainbow(Section.OffBoard, 1);
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
-                solid(Color.MAGENTA, Section.OffBoard);
+                if (hasPiece) {
+                    strobe(Color.MAGENTA, Section.All, .3);
+                } else {
+                    solid(Color.MAGENTA, Section.All);
+                }
             } else {
-                solid(Color.ORANGE, Section.OffBoard);
+                if (hasPiece) {
+                    strobe(Color.ORANGE, Section.All, .3);
+                } else {
+                    solid(Color.ORANGE, Section.All);
+                }
             }
         }
     }

@@ -99,7 +99,7 @@ public class PoseEstimator extends SubsystemBase {
 
 
   public void periodic(){
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYawflip(), s_Swerve.getModulePositions());
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions());
     //VisionMessure(, true); 
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();
     field2d.setRobotPose(CurrentPose);

@@ -1,5 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -65,7 +67,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public int backScoreRetract(){
-        return desiredPosition - 10000;
+        return Constants.Pivot.Cone.highPosition - 10000;
     }
 
     public int frontScoreRetract(){

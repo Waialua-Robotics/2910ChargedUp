@@ -172,11 +172,11 @@ public final class Constants {
         public static final boolean invertGyro = false; // TODO: Always ensure Gyro is CCW+ CW-
 
         public static final COTSFalconSwerveConstants chosenModule = 
-            COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L2);
+            COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L3);
 
         /* Drivetrain Constants */
-        public static final double trackWidth = Units.inchesToMeters(21); //TODO: This must be tuned to robot
-        public static final double wheelBase = Units.inchesToMeters(23); //TODO: This must be tuned to robot
+        public static final double trackWidth = Units.inchesToMeters(20.75); //TODO: This must be tuned to robot
+        public static final double wheelBase = Units.inchesToMeters(22.75); //TODO: This must be tuned to robot
         public static final double wheelCircumference = chosenModule.wheelCircumference;
 
         /* Swerve Kinematics 
@@ -239,7 +239,7 @@ public final class Constants {
         public static final double maxAngularVelocity = 10; //TODO: This must be tuned to robot
 
         /* Neutral Modes */
-        public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
+        public static final NeutralMode angleNeutralMode = NeutralMode.Brake;
         public static final NeutralMode driveNeutralMode = NeutralMode.Brake;
 
         /* Module Specific Constants */

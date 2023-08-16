@@ -44,6 +44,7 @@ public class RobotContainer {
 
     public static boolean isCube = true;
     public static boolean allowScore = true;
+    public static boolean retractOnScore = false;
     public boolean toggleMode = true;
     public boolean brakeMode = false;
     public boolean zeroMode = true;
@@ -75,7 +76,7 @@ public class RobotContainer {
     private final JoystickButton Angle90 = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final POVButton robotCentric = new POVButton(driver, 270);
+    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     
 
     /* Operator Controls */
@@ -127,9 +128,9 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
             s_Swerve, 
-            () -> -driver.getRawAxis(translationAxis), 
-            () -> -driver.getRawAxis(strafeAxis), 
-            () -> -driver.getRawAxis(rotationAxis), 
+            () -> driver.getRawAxis(translationAxis), 
+            () -> driver.getRawAxis(strafeAxis), 
+            () -> driver.getRawAxis(rotationAxis), 
             () -> robotCentric.getAsBoolean()
             )
         );  
@@ -192,10 +193,10 @@ public class RobotContainer {
             /* Snap-to Swerve Angle */
             snapRightAngle.onTrue(new InstantCommand(() -> s_Swerve.snapRightAngle()));
             setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.setCurrentAngle()));
-            Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));
-            Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(270)));
-            Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
-            Angle270.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
+            Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
+            Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
+            Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));
+            Angle270.onTrue(new InstantCommand(() -> s_Swerve.setDesired(270)));
 
             /* Toggle Swerve Slow Mode */
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
