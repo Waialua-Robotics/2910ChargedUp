@@ -11,6 +11,7 @@ public class ManualIntake extends CommandBase{
     private Intake s_Intake;
     private BooleanSupplier intake;
     private BooleanSupplier outake;
+    private Boolean manualMode = false;
     
     public ManualIntake(Intake s_Intake, BooleanSupplier intake, BooleanSupplier outake){
         this.intake = intake;
@@ -22,15 +23,18 @@ public class ManualIntake extends CommandBase{
     @Override
     public void execute(){
 
-        boolean lBumperControl = intake.getAsBoolean();
-        boolean rBumperControl = outake.getAsBoolean();
+        boolean inValue = intake.getAsBoolean();
+        boolean outValue = outake.getAsBoolean();
 
-        if(rBumperControl){
-            s_Intake.percentOutput(1);
-        } else if(lBumperControl){
-            s_Intake.percentOutput(-1);
-        } else {
-            s_Intake.stop();
+        if(inValue){
+            s_Intake.intake();
+            manualMode = true;
+        } else if(outValue){
+            s_Intake.outake();
+            manualMode = true;
+        } else if (manualMode) {
+            s_Intake.intakeIdle();
+            manualMode = false; 
         }
     }
 

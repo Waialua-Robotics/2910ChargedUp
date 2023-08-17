@@ -87,8 +87,8 @@ public class RobotContainer {
 
     /* Operator Buttons */
 
-    private final JoystickButton intake = new JoystickButton(operator, Constants.OI.intake);
-    private final JoystickButton outake = new JoystickButton(operator, Constants.OI.outake);
+    private final POVButton intake = new POVButton(operator, Constants.OI.intake);
+    private final POVButton outake = new POVButton(operator, Constants.OI.outake);
 
     private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
     private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
@@ -101,7 +101,7 @@ public class RobotContainer {
     private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
-    private final POVButton kill = new POVButton(operator, 270);
+    private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
 
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
 
@@ -142,6 +142,7 @@ public class RobotContainer {
                 () -> -operator.getRawAxis(revWristAxis)
             )
         );
+        */
 
         s_Intake.setDefaultCommand(
             new ManualIntake(
@@ -150,7 +151,7 @@ public class RobotContainer {
                 () -> outake.getAsBoolean()
             )
         );
-
+/* 
         s_Pivot.setDefaultCommand(
             new ManualPivot(
                 s_Pivot,
@@ -207,7 +208,6 @@ public class RobotContainer {
             new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
         setCube.onFalse(
             new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
-
 
             kill.whileTrue(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = false)));

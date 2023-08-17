@@ -149,8 +149,8 @@ public final class Constants {
         public static final int isCube = XboxController.Button.kLeftStick.value;
         public static final int isCone = XboxController.Button.kRightStick.value;
 
-        public static final int intake = XboxController.Button.kRightBumper.value;
-        public static final int outake = XboxController.Button.kLeftBumper.value;
+        public static final int intake = 270;
+        public static final int outake = 90;
 
         public static final int pivot = XboxController.Axis.kLeftY.value;
 
