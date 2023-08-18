@@ -12,6 +12,7 @@ public class ManualIntake extends CommandBase{
     private BooleanSupplier intake;
     private BooleanSupplier outake;
     private Boolean manualMode = false;
+    private boolean setIdle = false;
     
     public ManualIntake(Intake s_Intake, BooleanSupplier intake, BooleanSupplier outake){
         this.intake = intake;
@@ -26,14 +27,24 @@ public class ManualIntake extends CommandBase{
         boolean inValue = intake.getAsBoolean();
         boolean outValue = outake.getAsBoolean();
 
-        if(inValue){
+        if(inValue || outValue && !manualMode){
+            s_Intake.stop();
+        }
+
+        if (inValue) {
             s_Intake.intake();
             manualMode = true;
-        } else if(outValue){
+            setIdle = true;
+        } else if (outValue) {
             s_Intake.outake();
             manualMode = true;
+            setIdle = false;
         } else if (manualMode) {
-            s_Intake.intakeIdle();
+            if (setIdle) {
+                s_Intake.intakeIdle();
+            } else {
+                s_Intake.stop();
+            }
             manualMode = false; 
         }
     }

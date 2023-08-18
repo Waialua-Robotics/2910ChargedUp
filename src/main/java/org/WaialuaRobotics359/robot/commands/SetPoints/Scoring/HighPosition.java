@@ -72,6 +72,7 @@ public class HighPosition extends CommandBase {
 
                 if(Timer.hasElapsed(5.7)){
                     new InstantCommand(()-> s_Leds.actionReady = true);
+                    RobotContainer.retractOnScore = true;
                     finished = true;
                 }
 

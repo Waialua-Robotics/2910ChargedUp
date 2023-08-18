@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
-public class Score extends CommandBase{
+public class Score extends CommandBase {
     private Arm s_Arm;
     private Intake s_Intake;
-    private Wrist s_Wrist; 
+    private Wrist s_Wrist;
     private Pivot s_Pivot;
     private Leds s_Leds;
 
@@ -20,8 +20,7 @@ public class Score extends CommandBase{
     private static int PivotPosition;
     private static int WristPosition;
 
-
-    public Score(Arm s_Arm, Intake s_Intake, Pivot s_Pivot, Wrist s_Wrist, Leds s_Leds){
+    public Score(Arm s_Arm, Intake s_Intake, Pivot s_Pivot, Wrist s_Wrist, Leds s_Leds) {
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Pivot = s_Pivot;
@@ -37,9 +36,9 @@ public class Score extends CommandBase{
 
     private Timer Timer = new Timer();
 
-    public void initialize(){
-      
-        ArmPosition = Constants.Arm.stowPosition;;
+    public void initialize() {
+
+        ArmPosition = Constants.Arm.stowPosition;
         PivotPosition = Constants.Pivot.stowPosition;
         WristPosition = Constants.Wrist.stowPosition;
 
@@ -50,110 +49,113 @@ public class Score extends CommandBase{
     }
 
     @Override
-    public void execute(){
+    public void execute() {
 
-        if(!RobotContainer.allowScore){
+        if (!RobotContainer.allowScore) {
 
-                if(RobotContainer.isCube){
+            if (RobotContainer.isCube) {
 
-                        //s_Pivot.setDesiredPosition(s_Pivot.frontScoreRetract());
-                        //s_Pivot.goToPosition();
+                if (RobotContainer.retractOnScore) {
+                    s_Pivot.setDesiredPosition(PivotPosition); // s_Pivot.backScoreRetract()
+                    s_Pivot.goToPosition();
+                }
 
-                    //if(s_Pivot.isRetracted()){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                    //}
-                         
-                    if(Timer.hasElapsed(.3)){
-                        s_Wrist.setDesiredPosition(WristPosition);
-                        s_Wrist.goToPosition();
-                    }
-                    if(Timer.hasElapsed(.6)){
-                            s_Pivot.setDesiredPosition(PivotPosition);
-                            s_Pivot.goToPosition();
-                            finished = true;
-                        }
-                    } else {
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
 
-                        //s_Pivot.setDesiredPosition(s_Pivot.backScoreRetract());
-                        //s_Pivot.goToPosition();
+                if (Timer.hasElapsed(.3)) {
+                    s_Wrist.setDesiredPosition(WristPosition);
+                    s_Wrist.goToPosition();
+                }
+                if (Timer.hasElapsed(.6)) {
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+                    RobotContainer.retractOnScore = false;
+                    finished = true;
+                }
+            } else {
 
-                    //if(s_Pivot.isRetracted()){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                    //}
-                         
-                    if(Timer.hasElapsed(.3)){
-                        s_Wrist.setDesiredPosition(WristPosition);
-                        s_Wrist.goToPosition();
-                    }
-                    if(Timer.hasElapsed(.6)){
-                            s_Pivot.setDesiredPosition(PivotPosition);
-                            s_Pivot.goToPosition();
-                            finished = true;
-                        }
-                    }
+                if (RobotContainer.retractOnScore) {
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+                }
 
-                } else {
-                     
-                if(RobotContainer.isCube){
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
 
-                    s_Intake.outake();
+                if (Timer.hasElapsed(.3)) {
+                    s_Wrist.setDesiredPosition(WristPosition);
+                    s_Wrist.goToPosition();
+                }
+                if (Timer.hasElapsed(.6)) {
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+                    RobotContainer.retractOnScore = false;
+                    finished = true;
+                }
+            }
 
-                   // s_Pivot.setDesiredPosition(s_Pivot.frontScoreRetract());
-                   // s_Pivot.goToPosition();
+        } else {
 
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                     
-                if(Timer.hasElapsed(.3)){
+            if (RobotContainer.isCube) {
+
+                s_Intake.outake();
+
+                if (RobotContainer.retractOnScore) {
+                    s_Pivot.setDesiredPosition(PivotPosition); // s_Pivot.backScoreRetract()
+                    s_Pivot.goToPosition();
+                }
+
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
+
+                if (Timer.hasElapsed(.3)) {
                     s_Intake.stop();
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                 }
-                if(Timer.hasElapsed(.6)){
-                        s_Pivot.setDesiredPosition(PivotPosition);
-                        s_Pivot.goToPosition();
-                        s_Leds.noPiece();
-                        new InstantCommand(()-> s_Leds.actionReady = true);
-                        finished = true;
-                    }
-                
-                } else{
+                if (Timer.hasElapsed(.6)) {
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+                    s_Leds.noPiece();
+                    new InstantCommand(() -> s_Leds.actionReady = true);
+                    RobotContainer.retractOnScore = false;
+                    finished = true;
+                }
 
-                    s_Intake.outake();
+            } else {
 
-                    if(RobotContainer.retractOnScore){
-                        s_Pivot.setDesiredPosition(s_Pivot.backScoreRetract());
-                        s_Pivot.goToPosition();
-                    }
+                s_Intake.outake();
 
-                    if(s_Pivot.isRetracted()){
-                        s_Arm.setDesiredPosition(ArmPosition);
-                        s_Arm.goToPosition();
-                    }
-                         
-                    if(Timer.hasElapsed(.3)){
-                        s_Wrist.setDesiredPosition(WristPosition);
-                        s_Wrist.goToPosition();
-                        s_Intake.stop();
-                    }
-                    if(Timer.hasElapsed(.6)){
-                        s_Pivot.setDesiredPosition(PivotPosition);
-                        s_Pivot.goToPosition();
-                        s_Leds.noPiece();
-                        new InstantCommand(()-> s_Leds.actionReady = true);
-                        RobotContainer.retractOnScore = false;
-                        finished = true;                        
-                    }
-                }   
+                if (RobotContainer.retractOnScore) {
+                    s_Pivot.setDesiredPosition(PivotPosition); // s_Pivot.backScoreRetract()
+                    s_Pivot.goToPosition();
+                }
+
+                if (Timer.hasElapsed(.1)) {
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
+
+                if (Timer.hasElapsed(.2)) { // timer.3
+                    s_Wrist.setDesiredPosition(WristPosition);
+                    s_Wrist.goToPosition();
+                    s_Intake.stop();
+                }
+                if (Timer.hasElapsed(.6)) { // timer.6
+                    s_Pivot.setDesiredPosition(PivotPosition);
+                    s_Pivot.goToPosition();
+                    s_Leds.noPiece();
+                    new InstantCommand(() -> s_Leds.actionReady = true);
+                    RobotContainer.retractOnScore = false;
+                    finished = true;
+                }
             }
         }
+    }
 
-    
-    
     @Override
-    public boolean isFinished(){
+    public boolean isFinished() {
         return finished;
     }
 }

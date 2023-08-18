@@ -88,6 +88,7 @@ public class FeederPosition extends CommandBase {
 
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
+                    RobotContainer.retractOnScore = true;
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -106,7 +107,6 @@ public class FeederPosition extends CommandBase {
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.intakeIdle();
                     new InstantCommand(()-> s_Leds.actionReady = true);
-                    RobotContainer.retractOnScore = true;
                     finished = true;
 
                 }

@@ -31,15 +31,15 @@ public class Arm extends SubsystemBase{
        
         //Motion Magic
         m_lArm.setSelectedSensorPosition(0);
-        m_lArm.configMotionCruiseVelocity(65000);
-        m_lArm.configMotionAcceleration(75000);
-        m_lArm.configMotionSCurveStrength(8);
+        m_lArm.configMotionCruiseVelocity(75000);//65000
+        m_lArm.configMotionAcceleration(75000);//75000
+        m_lArm.configMotionSCurveStrength(7);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
         m_lArm.configForwardSoftLimitThreshold(26550);
         m_lArm.configReverseSoftLimitThreshold(0);
-        m_lArm.configPeakOutputForward(.5);
-        m_lArm.configPeakOutputReverse(-.5);
+        m_lArm.configPeakOutputForward(1);
+        m_lArm.configPeakOutputReverse(-1);
 
 
         m_lArm.config_kP(0, .25);
@@ -64,6 +64,8 @@ public class Arm extends SubsystemBase{
 
     public void setCurrentPosition(){
         double currentPosition = getPosition();
+        setDesiredPosition((int)currentPosition);
+        goToPosition();
 
         currentPosition = desiredPosition;
     }

@@ -60,16 +60,17 @@ public class StowPosition extends CommandBase{
             if (Timer.hasElapsed(.4)) {
                 s_Pivot.setDesiredPosition(PivotPosition);
                 s_Pivot.goToPosition();
+                finished= true;
             }
 
         } else {
 
             if (RobotContainer.retractOnScore) {
-                s_Pivot.setDesiredPosition(s_Pivot.feederConeScoreRetract());
+                s_Pivot.setDesiredPosition(PivotPosition);
                 s_Pivot.goToPosition();
             }
 
-            if (s_Pivot.isRetracted()) {
+            if (Timer.hasElapsed(0)) {
                 s_Arm.setDesiredPosition(ArmPosition);
                 s_Arm.goToPosition();
             }

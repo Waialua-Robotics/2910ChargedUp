@@ -62,6 +62,7 @@ public final class Constants {
             public static final int groundPosition = 32620;
             public static final int standingPosition = 42900;
             public static final int lowPosition = 2325;
+            public static final int frontLowPosition = 43150;
             public static final int midPosition = 6730;
             public static final int highPosition = 13905;
             public static final int feederPosition = 300;
@@ -70,8 +71,11 @@ public final class Constants {
         public static final class Cube {
             public static final int groundPosition = 21500;
             public static final int lowPosition = 155;
+            public static final int frontLowPosition = 0;
             public static final int midPosition = 5110;
+            public static final int frontMidPosition = 9200;
             public static final int highPosition = 6880;
+            public static final int frontHighPosition = 2580;
             public static final int feederPosition = 37440;
         }
     }
@@ -87,6 +91,7 @@ public final class Constants {
             public static final int groundPosition = 5400;
             public static final int standingPosition = 10;
             public static final int lowPosition = 0;
+            public static final int frontLowPosition = 100;
             public static final int midPosition = 13225;
             public static final int highPosition = 26525;
             public static final int feederPosition = 19280;
@@ -95,9 +100,11 @@ public final class Constants {
         public static final class Cube {
             public static final int groundPosition = 5400;
             public static final int lowPosition = 0;
+            public static final int frontLowPosition = 0;
             public static final int midPosition = 2790;
-            public static final int highPosition = 25020
-            ;
+            public static final int frontMidPosition = 1665;
+            public static final int highPosition = 25020;
+            public static final int frontHighPosition = 26470;
             public static final int feederPosition = 18120;
         }
     }
@@ -121,6 +128,7 @@ public final class Constants {
             public static final int groundPosition = 790;
             public static final int standingPosition = 19150;
             public static final int lowPosition = 21300;
+            public static final int frontLowPosition = 16300;
             public static final int midPosition = 83290;
             public static final int highPosition = 87550;
             public static final int feederPosition = 68600;
@@ -130,8 +138,11 @@ public final class Constants {
         public static final class Cube {
             public static final int groundPosition = 2275;
             public static final int lowPosition = 62200;
+            public static final int frontLowPosition = 0;
             public static final int midPosition = 85630;
+            public static final int frontMidPosition = 20630;
             public static final int highPosition = 88410;
+            public static final int frontHighPosition = 22000;
             public static final int feederPosition = 39050;
         }
     }

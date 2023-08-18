@@ -36,9 +36,9 @@ public class LowPosition extends CommandBase{
     public void initialize() {
         if (RobotContainer.isCube) {
             if (s_Pose.isFrontScore()) {
-                ArmPosition = Constants.Arm.Cube.lowPosition;
-                PivotPosition = Constants.Pivot.Cube.lowPosition;
-                WristPosition = Constants.Wrist.Cube.lowPosition;
+                ArmPosition = Constants.Arm.Cube.frontLowPosition;
+                PivotPosition = Constants.Pivot.Cube.frontLowPosition;
+                WristPosition = Constants.Wrist.Cube.frontLowPosition;
             } else {
                 ArmPosition = Constants.Arm.Cube.lowPosition;
                 PivotPosition = Constants.Pivot.Cube.lowPosition;
@@ -46,9 +46,9 @@ public class LowPosition extends CommandBase{
             }
         } else {
             if (s_Pose.isFrontScore()) {
-                ArmPosition = Constants.Arm.Cone.lowPosition;
-                PivotPosition = Constants.Pivot.Cone.lowPosition;
-                WristPosition = Constants.Wrist.Cone.lowPosition;
+                ArmPosition = Constants.Arm.Cone.frontLowPosition;
+                PivotPosition = Constants.Pivot.Cone.frontLowPosition;
+                WristPosition = Constants.Wrist.Cone.frontLowPosition;
             } else {
                 ArmPosition = Constants.Arm.Cone.lowPosition;
                 PivotPosition = Constants.Pivot.Cone.lowPosition;

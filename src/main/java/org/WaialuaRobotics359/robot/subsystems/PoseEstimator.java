@@ -99,8 +99,8 @@ public class PoseEstimator extends SubsystemBase {
   }
 
   public boolean isFrontScore(){
-    double angle = getPose().getRotation().getSin();
-    return angle > 0 ? true : false;
+    double angle = getPose().getRotation().getCos();
+    return angle > 0 ? false : true;
   }
 
 
@@ -113,6 +113,7 @@ public class PoseEstimator extends SubsystemBase {
     SmartDashboard.putNumber("X", CurrentPose.getX());
     SmartDashboard.putNumber("y", CurrentPose.getY());
     SmartDashboard.putNumber("Rot", CurrentPose.getRotation().getDegrees());
+    SmartDashboard.putBoolean("isFront", isFrontScore());
 
     //logData();
     //SmartDashboard.putNumber("X to Closest Node", getXtoClosestSelectedNode());
