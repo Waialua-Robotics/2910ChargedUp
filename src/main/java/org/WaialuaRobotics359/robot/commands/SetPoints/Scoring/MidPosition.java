@@ -72,7 +72,7 @@ public class MidPosition extends CommandBase {
                 s_Wrist.goToPosition();
             }
 
-            if(Timer.hasElapsed(2.7)){
+            if(Timer.hasElapsed(.6)){
                 new InstantCommand(()-> s_Leds.actionReady = true);
                 RobotContainer.retractOnScore = true;
                 finished = true;

@@ -52,15 +52,25 @@ public class StowPosition extends CommandBase{
 
            if (RobotContainer.isCube) {
 
-            s_Arm.setDesiredPosition(ArmPosition);
-            s_Arm.goToPosition();
-            s_Wrist.setDesiredPosition(WristPosition);
-            s_Wrist.goToPosition();
-
-            if (Timer.hasElapsed(.4)) {
+            if (RobotContainer.retractOnScore) {
                 s_Pivot.setDesiredPosition(PivotPosition);
                 s_Pivot.goToPosition();
-                finished= true;
+            }
+
+            if (Timer.hasElapsed(0)) {
+                s_Arm.setDesiredPosition(ArmPosition);
+                s_Arm.goToPosition();
+            }
+
+            if (Timer.hasElapsed(.3)) {
+                s_Wrist.setDesiredPosition(WristPosition);
+                s_Wrist.goToPosition();
+            }
+            if (Timer.hasElapsed(.6)) {
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+                RobotContainer.retractOnScore = false;
+                finished = true;
             }
 
         } else {

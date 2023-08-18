@@ -106,15 +106,17 @@ public class Score extends CommandBase {
                     s_Pivot.goToPosition();
                 }
 
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
+                if (Timer.hasElapsed(.1)) {
+                    s_Arm.setDesiredPosition(ArmPosition);
+                    s_Arm.goToPosition();
+                }
 
-                if (Timer.hasElapsed(.3)) {
-                    s_Intake.stop();
+                if (Timer.hasElapsed(.2)) { // timer.3
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
+                    s_Intake.stop();
                 }
-                if (Timer.hasElapsed(.6)) {
+                if (Timer.hasElapsed(.6)) { // timer.6
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
                     s_Leds.noPiece();

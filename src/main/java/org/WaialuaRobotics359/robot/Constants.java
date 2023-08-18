@@ -136,7 +136,7 @@ public final class Constants {
         }
         
         public static final class Cube {
-            public static final int groundPosition = 2275;
+            public static final int groundPosition = 0;
             public static final int lowPosition = 62200;
             public static final int frontLowPosition = 0;
             public static final int midPosition = 85630;

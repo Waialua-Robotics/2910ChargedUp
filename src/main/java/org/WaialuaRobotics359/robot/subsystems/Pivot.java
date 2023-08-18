@@ -152,7 +152,7 @@ public class Pivot extends SubsystemBase{
         SmartDashboard.putNumber("pPosition", getPosition());
         SmartDashboard.putNumber("pDesired", desiredPosition);
         SmartDashboard.putNumber("pPercentOutput", m_FlPivot.getMotorOutputPercent());
-
+        SmartDashboard.putBoolean("RetractOnScore", RobotContainer.retractOnScore);
 
 
     }
