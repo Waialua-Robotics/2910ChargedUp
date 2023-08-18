@@ -75,13 +75,16 @@ public class FeederPosition extends CommandBase {
 
                 if(Timer.hasElapsed(.6)){
                     s_Intake.intake();
+                    new InstantCommand(()-> s_Leds.actionReady = true);
+                    //finished = true;
                 }
 
-                if(s_Intake.current() > 40){
-                    s_Intake.intakeIdle();
+                if(s_Intake.current() > 40 && Timer.hasElapsed(.2)){
+                    //s_Intake.intakeIdle();
+                    s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
+                    s_Wrist.goToPosition();
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     finished = true;
-
                 }
 
             } else {

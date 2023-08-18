@@ -76,7 +76,7 @@ public final class Constants {
             public static final int frontMidPosition = 9200;
             public static final int highPosition = 6880;
             public static final int frontHighPosition = 2580;
-            public static final int feederPosition = 37440;
+            public static final int feederPosition = 37200;
         }
     }
 
@@ -105,7 +105,7 @@ public final class Constants {
             public static final int frontMidPosition = 1665;
             public static final int highPosition = 25020;
             public static final int frontHighPosition = 26470;
-            public static final int feederPosition = 18120;
+            public static final int feederPosition = 13360;
         }
     }
 
@@ -126,7 +126,7 @@ public final class Constants {
         public static final class Cone {
 
             public static final int groundPosition = 790;
-            public static final int standingPosition = 19150;
+            public static final int standingPosition = 20000;//19150
             public static final int lowPosition = 21300;
             public static final int frontLowPosition = 16300;
             public static final int midPosition = 83290;
@@ -143,7 +143,7 @@ public final class Constants {
             public static final int frontMidPosition = 20630;
             public static final int highPosition = 88410;
             public static final int frontHighPosition = 22000;
-            public static final int feederPosition = 39050;
+            public static final int feederPosition = 40600;
         }
     }
 

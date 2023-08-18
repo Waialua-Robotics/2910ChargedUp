@@ -109,7 +109,7 @@ public class SwerveModule {
         //encodeTimer.start();
         for (int i = 0; i < 100; ++i) {
             angleEncoder.getAbsolutePosition();
-            if (angleEncoder.getLastError() == ErrorCode.OK && mAngleMotor.getLastError() == ErrorCode.OK) {
+            if (angleEncoder.getLastError() == ErrorCode.OK && mAngleMotor.getLastError() == ErrorCode.OK && angleEncoder.getAbsolutePosition()!= 0) {
                 break;
             }
             Timer.delay(0.010);            

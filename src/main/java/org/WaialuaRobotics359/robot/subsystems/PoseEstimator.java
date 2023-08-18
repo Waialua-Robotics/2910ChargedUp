@@ -100,12 +100,12 @@ public class PoseEstimator extends SubsystemBase {
 
   public boolean isFrontScore(){
     double angle = getPose().getRotation().getCos();
-    return angle > 0 ? false : true;
+    return angle > 0 ? true : false;
   }
 
 
   public void periodic(){
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions());
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYawflip(), s_Swerve.getModulePositions());
     //VisionMessure(, true); 
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();
     field2d.setRobotPose(CurrentPose);

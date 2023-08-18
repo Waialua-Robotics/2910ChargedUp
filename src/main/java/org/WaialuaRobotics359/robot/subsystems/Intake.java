@@ -87,6 +87,7 @@ public class Intake extends SubsystemBase{
     public void periodic(){
         SmartDashboard.putNumber("iPercentOutput", m_Intake.getMotorOutputPercent());
         SmartDashboard.putNumber("Ivelocity", m_Intake.getSelectedSensorVelocity());
+        SmartDashboard.putNumber("iCurrent", m_Intake.getStatorCurrent());
         SmartDashboard.putBoolean("Mode", RobotContainer.isCube);
         SmartDashboard.putBoolean("KillSwitch", RobotContainer.allowScore);
 
