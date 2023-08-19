@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    //PathPlannerServer.startServer(5811);
+    PathPlannerServer.startServer(5811);
     }
 
   /**
@@ -65,6 +65,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    //m_robotContainer.getSwerve().resetModulesToAbsolute();
+    m_robotContainer.getSwerve().setCurrentAngle();
 
     m_robotContainer.getArm().setCurrentPosition();
     m_robotContainer.getPivot().setCurrentPosition();

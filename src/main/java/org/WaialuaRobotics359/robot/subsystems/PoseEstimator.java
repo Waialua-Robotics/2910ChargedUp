@@ -55,10 +55,6 @@ public class PoseEstimator extends SubsystemBase {
       stateStdDevs,
       visionMeasurementStdDevs);
 
-      //pose Log Entry
-      //current = new LoggablePose("PoseEst/pose", new Pose2d(0,0, new Rotation2d(0)));
-      //targetpose = new LoggablePose("poseEst/target", new Pose2d(0,0, new Rotation2d(0)));
-      //limelightPose = new LoggablePose("poseEst/limelight", new Pose2d(0,0, new Rotation2d(0)));
   }
 
   /*PoseEst */
@@ -105,7 +101,7 @@ public class PoseEstimator extends SubsystemBase {
 
 
   public void periodic(){
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYawflip(), s_Swerve.getModulePositions());
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions());
     //VisionMessure(, true); 
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();
     field2d.setRobotPose(CurrentPose);

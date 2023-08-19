@@ -38,7 +38,7 @@ public class Swerve extends SubsystemBase {
             new SwerveModule(3, Constants.Swerve.Mod3.constants)
         };
 
-        Timer.delay(2.0);
+        Timer.delay(1.0);
         resetModulesToAbsolute();
 
         //swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
@@ -58,8 +58,8 @@ public class Swerve extends SubsystemBase {
                                     getYaw()
                                 )
                                 : new ChassisSpeeds(
-                                    -translation.getX(),
-                                    -translation.getY(), 
+                                    translation.getX(),
+                                    translation.getY(), 
                                     rotation)
                                 );
         SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.maxSpeed);
@@ -74,7 +74,7 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false);
+            mod.setDesiredState(desiredStates[mod.moduleNumber], false); //false
         }
     }    
 
@@ -146,7 +146,13 @@ public class Swerve extends SubsystemBase {
 
     public void snapRightAngle() {
         //set desired to nearest 90 degrees
-        setDesired( Math.round(getYaw360()/90)*90);
+        setDesired( Math.round(getYaw360()/180)*180);//90 for 90 degrees
+    }
+
+    public void resetModulesToAbsoluteInit(){
+        for(SwerveModule mod : mSwerveMods){
+            mod.resetToAbsoluteInit();
+        }
     }
 
     public void resetModulesToAbsolute(){

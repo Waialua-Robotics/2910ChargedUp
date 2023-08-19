@@ -65,7 +65,7 @@ public class RobotContainer {
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-    private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
+    private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
@@ -251,6 +251,10 @@ public class RobotContainer {
         return s_Arm;
     }
 
+    public Swerve getSwerve(){
+        return s_Swerve;
+    }
+
 
     public void configAuto() {
 
@@ -287,7 +291,7 @@ public class RobotContainer {
 
           /* AutoChosser */
           m_chooser.setDefaultOption("PurpleYellow", new PurpleYellow(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("PurpleYellowTwo", new PurpleYellow(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("None", null);
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)

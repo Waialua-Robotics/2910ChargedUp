@@ -107,9 +107,9 @@ public class SwerveModule {
          * from the CANcoder.
          */
         //encodeTimer.start();
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 1000; ++i) {
             angleEncoder.getAbsolutePosition();
-            if (angleEncoder.getLastError() == ErrorCode.OK && mAngleMotor.getLastError() == ErrorCode.OK && angleEncoder.getAbsolutePosition()!= 0) {
+            if (angleEncoder.getLastError() == ErrorCode.OK && mAngleMotor.getLastError() == ErrorCode.OK) {
                 break;
             }
             Timer.delay(0.010);            
@@ -117,10 +117,21 @@ public class SwerveModule {
         }
     }
 
+    void resetToAbsoluteInit(){
+        //waitForCanCoder();
+        double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
+        while(Math.abs(absolutePosition - mAngleMotor.getSelectedSensorPosition()) > 1){
+            System.out.println(absolutePosition + " " + mAngleMotor.getSelectedSensorPosition());
+        mAngleMotor.setSelectedSensorPosition(absolutePosition);//absolute position
+        }
+    }
+
     void resetToAbsolute(){
         waitForCanCoder();
         double absolutePosition = Conversions.degreesToFalcon(getCanCoder().getDegrees() - angleOffset.getDegrees(), Constants.Swerve.angleGearRatio);
         mAngleMotor.setSelectedSensorPosition(absolutePosition);//absolute position
+        mAngleMotor.set(ControlMode.Position, absolutePosition);
+        
 
     }
 
