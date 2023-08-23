@@ -60,7 +60,7 @@ public class HighPosition extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
 
-                if(Timer.hasElapsed(.2)){
+                if(Timer.hasElapsed(.3)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
@@ -70,7 +70,7 @@ public class HighPosition extends CommandBase {
                     s_Wrist.goToPosition();
                 }
 
-                if(Timer.hasElapsed(.6)){
+                if(Timer.hasElapsed(1)){
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     RobotContainer.retractOnScore = true;
                     finished = true;
@@ -81,7 +81,7 @@ public class HighPosition extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
 
-                if(Timer.hasElapsed(.2)){
+                if(Timer.hasElapsed(.3)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
@@ -91,7 +91,7 @@ public class HighPosition extends CommandBase {
                     s_Wrist.goToPosition();
                 }
 
-                if(Timer.hasElapsed(.6)){
+                if(Timer.hasElapsed(1)){ // .6
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     RobotContainer.retractOnScore = true;
                     finished = true;

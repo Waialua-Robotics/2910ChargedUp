@@ -50,6 +50,9 @@ public class StowPosition extends CommandBase{
     public void execute(){
         s_Intake.intakeIdle();
 
+        s_Pivot.stowSpeed();
+        s_Arm.stowSpeed();
+
            if (RobotContainer.isCube) {
 
             if (RobotContainer.retractOnScore) {
@@ -62,13 +65,15 @@ public class StowPosition extends CommandBase{
                 s_Arm.goToPosition();
             }
 
-            if (Timer.hasElapsed(.3)) {
+            if (Timer.hasElapsed(.3) || s_Pivot.isStowed()) {
                 s_Wrist.setDesiredPosition(WristPosition);
                 s_Wrist.goToPosition();
             }
             if (Timer.hasElapsed(.6)) {
                 s_Pivot.setDesiredPosition(PivotPosition);
                 s_Pivot.goToPosition();
+                s_Pivot.normSpeed();
+                s_Arm.normSpeed();
                 RobotContainer.retractOnScore = false;
                 finished = true;
             }
@@ -85,13 +90,15 @@ public class StowPosition extends CommandBase{
                 s_Arm.goToPosition();
             }
 
-            if (Timer.hasElapsed(.3)) {
+            if (Timer.hasElapsed(.3) || s_Pivot.isStowed()) {
                 s_Wrist.setDesiredPosition(WristPosition);
                 s_Wrist.goToPosition();
             }
             if (Timer.hasElapsed(.6)) {
                 s_Pivot.setDesiredPosition(PivotPosition);
                 s_Pivot.goToPosition();
+                s_Pivot.normSpeed();
+                s_Arm.normSpeed();
                 RobotContainer.retractOnScore = false;
                 finished = true;
             }

@@ -96,10 +96,10 @@ public class LowPosition extends CommandBase{
             s_Arm.goToPosition();
         }
 
-        if(Timer.hasElapsed(.4)){
+        //if(Timer.hasElapsed(.4) || s_Pivot.inPosition()){
             s_Wrist.setDesiredPosition(WristPosition);
             s_Wrist.goToPosition();
-        }
+        //}
 
         if(Timer.hasElapsed(.6)){
             new InstantCommand(()-> s_Leds.actionReady = true);

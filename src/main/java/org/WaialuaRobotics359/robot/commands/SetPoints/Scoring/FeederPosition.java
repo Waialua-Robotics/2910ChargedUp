@@ -79,11 +79,12 @@ public class FeederPosition extends CommandBase {
                     //finished = true;
                 }
 
-                if(s_Intake.current() > 40 && Timer.hasElapsed(.2)){
+                if(s_Intake.current() > 40 && Timer.hasElapsed(.8)){
                     //s_Intake.intakeIdle();
                     s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
                     s_Wrist.goToPosition();
                     new InstantCommand(()-> s_Leds.actionReady = true);
+                    s_Leds.hasPiece = true;
                     finished = true;
                 }
 
@@ -93,7 +94,7 @@ public class FeederPosition extends CommandBase {
                     s_Pivot.goToPosition();
                     RobotContainer.retractOnScore = true;
 
-                if(Timer.hasElapsed(.2)){
+                if(Timer.hasElapsed(.075)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
@@ -110,6 +111,7 @@ public class FeederPosition extends CommandBase {
                 if(s_Flight.getSensorRange() < 200){
                     s_Intake.intakeIdle();
                     new InstantCommand(()-> s_Leds.actionReady = true);
+                    s_Leds.hasPiece = true;
                     finished = true;
 
                 }

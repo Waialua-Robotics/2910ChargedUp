@@ -14,6 +14,9 @@ public class Arm extends SubsystemBase{
     private int desiredPosition = 0;
     private boolean brakeMode = true;
 
+    private int maxSpeed = 85000;
+    private int maxAcceleration = 85000;
+
     public Arm(){
         m_lArm = new TalonFX(Constants.Arm.lArmID);
         m_rArm = new TalonFX(Constants.Arm.rArmID);
@@ -31,8 +34,8 @@ public class Arm extends SubsystemBase{
        
         //Motion Magic
         m_lArm.setSelectedSensorPosition(0);
-        m_lArm.configMotionCruiseVelocity(75000);//65000
-        m_lArm.configMotionAcceleration(75000);//75000
+        m_lArm.configMotionCruiseVelocity(maxSpeed);//65000
+        m_lArm.configMotionAcceleration(maxAcceleration);//75000
         m_lArm.configMotionSCurveStrength(7);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
@@ -46,6 +49,16 @@ public class Arm extends SubsystemBase{
         m_lArm.config_kI(0, 0);
         m_lArm.config_kD(0, 0);
         m_lArm.config_kF(0, 0);
+    }
+
+    public void stowSpeed() {
+        m_lArm.configMotionCruiseVelocity(85000);
+        m_lArm.configMotionAcceleration(85000);
+    }
+
+    public void normSpeed() {
+        m_lArm.configMotionCruiseVelocity(maxSpeed); // 70000
+        m_lArm.configMotionAcceleration(maxAcceleration); // 40000
     }
 
     public void setCoast(){

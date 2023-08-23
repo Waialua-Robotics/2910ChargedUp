@@ -17,6 +17,8 @@ public class Pivot extends SubsystemBase{
     private TalonFX m_BrPivot;
 
     private int desiredPosition = 0;
+    private int maxSpeed = 50000;
+    private int maxAcceleration = 40000;
 
     public Pivot(){
 
@@ -54,8 +56,8 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.configForwardSoftLimitThreshold(116000);
         m_FlPivot.configReverseSoftLimitThreshold(0);
 
-        m_FlPivot.configMotionCruiseVelocity(50000); //70000
-        m_FlPivot.configMotionAcceleration(20000); //40000
+        m_FlPivot.configMotionCruiseVelocity(maxSpeed); //70000
+        m_FlPivot.configMotionAcceleration(maxAcceleration); //40000
         m_FlPivot.configMotionSCurveStrength(0);
         m_FlPivot.configPeakOutputForward(1);
         m_FlPivot.configPeakOutputReverse(-1);
@@ -64,6 +66,16 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.config_kI(0, 0);
         m_FlPivot.config_kD(0, 0);
         m_FlPivot.config_kF(0, 0);
+    }
+
+    public void stowSpeed() {
+        m_FlPivot.configMotionCruiseVelocity(50000);
+        m_FlPivot.configMotionAcceleration(20000);
+    }
+
+    public void normSpeed() {
+        m_FlPivot.configMotionCruiseVelocity(maxSpeed); // 70000
+        m_FlPivot.configMotionAcceleration(maxAcceleration); // 40000
     }
 
     public int backScoreRetract(){
@@ -80,6 +92,10 @@ public class Pivot extends SubsystemBase{
 
     public boolean isRetracted(){
         return Math.abs(getPosition() - desiredPosition) < 300;
+    }
+
+    public boolean isStowed(){
+        return getPosition() < 1000;
     }
 
     public void setCurrentPosition(){

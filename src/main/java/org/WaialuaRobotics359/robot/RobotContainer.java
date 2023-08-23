@@ -146,7 +146,7 @@ public class RobotContainer {
 
         s_Intake.setDefaultCommand(
             new ManualIntake(
-                s_Intake,
+                s_Intake, s_Leds,
                 () -> intake.getAsBoolean(),
                 () -> outake.getAsBoolean()
             )

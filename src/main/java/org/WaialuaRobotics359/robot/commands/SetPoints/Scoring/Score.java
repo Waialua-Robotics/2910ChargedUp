@@ -51,6 +51,9 @@ public class Score extends CommandBase {
     @Override
     public void execute() {
 
+        s_Pivot.stowSpeed();
+        s_Arm.stowSpeed();
+
         if (!RobotContainer.allowScore) {
 
             if (RobotContainer.isCube) {
@@ -70,6 +73,8 @@ public class Score extends CommandBase {
                 if (Timer.hasElapsed(.6)) {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
+                    s_Pivot.normSpeed();
+                    s_Arm.normSpeed();
                     RobotContainer.retractOnScore = false;
                     finished = true;
                 }
@@ -90,6 +95,8 @@ public class Score extends CommandBase {
                 if (Timer.hasElapsed(.6)) {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
+                    s_Pivot.normSpeed();
+                    s_Arm.normSpeed();
                     RobotContainer.retractOnScore = false;
                     finished = true;
                 }
@@ -120,6 +127,8 @@ public class Score extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
                     s_Leds.noPiece();
+                    s_Pivot.normSpeed();
+                    s_Arm.normSpeed();
                     new InstantCommand(() -> s_Leds.actionReady = true);
                     RobotContainer.retractOnScore = false;
                     finished = true;
@@ -148,6 +157,8 @@ public class Score extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
                     s_Leds.noPiece();
+                    s_Pivot.normSpeed();
+                    s_Arm.normSpeed();
                     new InstantCommand(() -> s_Leds.actionReady = true);
                     RobotContainer.retractOnScore = false;
                     finished = true;
