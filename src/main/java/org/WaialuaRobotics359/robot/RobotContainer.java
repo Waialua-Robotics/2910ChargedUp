@@ -113,7 +113,8 @@ public class RobotContainer {
     private final Flight s_Flight = new Flight();
     private final Pivot s_Pivot = new Pivot();
     private final Leds s_Leds = new Leds();
-    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve);
+    private final PhotonVision s_PhotonVision = new PhotonVision();
+    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision);
 
     /* Auto Builder */
     private SwerveAutoBuilder autoBuilder;

@@ -151,6 +151,40 @@ public final class Constants {
         public static final int CandleID = 26;
         public static final int LEDCount = 68;
     }
+    public static final class PhotonConstants {
+        public static final double nodeHeight = 15.13;
+        public static final double cameraHeight = 9.195;
+
+        public static final class CameraLeft {
+            public static final double xOffset = 5.726;
+            public static final double yOffset = -2.875;
+            public static final double zOffset = 9.195;
+
+            public static final double rollOffset = 0;
+            public static final double pitchOffset = -15; //105?
+            public static final double yawOffset = 241.12;
+
+            public static final int LEDPipe = 0;
+            public static final int LEDOff = 1;
+            public static final int LEDBlink = 2;
+            public static final int LEDOn = 3;
+        }
+
+        public static final class CameraRight {
+            public static final double xOffset = -5.726;
+            public static final double yOffset = -2.875;
+            public static final double zOffset = 9.195;
+
+            public static final double rollOffset = 0;
+            public static final double pitchOffset = -15; //105?
+            public static final double yawOffset = 118.88;
+
+            public static final int LEDPipe = 0;
+            public static final int LEDOff = 1;
+            public static final int LEDBlink = 2;
+            public static final int LEDOn = 3;
+        }
+    }
 
     public static final class OI {
 

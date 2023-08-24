@@ -93,6 +93,10 @@ public class SwerveModule {
         return Rotation2d.fromDegrees(Conversions.falconToDegrees(mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
     }
 
+    private Rotation2d getAngleFlip(){
+        return Rotation2d.fromDegrees(Conversions.falconToDegrees(-mAngleMotor.getSelectedSensorPosition(), Constants.Swerve.angleGearRatio));
+    }
+
     public Rotation2d getCanCoder(){
         return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
     }
@@ -179,4 +183,12 @@ public class SwerveModule {
             getAngle()
         );
     }
+
+    public SwerveModulePosition getPositionFlip(){
+        return new SwerveModulePosition(
+            Conversions.falconToMeters(-mDriveMotor.getSelectedSensorPosition(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
+            getAngleFlip()
+        );
+    }
+
 }

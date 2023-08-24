@@ -1,9 +1,12 @@
 package org.WaialuaRobotics359.robot.subsystems;
 
 
+import java.util.Optional;
+
 import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
+import org.photonvision.EstimatedRobotPose;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -27,6 +30,10 @@ public class PoseEstimator extends SubsystemBase {
   public Pose2d CurrentPose;
 
   private final Swerve s_Swerve;
+  private final PhotonVision s_PhotonVision;
+
+  EstimatedRobotPose cam1Pose;
+  EstimatedRobotPose cam2Pose;
 
   // Kalman Filter Configuration. These can be "tuned-to-taste" based on how much
   // you trust your various sensors. Smaller numbers will cause the filter to
@@ -34,7 +41,7 @@ public class PoseEstimator extends SubsystemBase {
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
   private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.5, .5, Units.degreesToRadians(.01)); //.1
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.5, .5, Units.degreesToRadians(180));
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.5, .5, Units.degreesToRadians(1));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -42,10 +49,11 @@ public class PoseEstimator extends SubsystemBase {
   /* Logging */
 
 
-  public PoseEstimator( Swerve s_Swerve) {
+  public PoseEstimator(Swerve s_Swerve, PhotonVision s_PhotonVision) {
     this.s_Swerve = s_Swerve;
+    this.s_PhotonVision = s_PhotonVision;
 
-    ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+    ShuffleboardTab tab = Shuffleboard.getTab("Field");
     tab.add(field2d);
 
     SwerveposeEstimator = new SwerveDrivePoseEstimator(Constants.Swerve.swerveKinematics,
@@ -57,16 +65,16 @@ public class PoseEstimator extends SubsystemBase {
 
   }
 
-  /*PoseEst */
-  public void VisionMessure(Pose2d robotPose, boolean soft){
-    if(robotPose != null){
-      if (soft){
-        //SwerveposeEstimator.addVisionMeasurement
-        
-      } else{
-        SwerveposeEstimator.resetPosition(robotPose.getRotation(), s_Swerve.getModulePositions(), robotPose);
-      }
-    } 
+  /* PoseEst */
+  public void VisionMeasure(Pose2d robotPose, double timestampSeconds, boolean soft) {
+    if (robotPose == null) {
+      return;
+    }
+    if (soft) {
+      SwerveposeEstimator.addVisionMeasurement(robotPose, timestampSeconds);
+    } else {
+      SwerveposeEstimator.resetPosition(robotPose.getRotation(), s_Swerve.getModulePositions(), robotPose);
+    }
   }
 
   public void resetPoseToZero(){
@@ -101,11 +109,39 @@ public class PoseEstimator extends SubsystemBase {
 
 
   public void periodic(){
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions());
-    //VisionMessure(, true); 
+
+    //CameraLeft
+    Optional<EstimatedRobotPose> result1 = s_PhotonVision.getEstimatedPose(0);
+    if(result1.isPresent()){
+      cam1Pose = result1.get();
+      field2d.getObject("CamLeft Est Pos").setPose(cam1Pose.estimatedPose.toPose2d());
+    }else{
+      field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+    }
+    
+    //CameraRight
+    Optional<EstimatedRobotPose> result2 = s_PhotonVision.getEstimatedPose(1);
+    if(result2.isPresent()){
+      cam2Pose = result2.get();
+      field2d.getObject("CamRight Est Pos").setPose(cam2Pose.estimatedPose.toPose2d());
+    }else{
+      field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+    }
+
+    //Update Pose
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions()); //flipped pose?? or yaw?
+    if(result1.isPresent()){
+      VisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
+    }
+
+    if(result2.isPresent()){
+      VisionMeasure(cam2Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
+    }
+
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();
     field2d.setRobotPose(CurrentPose);
     field2d.getObject("TargetNode").setPose(ClosestSelectedNode());
+
     SmartDashboard.putNumber("X", CurrentPose.getX());
     SmartDashboard.putNumber("y", CurrentPose.getY());
     SmartDashboard.putNumber("Rot", CurrentPose.getRotation().getDegrees());
