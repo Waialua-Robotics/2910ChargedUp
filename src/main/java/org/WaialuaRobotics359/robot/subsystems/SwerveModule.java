@@ -187,7 +187,7 @@ public class SwerveModule {
     public SwerveModulePosition getPositionFlip(){
         return new SwerveModulePosition(
             Conversions.falconToMeters(-mDriveMotor.getSelectedSensorPosition(), Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio), 
-            getAngleFlip()
+            getAngle()
         );
     }
 

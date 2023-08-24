@@ -152,16 +152,16 @@ public final class Constants {
         public static final int LEDCount = 68;
     }
     public static final class PhotonConstants {
-        public static final double nodeHeight = 15.13;
-        public static final double cameraHeight = 9.195;
+        public static final double nodeHeight = Units.inchesToMeters(15.13);
+        public static final double cameraHeight = Units.inchesToMeters(9.195);
 
         public static final class CameraLeft {
-            public static final double xOffset = 5.726;
-            public static final double yOffset = -2.875;
-            public static final double zOffset = 9.195;
+            public static final double xOffset = Units.inchesToMeters(-2.875); //-2.875
+            public static final double yOffset = Units.inchesToMeters(-5.726); //- 5.726
+            public static final double zOffset = Units.inchesToMeters(9.195);
 
             public static final double rollOffset = 0;
-            public static final double pitchOffset = -15; //105?
+            public static final double pitchOffset = -15; //105? / -15
             public static final double yawOffset = 241.12;
 
             public static final int LEDPipe = 0;
@@ -171,9 +171,9 @@ public final class Constants {
         }
 
         public static final class CameraRight {
-            public static final double xOffset = -5.726;
-            public static final double yOffset = -2.875;
-            public static final double zOffset = 9.195;
+            public static final double xOffset = Units.inchesToMeters(-2.875); //-2.875
+            public static final double yOffset = Units.inchesToMeters(5.726); // 5.726
+            public static final double zOffset = Units.inchesToMeters(9.195);
 
             public static final double rollOffset = 0;
             public static final double pitchOffset = -15; //105?

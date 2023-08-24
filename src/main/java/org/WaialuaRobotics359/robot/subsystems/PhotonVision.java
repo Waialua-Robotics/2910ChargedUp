@@ -85,7 +85,14 @@ public class PhotonVision extends SubsystemBase {
         if (!camera[num].getLatestResult().hasTargets()) {
             return 0;
         }
-        return (PhotonConstants.CameraRight.zOffset - PhotonConstants.nodeHeight) / Math.tan(Math.toRadians(getPitch(num)));
+        return camera[num].getLatestResult().getBestTarget().getBestCameraToTarget().getX();
+    }
+
+    public double getPoseAmbiguity(int cam){
+        if (!camera[cam].getLatestResult().hasTargets()) {
+            return 0;
+        }
+        return camera[cam].getLatestResult().getBestTarget().getPoseAmbiguity();
     }
 
     public boolean hasTarget(int num) {
@@ -101,9 +108,15 @@ public class PhotonVision extends SubsystemBase {
     }
 
     public Optional<EstimatedRobotPose> getEstimatedPose(int num) {
-        /*if (!hasTarget(num) || camera[num].getLatestResult().getBestTarget().getPoseAmbiguity() > .2 ) {
+        if (!hasTarget(num)) {
             return Optional.empty();
-        }*/
+        }
+
+        if(hasTarget(num)){
+            if(camera[num].getLatestResult().getBestTarget().getPoseAmbiguity() > .1){
+                return Optional.empty();
+            }
+        }
 
         if (num == 0) {
             return photonLeftPoseEstimator.update();

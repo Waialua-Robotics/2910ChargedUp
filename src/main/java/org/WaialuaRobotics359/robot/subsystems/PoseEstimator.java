@@ -40,8 +40,8 @@ public class PoseEstimator extends SubsystemBase {
   // "trust" the estimate from that particular component more than the others. 
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
-  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.5, .5, Units.degreesToRadians(.01)); //.1
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.5, .5, Units.degreesToRadians(1));
+  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.1, .1, Units.degreesToRadians(.01)); //.1
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(1, 1, Units.degreesToRadians(90));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -77,6 +77,14 @@ public class PoseEstimator extends SubsystemBase {
     }
   }
 
+  public void simpleVisionMeasure(Pose2d robotPose, double timestampSeconds, int cam) {
+    if (s_PhotonVision.getDistance(cam) < 2 && s_PhotonVision.getDistance(cam) > 0) {
+      if (s_PhotonVision.getPoseAmbiguity(cam) < .1 && s_PhotonVision.getPoseAmbiguity(cam)>0 ) {
+        SwerveposeEstimator.addVisionMeasurement(robotPose, timestampSeconds);
+      }
+    }
+  }
+
   public void resetPoseToZero(){
     Pose2d pose = new Pose2d(0,0, new Rotation2d(0));
     SwerveposeEstimator.resetPosition(pose.getRotation(), s_Swerve.getModulePositions(), pose);
@@ -104,7 +112,7 @@ public class PoseEstimator extends SubsystemBase {
 
   public boolean isFrontScore(){
     double angle = getPose().getRotation().getCos();
-    return angle > 0 ? true : false;
+    return angle > 0 ? false : true;
   }
 
 
@@ -129,22 +137,28 @@ public class PoseEstimator extends SubsystemBase {
     }
 
     //Update Pose
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositions()); //flipped pose?? or yaw?
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositionsFlip()); //flipped pose?? or yaw?
     if(result1.isPresent()){
-      VisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
+      simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), 0);
+      //VisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
     }
 
     if(result2.isPresent()){
-      VisionMeasure(cam2Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
+      simpleVisionMeasure(cam2Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), 1);
+      //VisionMeasure(cam2Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
     }
 
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();
     field2d.setRobotPose(CurrentPose);
     field2d.getObject("TargetNode").setPose(ClosestSelectedNode());
 
-    SmartDashboard.putNumber("X", CurrentPose.getX());
-    SmartDashboard.putNumber("y", CurrentPose.getY());
-    SmartDashboard.putNumber("Rot", CurrentPose.getRotation().getDegrees());
+    SmartDashboard.putNumber("Xshuffle", CurrentPose.getX());
+    SmartDashboard.putNumber("Yshuffle", CurrentPose.getY());
+    SmartDashboard.putNumber("ROTshuffle", CurrentPose.getRotation().getDegrees());
+    SmartDashboard.putNumber("cam 0 dist", s_PhotonVision.getDistance(0));
+    SmartDashboard.putNumber("cam 1 dist", s_PhotonVision.getDistance(1));
+    SmartDashboard.putNumber("cam 0 amb", s_PhotonVision.getPoseAmbiguity(0));
+    SmartDashboard.putNumber("cam 1 amb", s_PhotonVision.getPoseAmbiguity(1));
     SmartDashboard.putBoolean("isFront", isFrontScore());
 
     //logData();

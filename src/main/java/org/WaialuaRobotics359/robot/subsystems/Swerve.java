@@ -106,6 +106,14 @@ public class Swerve extends SubsystemBase {
         return positions;
     }
 
+    public SwerveModulePosition[] getModulePositionsFlip(){
+        SwerveModulePosition[] positions = new SwerveModulePosition[4];
+        for(SwerveModule mod : mSwerveMods){
+            positions[mod.moduleNumber] = mod.getPositionFlip();
+        }
+        return positions;
+    }
+
     public void zeroGyro(){
         desiredAngle = 0;
         gyro.setYaw(0);
