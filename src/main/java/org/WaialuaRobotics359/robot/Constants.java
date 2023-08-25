@@ -162,7 +162,7 @@ public final class Constants {
 
             public static final double rollOffset = 0;
             public static final double pitchOffset = Units.degreesToRadians(-15); //105? / -15
-            public static final double yawOffset = Units.degreesToRadians(241.12); //241.12
+            public static final double yawOffset = Units.degreesToRadians(215); //241.12 21.12
 
             public static final int LEDPipe = 0;
             public static final int LEDOff = 1;
@@ -177,7 +177,7 @@ public final class Constants {
 
             public static final double rollOffset = 0;
             public static final double pitchOffset = Units.degreesToRadians(-15); //105?
-            public static final double yawOffset = Units.degreesToRadians(118.88); //118.88
+            public static final double yawOffset = Units.degreesToRadians(155); //118.88
 
             public static final int LEDPipe = 0;
             public static final int LEDOff = 1;
