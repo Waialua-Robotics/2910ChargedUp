@@ -40,8 +40,8 @@ public class PoseEstimator extends SubsystemBase {
   // "trust" the estimate from that particular component more than the others. 
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
-  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.1, .1, Units.degreesToRadians(.01)); //.1
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(1, 1, Units.degreesToRadians(90));
+  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(5, 5, Units.degreesToRadians(90)); //.1,.1 .01
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.1, .1, Units.degreesToRadians(.01));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -78,8 +78,9 @@ public class PoseEstimator extends SubsystemBase {
   }
 
   public void simpleVisionMeasure(Pose2d robotPose, double timestampSeconds, int cam) {
-    if (s_PhotonVision.getDistance(cam) < 2 && s_PhotonVision.getDistance(cam) > 0) {
-      if (s_PhotonVision.getPoseAmbiguity(cam) < .1 && s_PhotonVision.getPoseAmbiguity(cam)>0 ) {
+    if (s_PhotonVision.getDistance(cam) < 4 && s_PhotonVision.getDistance(cam) > 0) {
+      if (s_PhotonVision.getPoseAmbiguity(cam) < .2 && s_PhotonVision.getPoseAmbiguity(cam)>0 ) {
+        timestampSeconds += s_PhotonVision.getLatencySec(cam);
         SwerveposeEstimator.addVisionMeasurement(robotPose, timestampSeconds);
       }
     }
@@ -120,26 +121,36 @@ public class PoseEstimator extends SubsystemBase {
 
     //CameraLeft
     Optional<EstimatedRobotPose> result1 = s_PhotonVision.getEstimatedPose(0);
-    if(result1.isPresent()){
+    if(result1.isPresent()){ //result1.isPresent()
       cam1Pose = result1.get();
       field2d.getObject("CamLeft Est Pos").setPose(cam1Pose.estimatedPose.toPose2d());
+      SmartDashboard.putNumber("cam1Result3dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam1Result3dZ", cam1Pose.estimatedPose.getZ());
+      SmartDashboard.putNumber("cam1Result3dX", cam1Pose.estimatedPose.getX());
+      SmartDashboard.putNumber("cam1Result3dY", cam1Pose.estimatedPose.getY());
+      SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
     }else{
-      field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+      //field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
     
     //CameraRight
     Optional<EstimatedRobotPose> result2 = s_PhotonVision.getEstimatedPose(1);
-    if(result2.isPresent()){
+    if(result2.isPresent()){ //result2.isPresent()
       cam2Pose = result2.get();
       field2d.getObject("CamRight Est Pos").setPose(cam2Pose.estimatedPose.toPose2d());
+      SmartDashboard.putNumber("cam2Result3dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam2Result3dZ", cam2Pose.estimatedPose.getZ());
+      SmartDashboard.putNumber("cam2Result3dX", cam2Pose.estimatedPose.getX());
+      SmartDashboard.putNumber("cam2Result3dY", cam2Pose.estimatedPose.getY());
+      SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
     }else{
-      field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
+      //field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
 
     //Update Pose
     SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositionsFlip()); //flipped pose?? or yaw?
     if(result1.isPresent()){
-      simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), 0);
+      simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), 0); //Timer.getFPGATimestamp()-s_PhotonVision.getLatency(0)
       //VisionMeasure(cam1Pose.estimatedPose.toPose2d(), Timer.getFPGATimestamp(), true); //true
     }
 
@@ -155,10 +166,12 @@ public class PoseEstimator extends SubsystemBase {
     SmartDashboard.putNumber("Xshuffle", CurrentPose.getX());
     SmartDashboard.putNumber("Yshuffle", CurrentPose.getY());
     SmartDashboard.putNumber("ROTshuffle", CurrentPose.getRotation().getDegrees());
-    SmartDashboard.putNumber("cam 0 dist", s_PhotonVision.getDistance(0));
+    /*SmartDashboard.putNumber("cam 0 dist", s_PhotonVision.getDistance(0));
     SmartDashboard.putNumber("cam 1 dist", s_PhotonVision.getDistance(1));
     SmartDashboard.putNumber("cam 0 amb", s_PhotonVision.getPoseAmbiguity(0));
     SmartDashboard.putNumber("cam 1 amb", s_PhotonVision.getPoseAmbiguity(1));
+    SmartDashboard.putNumber("cam 0 lat", s_PhotonVision.getLatencySec(0));
+    SmartDashboard.putNumber("cam 1 lat", s_PhotonVision.getLatencySec(1));*/
     SmartDashboard.putBoolean("isFront", isFrontScore());
 
     //logData();

@@ -17,6 +17,8 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PhotonVision extends SubsystemBase {
@@ -95,6 +97,14 @@ public class PhotonVision extends SubsystemBase {
         return camera[cam].getLatestResult().getBestTarget().getPoseAmbiguity();
     }
 
+    public double getLatency(int num) {
+        return camera[num].getLatestResult().getLatencyMillis();
+    }
+
+    public double getLatencySec(int num){
+        return Units.millisecondsToSeconds(getLatency(num));
+    }
+
     public boolean hasTarget(int num) {
         return camera[num].getLatestResult().hasTargets();
     }
@@ -108,21 +118,17 @@ public class PhotonVision extends SubsystemBase {
     }
 
     public Optional<EstimatedRobotPose> getEstimatedPose(int num) {
+        /* 
         if (!hasTarget(num)) {
             return Optional.empty();
         }
-
-        if(hasTarget(num)){
-            if(camera[num].getLatestResult().getBestTarget().getPoseAmbiguity() > .1){
-                return Optional.empty();
-            }
-        }
-
+        */
         if (num == 0) {
             return photonLeftPoseEstimator.update();
         }else{
             return photonRightPoseEstimator.update();
         }
+        
     }
 
     public void setLEDs(int num, int LEDmode){
