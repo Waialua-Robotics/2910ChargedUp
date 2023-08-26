@@ -27,6 +27,7 @@ import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
+import org.WaialuaRobotics359.robot.commands.Swerve.AutoAlignXApril;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.*;
 import org.WaialuaRobotics359.robot.commands.autonomous.*;
 import org.WaialuaRobotics359.robot.subsystems.*;
@@ -66,6 +67,7 @@ public class RobotContainer {
     private final int rotationAxis = XboxController.Axis.kRightX.value;
 
     private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
+    private final Trigger autoAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) >.5);
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
@@ -77,6 +79,7 @@ public class RobotContainer {
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+  
     
 
     /* Operator Controls */
@@ -203,6 +206,8 @@ public class RobotContainer {
             /* Toggle Swerve Slow Mode */
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
+
+            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, ()-> autoAlign.getAsBoolean()));
 
         /* Operator Buttons */
         setCone.whileTrue(

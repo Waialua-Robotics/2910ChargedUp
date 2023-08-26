@@ -116,6 +116,7 @@ public class Leds extends SubsystemBase{
         alliance = DriverStation.getAlliance();
 
         /*Button Leds */
+
         if(zeroButton){
             rainbow(Section.OnBoard, 1);
             //solid(Color.GREEN, Section.OnBoard);
@@ -127,14 +128,14 @@ public class Leds extends SubsystemBase{
             }
         }
 
-
-        if (!bothControllers) {
+        if(alliance == DriverStation.Alliance.Invalid){
+            ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
+        } else if (!bothControllers) {
             solid(Color.BLUE, Section.Right);
             solid(Color.RED, Section.Left);
         } else if (alliance == DriverStation.Alliance.Red) {
             solid(Color.RED, Section.OffBoard);
         } else if (alliance == DriverStation.Alliance.Blue) {
-            //ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
             solid(Color.BLUE, Section.OffBoard);
         } else {
             ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);

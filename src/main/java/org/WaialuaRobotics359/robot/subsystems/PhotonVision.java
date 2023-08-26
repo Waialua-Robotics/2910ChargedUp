@@ -3,6 +3,7 @@ package org.WaialuaRobotics359.robot.subsystems;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.Constants.PhotonConstants;
 import org.WaialuaRobotics359.robot.Constants.PhotonConstants.CameraLeft;
 import org.WaialuaRobotics359.robot.Constants.PhotonConstants.CameraRight;
@@ -70,31 +71,51 @@ public class PhotonVision extends SubsystemBase {
     }
 
     public double getYaw(int num) {
-        if (!camera[num].getLatestResult().hasTargets()) {
-            return 0;
+        double result = 0;
+        if (camera[num].getLatestResult().hasTargets()) {
+            if (camera[num].getLatestResult().getBestTarget() != null) {
+                result =  camera[num].getLatestResult().getBestTarget().getYaw();
+            } else {
+                result = 0;
+            }
         }
-        return camera[num].getLatestResult().getBestTarget().getYaw();
+        return result;
     }
 
     public double getPitch(int num) {
-        if (!camera[num].getLatestResult().hasTargets()) {
-            return 0;
+        double result = 0;
+        if (camera[num].getLatestResult().hasTargets()) {
+            if (camera[num].getLatestResult().getBestTarget() != null) {
+                result =  camera[num].getLatestResult().getBestTarget().getPitch();
+            } else{
+                result = 0;
+            }
         }
-        return camera[num].getLatestResult().getBestTarget().getPitch();
+        return result;
     }
 
     public double getDistance(int num) {
-        if (!camera[num].getLatestResult().hasTargets()) {
-            return 0;
+        double result = 0;
+        if (camera[num].getLatestResult().hasTargets()) {
+            if (camera[num].getLatestResult().getBestTarget() != null) {
+                result = camera[num].getLatestResult().getBestTarget().getBestCameraToTarget().getX();
+            } else {
+                result = 0;
+            }
         }
-        return camera[num].getLatestResult().getBestTarget().getBestCameraToTarget().getX();
+            return result;
     }
 
-    public double getPoseAmbiguity(int cam){
-        if (!camera[cam].getLatestResult().hasTargets()) {
-            return 0;
+    public double getPoseAmbiguity(int num) {
+        double result = 0;
+        if (camera[num].getLatestResult().hasTargets()) {
+            if (camera[num].getLatestResult().getBestTarget() != null) {
+                result = camera[num].getLatestResult().getBestTarget().getPoseAmbiguity();
+            } else {
+                result = 0;
+            }
         }
-        return camera[cam].getLatestResult().getBestTarget().getPoseAmbiguity();
+        return result;
     }
 
     public double getLatency(int num) {
