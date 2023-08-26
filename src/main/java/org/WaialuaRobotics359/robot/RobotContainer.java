@@ -207,7 +207,7 @@ public class RobotContainer {
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
-            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, ()-> autoAlign.getAsBoolean()));
+            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean()));
 
         /* Operator Buttons */
         setCone.whileTrue(

@@ -69,6 +69,7 @@ public class PhotonVision extends SubsystemBase {
         setPipeline(1, 0);
         //setLEDs(1, CameraRight.LEDPipe);
     }
+    /* 
 
     public double getYaw(int num) {
         double result = 0;
@@ -117,6 +118,7 @@ public class PhotonVision extends SubsystemBase {
         }
         return result;
     }
+    */
 
     public double getLatency(int num) {
         return camera[num].getLatestResult().getLatencyMillis();

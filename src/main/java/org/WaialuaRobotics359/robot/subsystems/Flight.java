@@ -16,6 +16,14 @@ public class Flight extends SubsystemBase {
         return m_Flight.getRange();
     }
 
+    public double offsetFromCenterIn(){
+        if(getSensorRange()<365){
+            return -1*((getSensorRange()-160)/1000);
+        }else{
+            return 0;
+        }
+    }
+
     public void periodic(){
         SmartDashboard.putNumber("PWF Distance", getSensorRange());
         SmartDashboard.putNumber("pid", m_Flight.pidGet());

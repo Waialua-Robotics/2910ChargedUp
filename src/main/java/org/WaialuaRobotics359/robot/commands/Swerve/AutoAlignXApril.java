@@ -6,6 +6,7 @@ import java.util.function.BooleanSupplier;
 import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
+import org.WaialuaRobotics359.robot.subsystems.Flight;
 import org.WaialuaRobotics359.robot.subsystems.PoseEstimator;
 import org.WaialuaRobotics359.robot.subsystems.Swerve;
 
@@ -20,6 +21,7 @@ public class AutoAlignXApril extends CommandBase {
 
     private PoseEstimator s_PoseEstimator;
     private Swerve s_swerve;
+    private Flight s_Flight;
     private BooleanSupplier alignButton;
 
     // Create a PID controller whose setpoint's change is subject to maximum
@@ -34,9 +36,10 @@ public class AutoAlignXApril extends CommandBase {
     private double yDistance;
     private Timer  Timer;
 
-    public AutoAlignXApril(PoseEstimator s_poseEstimator, Swerve s_swerve, BooleanSupplier alignButton ) {
+    public AutoAlignXApril(PoseEstimator s_poseEstimator, Swerve s_swerve, Flight s_Flight, BooleanSupplier alignButton ) {
         this.s_PoseEstimator = s_poseEstimator;
         this.s_swerve = s_swerve;
+        this.s_Flight = s_Flight;
         this.alignButton = alignButton;
         Timer = new Timer();
         constraintsX = new TrapezoidProfile.Constraints(3, 5);
@@ -49,7 +52,7 @@ public class AutoAlignXApril extends CommandBase {
     }
 
     private void fetchValues() {
-       xDistance = s_PoseEstimator.getXtoClosestSelectedNode();
+       xDistance = s_PoseEstimator.getXtoClosestSelectedNode()+ s_Flight.offsetFromCenterIn();
        yDistance = s_PoseEstimator.getYtoClosestSelectedNode();
     }
 

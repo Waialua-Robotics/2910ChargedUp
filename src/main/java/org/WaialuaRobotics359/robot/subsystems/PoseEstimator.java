@@ -41,7 +41,7 @@ public class PoseEstimator extends SubsystemBase {
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
   private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.01)); //.1,.1 .01
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.1, .1, Units.degreesToRadians(1));
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(1));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -78,10 +78,20 @@ public class PoseEstimator extends SubsystemBase {
   }
 
   public void simpleVisionMeasure(Pose2d robotPose, double timestampSeconds, int cam) {
-    if (s_PhotonVision.getDistance(cam) < 4 && s_PhotonVision.getDistance(cam) > 0) {
-      if (s_PhotonVision.getPoseAmbiguity(cam) < .2 && s_PhotonVision.getPoseAmbiguity(cam)>0 ) {
+    if (getDistance(cam) < 4 && getDistance(cam) > 0) {
+      /*if (s_PhotonVision.getPoseAmbiguity(cam) < .2 && s_PhotonVision.getPoseAmbiguity(cam)>0 ) {
         SwerveposeEstimator.addVisionMeasurement(robotPose, timestampSeconds);
-      }
+      }*/
+
+      SwerveposeEstimator.addVisionMeasurement(robotPose, timestampSeconds);
+    }
+  }
+
+  public double getDistance(int cam){
+    if(cam == 0){
+      return cam1Pose.estimatedPose.getX();
+    }else{
+      return cam2Pose.estimatedPose.getX();
     }
   }
 
