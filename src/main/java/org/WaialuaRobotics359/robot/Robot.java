@@ -4,13 +4,17 @@
 
 package org.WaialuaRobotics359.robot;
 
+import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,8 +26,8 @@ public class Robot extends TimedRobot {
   public static CTREConfigs ctreConfigs;
 
   private Command m_autonomousCommand;
-
   private RobotContainer m_robotContainer;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -35,8 +39,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    PathPlannerServer.startServer(5811);
-  }
+    //PathPlannerServer.startServer(5811);
+    //PortForwarder.add(5800, "photonleft.local", 5800);
+    }
 
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
@@ -56,10 +61,66 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.getLeds().allOff();
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    //m_robotContainer.getSwerve().resetModulesToAbsolute();
+    m_robotContainer.getSwerve().setCurrentAngle();
+
+    m_robotContainer.getArm().setCurrentPosition();
+    m_robotContainer.getPivot().setCurrentPosition();
+    m_robotContainer.getWrist().setCurrentPosition();
+
+    if (!m_robotContainer.brakeToggle.get() && m_robotContainer.toggleMode) {
+
+      m_robotContainer.toggleMode = false;
+
+      if (m_robotContainer.brakeMode) {
+        m_robotContainer.getArm().setBrake();
+        m_robotContainer.getPivot().setBrake();
+        m_robotContainer.getWrist().setBrake();
+      } else if (!m_robotContainer.brakeMode) {
+        m_robotContainer.getArm().setCoast();
+        m_robotContainer.getPivot().setCoast();
+        m_robotContainer.getWrist().setCoast();
+      }
+
+      m_robotContainer.brakeMode = !m_robotContainer.brakeMode;
+    }
+
+    if (m_robotContainer.brakeToggle.get()) {
+      m_robotContainer.toggleMode = true;
+    }
+
+    if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode) {
+      m_robotContainer.zeroMode = false;
+      m_robotContainer.getArm().setPosition(0);
+      m_robotContainer.getArm().setDesiredPosition(0);
+      m_robotContainer.getArm().goToPosition();
+      m_robotContainer.getPivot().setPosition(0);
+      m_robotContainer.getPivot().setDesiredPosition(0);
+      m_robotContainer.getPivot().goToPosition();
+      m_robotContainer.getWrist().setPosition(0);
+      m_robotContainer.getWrist().setDesiredPosition(0);
+      m_robotContainer.getWrist().goToPosition();
+    } else {
+      m_robotContainer.zeroMode = true;
+    }
+
+    m_robotContainer.getLeds().DisabledLed(!m_robotContainer.zero.get(),m_robotContainer.brakeMode );
+
+  }
+
+  /*
+   * if pressed && firsttime
+   *  first time = false
+   *  set toogle oppisite true 
+   * else 
+   * first time = true
+   */
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -85,6 +146,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
   }
 
   /** This function is called periodically during operator control. */
