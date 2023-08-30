@@ -11,6 +11,7 @@ Driver | Rest Mods | Back |
 Driver | Robot Centric | LB |
 Driver | Snap 0 | Y |
 Driver | Snap 180 | A|
+
 Operator | 10* | NA |
 Operator | Low | A |
 Operator | Mid | B |
@@ -33,6 +34,7 @@ Overide |  | Middle |
 Robot | BrakeMode | Button |
 Robot | Zero | Button |
 Robot | Coast | Button |
+=======
 
 <h2> Id's/Location </h2>
 
@@ -77,3 +79,4 @@ when scoring button pressed
 Scoring sequence (manual mode) :
 disable the soft limits
 allow the joysticks and triggerst t control the different axis in percent mode
+
