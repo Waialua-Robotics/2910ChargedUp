@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -69,56 +70,14 @@ public class PhotonVision extends SubsystemBase {
         setPipeline(1, 0);
         //setLEDs(1, CameraRight.LEDPipe);
     }
-    /* 
 
-    public double getYaw(int num) {
-        double result = 0;
-        if (camera[num].getLatestResult().hasTargets()) {
-            if (camera[num].getLatestResult().getBestTarget() != null) {
-                result =  camera[num].getLatestResult().getBestTarget().getYaw();
-            } else {
-                result = 0;
-            }
-        }
-        return result;
+    public boolean leftConected(){
+        return camera[0].isConnected();
     }
 
-    public double getPitch(int num) {
-        double result = 0;
-        if (camera[num].getLatestResult().hasTargets()) {
-            if (camera[num].getLatestResult().getBestTarget() != null) {
-                result =  camera[num].getLatestResult().getBestTarget().getPitch();
-            } else{
-                result = 0;
-            }
-        }
-        return result;
+    public boolean rightConected(){
+        return camera[1].isConnected();
     }
-
-    public double getDistance(int num) {
-        double result = 0;
-        if (camera[num].getLatestResult().hasTargets()) {
-            if (camera[num].getLatestResult().getBestTarget() != null) {
-                result = camera[num].getLatestResult().getBestTarget().getBestCameraToTarget().getX();
-            } else {
-                result = 0;
-            }
-        }
-            return result;
-    }
-
-    public double getPoseAmbiguity(int num) {
-        double result = 0;
-        if (camera[num].getLatestResult().hasTargets()) {
-            if (camera[num].getLatestResult().getBestTarget() != null) {
-                result = camera[num].getLatestResult().getBestTarget().getPoseAmbiguity();
-            } else {
-                result = 0;
-            }
-        }
-        return result;
-    }
-    */
 
     public double getLatency(int num) {
         return camera[num].getLatestResult().getLatencyMillis();
@@ -169,5 +128,7 @@ public class PhotonVision extends SubsystemBase {
 
     @Override
     public void periodic() {
+        Leds.leftConected = true; //leftConected();
+        Leds.rightConected = false; //rightConected();
     }    
 }

@@ -21,6 +21,7 @@ import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.awt.Color;
@@ -55,6 +56,8 @@ public class Leds extends SubsystemBase{
 
     //Both
     private boolean estopped = false; //conected
+    public static boolean leftConected = false; //conected
+    public static boolean rightConected = false; //conected
     
 
     public Leds(){
@@ -82,7 +85,12 @@ public class Leds extends SubsystemBase{
 
     private void strobe(Color color ,Section section,  double duration) {
         boolean on = ((Timer.getFPGATimestamp() % duration) / duration) > 0.5;
-        solid( on ? color : color.black, section);
+        solid( on ? color : color.BLACK, section);
+    }
+
+    private boolean strobePeriod(){
+        double duration =2; 
+        return ((Timer.getFPGATimestamp() % duration) / duration) > 0.8;
     }
 
     private void rainbow(Section section,double speed){
@@ -104,6 +112,8 @@ public class Leds extends SubsystemBase{
     }
 
     public void DisabledLed(boolean zeroButton, boolean inBrake){
+
+        SmartDashboard.putBoolean("StrobeValue", strobePeriod());
 
         // update controller state
         if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)) {
@@ -128,7 +138,14 @@ public class Leds extends SubsystemBase{
             }
         }
 
-        if(alliance == DriverStation.Alliance.Invalid){
+        if((!leftConected || !rightConected) && strobePeriod()){
+            if(!rightConected){ 
+                solid(Color.WHITE, Section.Right);
+            }
+            if(!leftConected){
+                solid(Color.WHITE, Section.Left);
+            }
+        }else if(alliance == DriverStation.Alliance.Invalid){
             ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
         } else if (!bothControllers) {
             solid(Color.BLUE, Section.Right);
@@ -177,6 +194,13 @@ public class Leds extends SubsystemBase{
             solid(Color.RED, Section.All);
         } else if (endgameAlert) {
             rainbow(Section.OffBoard, 1);
+        }else if((!leftConected || !rightConected )&& strobePeriod()){
+            if(!rightConected){ 
+                solid(Color.WHITE, Section.Right);
+            }
+            if(!leftConected){
+                solid(Color.WHITE, Section.Left);
+            }
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {

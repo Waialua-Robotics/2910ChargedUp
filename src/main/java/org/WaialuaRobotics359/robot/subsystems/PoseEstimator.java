@@ -134,7 +134,7 @@ public class PoseEstimator extends SubsystemBase {
 
     //CameraLeft
     Optional<EstimatedRobotPose> result1 = s_PhotonVision.getEstimatedPose(0);
-    if(result1.isPresent()){ //result1.isPresent()
+    if(result1.isPresent()){ 
       cam1Pose = result1.get();
       field2d.getObject("CamLeft Est Pos").setPose(cam1Pose.estimatedPose.toPose2d());
       SmartDashboard.putNumber("cam1Result3dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
@@ -148,7 +148,7 @@ public class PoseEstimator extends SubsystemBase {
     
     //CameraRight
     Optional<EstimatedRobotPose> result2 = s_PhotonVision.getEstimatedPose(1);
-    if(result2.isPresent()){ //result2.isPresent()
+    if(result2.isPresent()){ 
       cam2Pose = result2.get();
       field2d.getObject("CamRight Est Pos").setPose(cam2Pose.estimatedPose.toPose2d());
       SmartDashboard.putNumber("cam2Result3dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
@@ -160,14 +160,17 @@ public class PoseEstimator extends SubsystemBase {
       field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
 
-    //Update Pose
-    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(),s_Swerve.getYaw(), s_Swerve.getModulePositionsFlip()); //flipped pose?? or yaw?
-    if(result1.isPresent()){
-      simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), cam1Pose.timestampSeconds, 0); //Timer.getFPGATimestamp()-s_PhotonVision.getLatency(0)
-    }
+    // Update Pose
+    SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(), s_Swerve.getYaw(), s_Swerve.getModulePositionsFlip());
 
-    if(result2.isPresent()){
-      simpleVisionMeasure(cam2Pose.estimatedPose.toPose2d(), cam2Pose.timestampSeconds, 1);
+    if (!DriverStation.isAutonomous()) {
+      if (result1.isPresent()) {
+        simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), cam1Pose.timestampSeconds, 0);
+      }
+
+      if (result2.isPresent()) {
+        simpleVisionMeasure(cam2Pose.estimatedPose.toPose2d(), cam2Pose.timestampSeconds, 1);
+      }
     }
 
     CurrentPose = SwerveposeEstimator.getEstimatedPosition();

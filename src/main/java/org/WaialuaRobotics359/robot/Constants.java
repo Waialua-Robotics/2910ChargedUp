@@ -62,7 +62,7 @@ public final class Constants {
             public static final int groundPosition = 32620;
             public static final int standingPosition = 42900;
             public static final int lowPosition = 2325;
-            public static final int frontLowPosition = 18000;
+            public static final int frontLowPosition = 39000; //18000
             public static final int midPosition = 6730;
             public static final int highPosition = 13905;
             public static final int feederPosition = 300;
@@ -94,7 +94,7 @@ public final class Constants {
             public static final int frontLowPosition = 10;
             public static final int midPosition = 13225;
             public static final int highPosition = 26525;
-            public static final int feederPosition = 19280;
+            public static final int feederPosition = 20200;
         }
         
         public static final class Cube {
@@ -128,7 +128,7 @@ public final class Constants {
             public static final int groundPosition = 790;
             public static final int standingPosition = 20000;//19150
             public static final int lowPosition = 21300;
-            public static final int frontLowPosition = 3640;
+            public static final int frontLowPosition = 12000;
             public static final int midPosition = 83290;
             public static final int highPosition = 87550;
             public static final int feederPosition = 68600;
@@ -348,24 +348,24 @@ public final class Constants {
             public static final List<Pose2d> BluePoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.85, Units.inchesToMeters(196.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(152.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(130.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(86.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(64.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(20.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(196.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(152.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(130.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(86.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(64.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(20.19), new Rotation2d(0)));
                 }
             };
             
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.85, Units.inchesToMeters(295.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(251.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(229.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(185.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(163.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(119.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(295.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(251.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(229.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(185.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(163.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(119.56), new Rotation2d(0)));
                 }
             };
         }
@@ -374,24 +374,25 @@ public final class Constants {
             public static final List<Pose2d> BluePoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.85, Units.inchesToMeters(174.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(108.19), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(42.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(174.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(108.19), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(42.19), new Rotation2d(0)));
                 }
             };
             
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.85, Units.inchesToMeters(273.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(207.56), new Rotation2d(0)));
-                add(new Pose2d(1.85, Units.inchesToMeters(141.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(273.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(207.56), new Rotation2d(0)));
+                add(new Pose2d(1.82, Units.inchesToMeters(141.56), new Rotation2d(0)));
                 }
             };
         }
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+        public static final boolean VisionInAuto = false;
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
@@ -402,7 +403,7 @@ public final class Constants {
         public static final double kPThetaController = 1;
 
         /*Auto Builder Const */
-        public static final PIDConstants translationPID = new PIDConstants(1, 0, 0);
+        public static final PIDConstants translationPID = new PIDConstants(.2, 0, 0);
         public static final PIDConstants rotationPID = new PIDConstants(1.5, 0, 0); //d.05 i .05
     
         /* Constraint for the motion profilied robot angle controller */

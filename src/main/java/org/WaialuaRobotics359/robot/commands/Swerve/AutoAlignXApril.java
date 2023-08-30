@@ -84,8 +84,8 @@ public class AutoAlignXApril extends CommandBase {
             translation, rotationVal * Constants.Swerve.maxAngularVelocity, true, true //open loop?
         ); 
 
-        System.out.println(translation.getY());
-        System.out.println(translation.getX());
+        //System.out.println(translation.getY());
+        //System.out.println(translation.getX());
     }
     
     @Override
