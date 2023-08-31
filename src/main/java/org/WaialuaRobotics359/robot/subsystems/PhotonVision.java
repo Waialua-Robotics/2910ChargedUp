@@ -128,7 +128,7 @@ public class PhotonVision extends SubsystemBase {
 
     @Override
     public void periodic() {
-        Leds.leftConected = true; //leftConected();
-        Leds.rightConected = false; //rightConected();
+        Leds.leftConected = leftConected();
+        Leds.rightConected = rightConected();
     }    
 }

@@ -404,7 +404,7 @@ public final class Constants {
 
         /*Auto Builder Const */
         public static final PIDConstants translationPID = new PIDConstants(.2, 0, 0);
-        public static final PIDConstants rotationPID = new PIDConstants(1.5, 0, 0); //d.05 i .05
+        public static final PIDConstants rotationPID = new PIDConstants(.1, 0, 0); //d.05 i .05
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

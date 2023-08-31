@@ -78,6 +78,9 @@ public class Leds extends SubsystemBase{
     }
 
     private void solid(int R, int G, int B, Section section){
+        if(section == section.All){
+            clearAnimation(1); 
+        }
         clearAnimation(section.animationSlot());
         LED.setLEDs(R, G, B, 0, section.startOne(), section.length());
         LED.setLEDs(R, G, B, 0, section.startTwo(), section.length());
@@ -159,6 +162,7 @@ public class Leds extends SubsystemBase{
         }
     }
 
+    @Override
     public void periodic() {
 
         //sync states
@@ -183,7 +187,7 @@ public class Leds extends SubsystemBase{
         }
 
         //endgame alert
-        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 20, 30))){
+        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 27, 30))){
             endgameAlert = true;
         }else{
             endgameAlert = false;
