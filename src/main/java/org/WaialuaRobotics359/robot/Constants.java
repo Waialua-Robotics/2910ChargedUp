@@ -62,7 +62,7 @@ public final class Constants {
             public static final int groundPosition = 32620;
             public static final int standingPosition = 42900;
             public static final int lowPosition = 2325;
-            public static final int frontLowPosition = 39000; //18000
+            public static final int frontLowPosition = 32000; //18000
             public static final int midPosition = 6730;
             public static final int highPosition = 13905;
             public static final int feederPosition = 300;
@@ -403,8 +403,8 @@ public final class Constants {
         public static final double kPThetaController = 1;
 
         /*Auto Builder Const */
-        public static final PIDConstants translationPID = new PIDConstants(.2, 0, 0);
-        public static final PIDConstants rotationPID = new PIDConstants(.1, 0, 0); //d.05 i .05
+        public static final PIDConstants translationPID = new PIDConstants(.7, 0, 0);
+        public static final PIDConstants rotationPID = new PIDConstants(.3, 0, 0); //d.05 i .05
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

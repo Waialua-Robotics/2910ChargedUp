@@ -52,7 +52,7 @@ public class PhotonVision extends SubsystemBase {
         robotToCam1 = new Transform3d(new Translation3d(CameraLeft.xOffset, CameraLeft.yOffset, CameraLeft.zOffset), 
             new Rotation3d(CameraLeft.rollOffset, CameraLeft.pitchOffset, CameraLeft.yawOffset)); //insert camera pos. from center
         photonLeftPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout, PoseStrategy.AVERAGE_BEST_TARGETS, camera[0], robotToCam1);
-
+        
         //CameraRight
         camera[1] = new PhotonCamera("photonRight");
         robotToCam2 = new Transform3d(new Translation3d(CameraRight.xOffset, CameraRight.yOffset, CameraRight.zOffset), 

@@ -137,11 +137,11 @@ public class PoseEstimator extends SubsystemBase {
     if(result1.isPresent()){ 
       cam1Pose = result1.get();
       field2d.getObject("CamLeft Est Pos").setPose(cam1Pose.estimatedPose.toPose2d());
-      SmartDashboard.putNumber("cam1Result3dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
-      SmartDashboard.putNumber("cam1Result3dZ", cam1Pose.estimatedPose.getZ());
-      SmartDashboard.putNumber("cam1Result3dX", cam1Pose.estimatedPose.getX());
-      SmartDashboard.putNumber("cam1Result3dY", cam1Pose.estimatedPose.getY());
-      SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
+      //SmartDashboard.putNumber("cam1Result3dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
+      //SmartDashboard.putNumber("cam1Result3dZ", cam1Pose.estimatedPose.getZ());
+      //SmartDashboard.putNumber("cam1Result3dX", cam1Pose.estimatedPose.getX());
+      //SmartDashboard.putNumber("cam1Result3dY", cam1Pose.estimatedPose.getY());
+      //SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
@@ -151,11 +151,11 @@ public class PoseEstimator extends SubsystemBase {
     if(result2.isPresent()){ 
       cam2Pose = result2.get();
       field2d.getObject("CamRight Est Pos").setPose(cam2Pose.estimatedPose.toPose2d());
-      SmartDashboard.putNumber("cam2Result3dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
-      SmartDashboard.putNumber("cam2Result3dZ", cam2Pose.estimatedPose.getZ());
-      SmartDashboard.putNumber("cam2Result3dX", cam2Pose.estimatedPose.getX());
-      SmartDashboard.putNumber("cam2Result3dY", cam2Pose.estimatedPose.getY());
-      SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
+      //SmartDashboard.putNumber("cam2Result3dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
+      //SmartDashboard.putNumber("cam2Result3dZ", cam2Pose.estimatedPose.getZ());
+      //SmartDashboard.putNumber("cam2Result3dX", cam2Pose.estimatedPose.getX());
+      //SmartDashboard.putNumber("cam2Result3dY", cam2Pose.estimatedPose.getY());
+      //SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
@@ -163,7 +163,7 @@ public class PoseEstimator extends SubsystemBase {
     // Update Pose
     SwerveposeEstimator.updateWithTime(Timer.getFPGATimestamp(), s_Swerve.getYaw(), s_Swerve.getModulePositionsFlip());
 
-    if (!DriverStation.isAutonomous()) {
+    if (DriverStation.isTeleopEnabled()) {
       if (result1.isPresent()) {
         simpleVisionMeasure(cam1Pose.estimatedPose.toPose2d(), cam1Pose.timestampSeconds, 0);
       }

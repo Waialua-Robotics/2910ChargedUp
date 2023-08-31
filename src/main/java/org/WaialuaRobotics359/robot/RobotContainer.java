@@ -105,6 +105,7 @@ public class RobotContainer {
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
 
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
+    private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
 
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
 
@@ -151,7 +152,7 @@ public class RobotContainer {
         s_Intake.setDefaultCommand(
             new ManualIntake(
                 s_Intake, s_Leds,
-                () -> intake.getAsBoolean(),
+                () -> intakeTrigger.getAsBoolean(),
                 () -> outake.getAsBoolean()
             )
         );
@@ -296,9 +297,8 @@ public class RobotContainer {
       public void configRoutine() {
 
           /* AutoChosser */
-          m_chooser.setDefaultOption("PurpleYellow", new PurpleYellow(autoBuilder, s_PoseEstimator));
+          m_chooser.setDefaultOption("None", null);
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("None", null);
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);
