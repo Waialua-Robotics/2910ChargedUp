@@ -71,6 +71,10 @@ public class Arm extends SubsystemBase{
         m_rArm.setNeutralMode(NeutralMode.Brake);
     }
 
+    public void setPercentOutput(double value){
+        m_lArm.set(ControlMode.PercentOutput, value);
+    }
+
     public void setPosition(double pos){
         m_lArm.setSelectedSensorPosition(pos);
     }
@@ -89,6 +93,10 @@ public class Arm extends SubsystemBase{
 
     public int getPosition(){
         return (int) m_lArm.getSelectedSensorPosition();
+    }
+
+    public double getVelocity(){
+        return m_lArm.getSelectedSensorVelocity();
     }
 
     public boolean inPosition(){
@@ -111,8 +119,8 @@ public class Arm extends SubsystemBase{
         m_lArm.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_lArm.getStatorCurrent();
+    public double getCurrent(){
+        return m_lArm.getStatorCurrent();
     } 
     
     public void stop() {

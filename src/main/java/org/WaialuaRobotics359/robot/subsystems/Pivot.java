@@ -78,6 +78,10 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.configMotionAcceleration(maxAcceleration); // 40000
     }
 
+    public void setPercentOutput(double speed){
+        m_FlPivot.set(ControlMode.PercentOutput, speed);
+    }
+
     public int backScoreRetract(){
         return Constants.Pivot.Cone.highPosition - 10000;
     }
@@ -155,9 +159,13 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_FlPivot.getStatorCurrent();
+    public double getCurrent(){
+        return m_FlPivot.getStatorCurrent();
     } 
+
+    public double getVelocity(){
+        return m_FlPivot.getSelectedSensorVelocity();
+    }
     
     public void stop() {
         m_FlPivot.set(ControlMode.PercentOutput, 0);

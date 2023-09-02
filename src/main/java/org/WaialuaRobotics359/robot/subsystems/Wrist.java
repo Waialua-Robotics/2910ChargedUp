@@ -62,8 +62,16 @@ public class Wrist extends SubsystemBase{
         m_Wrist.set(ControlMode.MotionMagic, desiredPosition);
     }
 
+    public void setPercentOutput(double value){
+        m_Wrist.set(ControlMode.PercentOutput, value);
+    }
+
     public int getPosition(){
         return (int) m_Wrist.getSelectedSensorPosition();
+    }
+
+    public double getVelocity(){
+        return m_Wrist.getSelectedSensorVelocity();
     }
 
     public boolean inPosition(){
@@ -78,8 +86,8 @@ public class Wrist extends SubsystemBase{
         m_Wrist.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_Wrist.getStatorCurrent();
+    public double getCurrent(){
+        return m_Wrist.getStatorCurrent();
     } 
     
     public void stop() {
