@@ -56,7 +56,9 @@ public final class Constants {
         public static final int softMax = 0;
         public static final int softMin = 0;
         public static final int WristID = 1;
+
         public static final int stowPosition = 0;
+        public static final int middleStowPosition = 0;
 
         public static final class Cone {
             public static final int groundPosition = 32620;
@@ -85,7 +87,9 @@ public final class Constants {
         public static final int softMin = 0;
         public static final int lArmID = 5;
         public static final int rArmID = 6;
+
         public static final int stowPosition = 0;
+        public static final int middleStowPosition = 0;
 
         public static final class Cone {
             public static final int groundPosition = 5400;
@@ -119,6 +123,7 @@ public final class Constants {
         public static final int lowStart = 10000;
         
         public static final int stowPosition = 0;
+        public static final int middleStowPosition = 0;
 
         public static final double kTicksPerDegree = 636.4;
 

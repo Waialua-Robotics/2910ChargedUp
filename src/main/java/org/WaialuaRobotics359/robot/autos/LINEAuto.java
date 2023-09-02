@@ -1,7 +1,6 @@
 package org.WaialuaRobotics359.robot.autos;
 
 import org.WaialuaRobotics359.robot.subsystems.PoseEstimator;
-import org.apache.commons.collections4.functors.InstantiateTransformer;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;

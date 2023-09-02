@@ -63,7 +63,7 @@ public class AutoHighPosition extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
 
-                if(Timer.hasElapsed(.2)){
+                if(Timer.hasElapsed(.4)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
@@ -79,6 +79,8 @@ public class AutoHighPosition extends CommandBase {
                 }
 
                     if(s_Pivot.inPosition()){
+                            Timer.reset();
+                            Timer.start();
                             s_Intake.outake();
                         
                         if (RobotContainer.retractOnScore) {
@@ -111,7 +113,7 @@ public class AutoHighPosition extends CommandBase {
                     s_Pivot.setDesiredPosition(PivotPosition);
                     s_Pivot.goToPosition();
 
-                if(Timer.hasElapsed(.2)){
+                if(Timer.hasElapsed(.4)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
@@ -126,6 +128,8 @@ public class AutoHighPosition extends CommandBase {
                     RobotContainer.retractOnScore = true;
                 }
                     if(s_Pivot.inPosition()){
+                        Timer.reset();
+                        Timer.start();
                         s_Intake.outake();
 
                         if (RobotContainer.retractOnScore) {

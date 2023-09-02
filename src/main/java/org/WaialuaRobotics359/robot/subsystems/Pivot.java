@@ -102,6 +102,7 @@ public class Pivot extends SubsystemBase{
         return getPosition() < 1000;
     }
 
+
     public void setCurrentPosition(){
         double currentPosition = getPosition();
 
