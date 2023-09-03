@@ -1,4 +1,4 @@
-package org.WaialuaRobotics359.robot.commands.SetPoints.Pickup;
+package org.WaialuaRobotics359.robot.commands.AutoCommands;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
 
-public class PickupPosition extends CommandBase{
+public class PickupPositionAuto extends CommandBase{
     private Arm s_Arm;
     private Intake s_Intake;
     private Pivot s_Pivot;
@@ -20,7 +20,7 @@ public class PickupPosition extends CommandBase{
     private static int PivotPosition;
     private static int WristPosition;
 
-    public PickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
+    public PickupPositionAuto(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
@@ -78,15 +78,15 @@ public class PickupPosition extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 60 && Timer.hasElapsed(1)){
+                //if(s_Intake.current() > 60 && Timer.hasElapsed(1)){
+                    if(Timer.hasElapsed(2)){
                     s_Wrist.setDesiredPosition(0);
                     s_Wrist.goToPosition();
+                    s_Arm.setDesiredPosition(0);
+                    s_Arm.goToPosition();
+                    s_Intake.intakeIdle();
                     s_Leds.hasPiece();
                     new InstantCommand(()-> s_Leds.actionReady = false);
-                }
-        
-                if(s_Leds.hasPiece && s_Wrist.getPosition()<100){
-                    s_Intake.intakeIdle();
                     finished = true;
                 }
 

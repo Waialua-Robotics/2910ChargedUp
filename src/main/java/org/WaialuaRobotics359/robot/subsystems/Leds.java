@@ -116,7 +116,7 @@ public class Leds extends SubsystemBase{
 
     public void DisabledLed(boolean zeroButton, boolean inBrake){
 
-        SmartDashboard.putBoolean("StrobeValue", strobePeriod());
+        //SmartDashboard.putBoolean("StrobeValue", strobePeriod());
 
         // update controller state
         if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)) {

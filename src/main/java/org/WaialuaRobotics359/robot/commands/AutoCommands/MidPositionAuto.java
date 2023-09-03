@@ -1,4 +1,4 @@
-package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
+package org.WaialuaRobotics359.robot.commands.AutoCommands;
 
 import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.RobotContainer;
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
-public class MidPosition extends CommandBase {
+public class MidPositionAuto extends CommandBase {
 
     private Arm s_Arm;
     private Pivot s_Pivot;
@@ -19,7 +19,7 @@ public class MidPosition extends CommandBase {
     private static int PivotPosition;
     private static int WristPosition;
 
-    public MidPosition(Intake s_Intake, Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
+    public MidPositionAuto(Intake s_Intake, Arm s_Arm, Wrist s_Wrist, Pivot s_Pivot, Leds s_Leds){
         this.s_Arm = s_Arm;
         this.s_Wrist = s_Wrist;
         this.s_Pivot = s_Pivot;
@@ -71,7 +71,7 @@ public class MidPosition extends CommandBase {
                 s_Wrist.goToPosition();
             }
 
-            if(Timer.hasElapsed(.6)){
+            if(s_Pivot.inPosition()){
                 new InstantCommand(()-> s_Leds.actionReady = true);
                 RobotContainer.retractOnScore = true;
                 finished = true;
@@ -92,7 +92,7 @@ public class MidPosition extends CommandBase {
                 s_Wrist.goToPosition();
             }
 
-            if(Timer.hasElapsed(.6)){
+            if(s_Pivot.inPosition() && Timer.hasElapsed(.6)){
                 new InstantCommand(()-> s_Leds.actionReady = true);
                 RobotContainer.retractOnScore = true;
                 finished = true;

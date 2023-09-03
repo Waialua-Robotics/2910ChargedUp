@@ -71,7 +71,7 @@ public final class Constants {
         }
         
         public static final class Cube {
-            public static final int groundPosition = 21500;
+            public static final int groundPosition = 21500;//21500
             public static final int lowPosition = 155;
             public static final int frontLowPosition = 0;
             public static final int midPosition = 5110;
@@ -102,7 +102,7 @@ public final class Constants {
         }
         
         public static final class Cube {
-            public static final int groundPosition = 5400;
+            public static final int groundPosition = 5400;//5400
             public static final int lowPosition = 0;
             public static final int frontLowPosition = 0;
             public static final int midPosition = 2790;
@@ -123,7 +123,7 @@ public final class Constants {
         public static final int lowStart = 10000;
         
         public static final int stowPosition = 0;
-        public static final int middleStowPosition = 0;
+        public static final int middleStowPosition = 58000;
 
         public static final double kTicksPerDegree = 636.4;
 
@@ -141,7 +141,7 @@ public final class Constants {
         }
         
         public static final class Cube {
-            public static final int groundPosition = 0;
+            public static final int groundPosition = 0; //0
             public static final int lowPosition = 62200;
             public static final int frontLowPosition = 0;
             public static final int midPosition = 85630;
@@ -409,7 +409,7 @@ public final class Constants {
 
         /*Auto Builder Const */
         public static final PIDConstants translationPID = new PIDConstants(.7, 0, 0);
-        public static final PIDConstants rotationPID = new PIDConstants(.3, 0, 0); //d.05 i .05
+        public static final PIDConstants rotationPID = new PIDConstants(1.3, 0, 0); //d.05 i .05
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

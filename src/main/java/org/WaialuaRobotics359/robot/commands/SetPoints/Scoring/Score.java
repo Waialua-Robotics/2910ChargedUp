@@ -1,12 +1,10 @@
 package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 
 import org.WaialuaRobotics359.robot.Constants;
-import org.WaialuaRobotics359.robot.Robot;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Score extends CommandBase {

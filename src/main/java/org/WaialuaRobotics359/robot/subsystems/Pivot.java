@@ -104,9 +104,8 @@ public class Pivot extends SubsystemBase{
 
 
     public void setCurrentPosition(){
-        double currentPosition = getPosition();
-
-        currentPosition = desiredPosition;
+        desiredPosition = getPosition();
+        goToPosition();
     }
 
     public void setCoast(){
@@ -175,10 +174,9 @@ public class Pivot extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("pPosition", getPosition());
-        SmartDashboard.putNumber("pDesired", desiredPosition);
-        SmartDashboard.putNumber("pPercentOutput", m_FlPivot.getMotorOutputPercent());
-        SmartDashboard.putBoolean("RetractOnScore", RobotContainer.retractOnScore);
-
+        //SmartDashboard.putNumber("pDesired", desiredPosition);
+        //SmartDashboard.putNumber("pPercentOutput", m_FlPivot.getMotorOutputPercent());
+        //SmartDashboard.putBoolean("RetractOnScore", RobotContainer.retractOnScore);
 
     }
 }

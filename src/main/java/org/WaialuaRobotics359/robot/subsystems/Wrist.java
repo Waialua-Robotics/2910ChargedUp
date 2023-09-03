@@ -46,8 +46,8 @@ public class Wrist extends SubsystemBase{
     }
 
     public void setCurrentPosition(){
-        double currentPosition = getPosition();
-        currentPosition = desiredPosition;
+        desiredPosition = getPosition();
+        goToPosition();
     }
 
     public void setPosition(double pos){
@@ -96,10 +96,9 @@ public class Wrist extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
-            SmartDashboard.putNumber("wDesiredPos", desiredPosition);
-            SmartDashboard.putNumber("wPosition", getPosition());
-            SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
-
+        //SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
+        //SmartDashboard.putNumber("wDesiredPos", desiredPosition);
+        SmartDashboard.putNumber("wPosition", getPosition());
+        //SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
     }
 }

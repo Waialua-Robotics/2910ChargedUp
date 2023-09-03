@@ -96,6 +96,7 @@ public class Robot extends TimedRobot {
 
     if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode) {
       m_robotContainer.zeroMode = false;
+      m_robotContainer.getSwerve().zeroGyro();
       m_robotContainer.getArm().setPosition(0);
       m_robotContainer.getArm().setDesiredPosition(0);
       m_robotContainer.getArm().goToPosition();

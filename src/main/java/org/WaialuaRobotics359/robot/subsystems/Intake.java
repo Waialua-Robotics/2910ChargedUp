@@ -24,12 +24,12 @@ public class Intake extends SubsystemBase{
         m_Intake.configMotionCruiseVelocity(15000);
         m_Intake.configMotionAcceleration(30000);
         m_Intake.configMotionSCurveStrength(6);
-        m_Intake.configPeakOutputForward(.5);
-        m_Intake.configPeakOutputReverse(-.5);
+        m_Intake.configPeakOutputForward(1);
+        m_Intake.configPeakOutputReverse(-1);
 
-        m_Intake.config_kP(0, .25);
+        m_Intake.config_kP(0, .2);
         m_Intake.config_kI(0, 0);
-        m_Intake.config_kD(0, 0);
+        m_Intake.config_kD(0, .05);
         m_Intake.config_kF(0, 0);
     }
 
@@ -50,7 +50,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void intakeIdle(){
-        m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 205 : -400);
+        m_Intake.set(ControlMode.Velocity,  RobotContainer.isCube ? 305 : -400);
         
     }
 
@@ -63,11 +63,11 @@ public class Intake extends SubsystemBase{
     }
 
     public void intake(){
-        m_Intake.set(ControlMode.PercentOutput, RobotContainer.isCube ? 1 : -1);
+        m_Intake.set(ControlMode.PercentOutput, RobotContainer.isCube ? .7 : -.7);
     }
 
     public void outake(){
-        m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -1 : 1);
+        m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -.5 : .5);
     }
 
     public void getCurrent(){
@@ -85,11 +85,11 @@ public class Intake extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("iPercentOutput", m_Intake.getMotorOutputPercent());
-        SmartDashboard.putNumber("Ivelocity", m_Intake.getSelectedSensorVelocity());
+        //SmartDashboard.putNumber("iPercentOutput", m_Intake.getMotorOutputPercent());
+        //SmartDashboard.putNumber("Ivelocity", m_Intake.getSelectedSensorVelocity());
         SmartDashboard.putNumber("iCurrent", m_Intake.getStatorCurrent());
-        SmartDashboard.putBoolean("Mode", RobotContainer.isCube);
-        SmartDashboard.putBoolean("KillSwitch", RobotContainer.allowScore);
+        //SmartDashboard.putBoolean("Mode", RobotContainer.isCube);
+        //SmartDashboard.putBoolean("KillSwitch", RobotContainer.allowScore);
 
 
     }

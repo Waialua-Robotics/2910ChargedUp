@@ -1,19 +1,13 @@
 package org.WaialuaRobotics359.robot;
 
-import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -30,6 +24,9 @@ import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
 import org.WaialuaRobotics359.robot.commands.Swerve.AutoAlignXApril;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.*;
 import org.WaialuaRobotics359.robot.commands.autonomous.*;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoHighPosition;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoMidPosition;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.LowPickupStow;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.PIDConstants;
@@ -270,11 +267,22 @@ public class RobotContainer {
        //eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
        //eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
 
+       /* Cone & Cube Modes */
+       eventMap.put("ConeMode", new InstantCommand(() -> isCube = false));
+       eventMap.put("CubeMode", new InstantCommand(() -> isCube = true));
+
+       /* Pickup */
+       eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
+       eventMap.put("Upright", new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));
         eventMap.put("Wait1", new AutoWait(1));
         eventMap.put("Wait1.5",new AutoWait(1.5));
+
+        /*Scoring commands*/
+        eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("ScoreMid", new AutoMidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
 
         /* End Event Map */
 
@@ -299,6 +307,7 @@ public class RobotContainer {
           /* AutoChosser */
           m_chooser.setDefaultOption("None", null);
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);

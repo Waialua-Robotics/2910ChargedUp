@@ -77,8 +77,8 @@ public class AutoAlignXApril extends CommandBase {
        fetchValues();
        
        Translation2d translation = new Translation2d(controllerY.calculate(yDistance, 0), controllerX.calculate(xDistance, 0)); // only drive y value
-       SmartDashboard.putNumber("xDistance", controllerX.calculate(xDistance, 0));
-       SmartDashboard.putNumber("xDistance", controllerY.calculate(xDistance, 0));
+       //SmartDashboard.putNumber("xDistance", controllerX.calculate(xDistance, 0));
+       //SmartDashboard.putNumber("xDistance", controllerY.calculate(xDistance, 0));
        
         s_swerve.drive(
             translation, rotationVal * Constants.Swerve.maxAngularVelocity, true, true //open loop?

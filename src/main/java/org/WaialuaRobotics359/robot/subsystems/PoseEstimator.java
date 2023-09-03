@@ -97,11 +97,11 @@ public class PoseEstimator extends SubsystemBase {
 
   public void resetPoseToZero(){
     Pose2d pose = new Pose2d(0,0, new Rotation2d(0));
-    SwerveposeEstimator.resetPosition(pose.getRotation(), s_Swerve.getModulePositions(), pose);
+    SwerveposeEstimator.resetPosition(pose.getRotation(), s_Swerve.getModulePositionsFlip(), pose);
   }
 
   public void resetPose(Pose2d pose){
-    SwerveposeEstimator.resetPosition(pose.getRotation(), s_Swerve.getModulePositions(), pose);
+    SwerveposeEstimator.resetPosition(pose.getRotation(), s_Swerve.getModulePositionsFlip(), pose);
   }
 
   public Pose2d getPose(){
@@ -177,16 +177,16 @@ public class PoseEstimator extends SubsystemBase {
     field2d.setRobotPose(CurrentPose);
     field2d.getObject("TargetNode").setPose(ClosestSelectedNode());
 
-    SmartDashboard.putNumber("Xshuffle", CurrentPose.getX());
-    SmartDashboard.putNumber("Yshuffle", CurrentPose.getY());
-    SmartDashboard.putNumber("ROTshuffle", CurrentPose.getRotation().getDegrees());
+    //SmartDashboard.putNumber("Xshuffle", CurrentPose.getX());
+    //SmartDashboard.putNumber("Yshuffle", CurrentPose.getY());
+    //SmartDashboard.putNumber("ROTshuffle", CurrentPose.getRotation().getDegrees());
     /*SmartDashboard.putNumber("cam 0 dist", s_PhotonVision.getDistance(0));
     SmartDashboard.putNumber("cam 1 dist", s_PhotonVision.getDistance(1));
     SmartDashboard.putNumber("cam 0 amb", s_PhotonVision.getPoseAmbiguity(0));
     SmartDashboard.putNumber("cam 1 amb", s_PhotonVision.getPoseAmbiguity(1));
     SmartDashboard.putNumber("cam 0 lat", s_PhotonVision.getLatencySec(0));
     SmartDashboard.putNumber("cam 1 lat", s_PhotonVision.getLatencySec(1));*/
-    SmartDashboard.putBoolean("isFront", isFrontScore());
+    //SmartDashboard.putBoolean("isFront", isFrontScore());
 
     //logData();
     //SmartDashboard.putNumber("X to Closest Node", getXtoClosestSelectedNode());

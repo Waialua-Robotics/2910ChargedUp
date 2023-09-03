@@ -76,10 +76,15 @@ public class MidPickupPosition extends CommandBase{
             s_Intake.intake();
         }
 
-        if(s_Intake.current() > 40){
-            s_Intake.intakeIdle();
+        if(s_Intake.current() > 80 && Timer.hasElapsed(1)){
+            s_Wrist.setDesiredPosition(0);
+            s_Wrist.goToPosition();
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
+        }
+
+        if(s_Leds.hasPiece && s_Wrist.getPosition()<100){
+            s_Intake.intakeIdle();
             finished = true;
         }
 

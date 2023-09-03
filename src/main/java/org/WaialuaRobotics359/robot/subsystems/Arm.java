@@ -80,11 +80,8 @@ public class Arm extends SubsystemBase{
     }
 
     public void setCurrentPosition(){
-        double currentPosition = getPosition();
-        setDesiredPosition((int)currentPosition);
+        desiredPosition = getPosition();
         goToPosition();
-
-        currentPosition = desiredPosition;
     }
 
     public void setDesiredPosition (int position) {
@@ -129,8 +126,8 @@ public class Arm extends SubsystemBase{
     
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("aDesiredPos", desiredPosition);
+        //SmartDashboard.putNumber("aDesiredPos", desiredPosition);
         SmartDashboard.putNumber("aPosition", getPosition());
-        SmartDashboard.putNumber("aPercentOutput", m_lArm.getMotorOutputPercent());
+        //SmartDashboard.putNumber("aPercentOutput", m_lArm.getMotorOutputPercent());
     }
 }
