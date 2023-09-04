@@ -18,6 +18,8 @@ import java.util.HashMap;
 
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.HighPositionAuto;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.MidPositionAuto;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
@@ -281,12 +283,16 @@ public class RobotContainer {
         eventMap.put("Wait1.5",new AutoWait(1.5));
 
         /* Positions */
-        eventMap.put("HighPosition", new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
-        eventMap.put("MidPosition", new MidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
-        
+        eventMap.put("HighPosition", new HighPositionAuto(s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("MidPosition", new MidPositionAuto(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("LowPosition", new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
+        eventMap.put("Stow", new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
+
         /*Scoring commands*/
         eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
         eventMap.put("ScoreMid", new AutoMidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("Score", new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
         /* End Event Map */
 

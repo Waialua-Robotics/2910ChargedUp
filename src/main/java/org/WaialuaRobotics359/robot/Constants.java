@@ -65,7 +65,7 @@ public final class Constants {
             public static final int standingPosition = 42900;
             public static final int lowPosition = 2325;
             public static final int frontLowPosition = 32000; //18000
-            public static final int midPosition = 6730;
+            public static final int midPosition = 3825; // 6730
             public static final int highPosition = 13905;
             public static final int feederPosition = 300;
         }
@@ -96,7 +96,7 @@ public final class Constants {
             public static final int standingPosition = 10;
             public static final int lowPosition = 0;
             public static final int frontLowPosition = 10;
-            public static final int midPosition = 13225;
+            public static final int midPosition = 19510;  //13225
             public static final int highPosition = 26525;
             public static final int feederPosition = 20200;
         }
@@ -134,7 +134,7 @@ public final class Constants {
             public static final int standingPosition = 20000;//19150
             public static final int lowPosition = 21300;
             public static final int frontLowPosition = 12000;
-            public static final int midPosition = 83290;
+            public static final int midPosition = 85145; //83290
             public static final int highPosition = 87550;
             public static final int feederPosition = 68600;
 

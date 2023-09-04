@@ -57,7 +57,7 @@ public class PickupPositionAuto extends CommandBase{
 
     @Override
     public void execute(){
-
+                s_Intake.intake();
 
             if(RobotContainer.isCube){
                     s_Pivot.setDesiredPosition(PivotPosition);
@@ -78,9 +78,8 @@ public class PickupPositionAuto extends CommandBase{
                     s_Intake.intake();
                 }
 
-                //if(s_Intake.current() > 60 && Timer.hasElapsed(1)){
-                    if(Timer.hasElapsed(2)){
-                    s_Wrist.setDesiredPosition(0);
+                if(s_Intake.current() > 70 && Timer.hasElapsed(1)|| Timer.hasElapsed(3)){
+                    s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
                     s_Wrist.goToPosition();
                     s_Arm.setDesiredPosition(0);
                     s_Arm.goToPosition();

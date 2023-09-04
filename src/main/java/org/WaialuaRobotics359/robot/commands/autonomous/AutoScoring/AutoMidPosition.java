@@ -14,10 +14,10 @@ public class AutoMidPosition extends SequentialCommandGroup {
 
 
         addCommands(new SequentialCommandGroup(
-            new MidPositionAuto(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds), //HalfUpHighStart
-            //new AutoWait(2),
-            new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds)
-            //new AutoWait(.1)
+                new MidPositionAuto(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds), // HalfUpHighStart
+                new AutoWait(0.1),
+                new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds)
+        // new AutoWait(.1)
         ));
     }
 }

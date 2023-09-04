@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.7,
-        "y": 3.34
+        "x": 6.781523277332269,
+        "y": 4.523458761203237
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.595431619434668,
-        "y": 3.993813273340833
+        "x": 5.70791755869226,
+        "y": 4.695235676185638
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -16,9 +16,7 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [
-          "Upright"
-        ],
+        "names": [],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
@@ -26,17 +24,14 @@
     },
     {
       "anchorPoint": {
-        "x": 4.834718240865054,
-        "y": 4.6236619616096375
+        "x": 1.857251714503429,
+        "y": 4.351681846220836
       },
       "prevControl": {
-        "x": 6.207003322428216,
-        "y": 4.359760984385953
+        "x": 2.200805544468232,
+        "y": 4.781124133676839
       },
-      "nextControl": {
-        "x": 4.090351609274648,
-        "y": 4.7668093907616385
-      },
+      "nextControl": null,
       "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
@@ -48,31 +43,29 @@
         "waitBehavior": "none",
         "waitTime": 0
       }
-    },
-    {
-      "anchorPoint": {
-        "x": 1.9288254290794298,
-        "y": 4.423255560796836
-      },
-      "prevControl": {
-        "x": 2.3010087448746326,
-        "y": 4.666606190355238
-      },
-      "nextControl": null,
-      "holonomicAngle": 0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [
-          "ScoreMid"
-        ],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
     }
   ],
-  "markers": []
+  "markers": [
+    {
+      "position": 0.6,
+      "names": [
+        "event",
+        "MidPosition"
+      ]
+    },
+    {
+      "position": 0.25,
+      "names": [
+        "event",
+        "Upright"
+      ]
+    },
+    {
+      "position": 0.845454545454545,
+      "names": [
+        "event",
+        "Score"
+      ]
+    }
+  ]
 }

@@ -55,6 +55,8 @@ public class MidPositionAuto extends CommandBase {
 
     @Override
     public void execute(){
+        s_Pivot.stowSpeed();
+        s_Arm.stowSpeed();
         
         if(RobotContainer.isCube){
 
@@ -71,32 +73,38 @@ public class MidPositionAuto extends CommandBase {
                 s_Wrist.goToPosition();
             }
 
-            if(s_Pivot.inPosition()){
+            if(Timer.hasElapsed(.6)){
                 new InstantCommand(()-> s_Leds.actionReady = true);
                 RobotContainer.retractOnScore = true;
+                s_Pivot.normSpeed();
+                s_Arm.normSpeed();
                 finished = true;
             }
 
         } else {
 
-                s_Pivot.setDesiredPosition(PivotPosition);
-                s_Pivot.goToPosition();
+            s_Arm.setDesiredPosition(ArmPosition);
+            s_Arm.goToPosition();
 
-            if(Timer.hasElapsed(.2)){
-                s_Arm.setDesiredPosition(ArmPosition);
-                s_Arm.goToPosition();
-            }
-
-            if(Timer.hasElapsed(.4)){
+            if (Timer.hasElapsed(.2)) {
                 s_Wrist.setDesiredPosition(WristPosition);
                 s_Wrist.goToPosition();
             }
 
-            if(s_Pivot.inPosition() && Timer.hasElapsed(.6)){
-                new InstantCommand(()-> s_Leds.actionReady = true);
-                RobotContainer.retractOnScore = true;
-                finished = true;
+            if (Timer.hasElapsed(.4)) {
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
             }
+
+            if (Timer.hasElapsed(.6) && s_Pivot.inPosition()) {
+                new InstantCommand(() -> s_Leds.actionReady = true);
+                RobotContainer.retractOnScore = true;
+                s_Pivot.normSpeed();
+                s_Arm.normSpeed();
+                finished = true;
+                System.out.print("Print");
+            }
+
         }
         
     }

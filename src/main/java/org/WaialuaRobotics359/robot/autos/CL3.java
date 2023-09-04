@@ -15,10 +15,10 @@ public class CL3 extends SequentialCommandGroup {
 
     public CL3 (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("CL3P1", new PathConstraints(3, 2)); 
-        PathPlannerTrajectory AutoPath2 = PathPlanner.loadPath("CL3P2", new PathConstraints(3, 2));
-        PathPlannerTrajectory AutoPath3 = PathPlanner.loadPath("CL3P3", new PathConstraints(3, 2));
-        PathPlannerTrajectory AutoPath4 = PathPlanner.loadPath("CL3P4", new PathConstraints(3, 2));
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("CL3P1", new PathConstraints(4, 3)); 
+        PathPlannerTrajectory AutoPath2 = PathPlanner.loadPath("CL3P2", new PathConstraints(4, 3));
+        PathPlannerTrajectory AutoPath3 = PathPlanner.loadPath("CL3P3", new PathConstraints(4, 3));
+        PathPlannerTrajectory AutoPath4 = PathPlanner.loadPath("CL3P4", new PathConstraints(4, 3));
 
         Pose2d startpose = AutoPath.getInitialHolonomicPose();
 
