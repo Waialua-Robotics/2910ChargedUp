@@ -80,7 +80,7 @@ public class Arm extends SubsystemBase{
     }
 
     public void setCurrentPosition(){
-        desiredPosition = getPosition();
+        setDesiredPosition(getPosition());
         goToPosition();
     }
 

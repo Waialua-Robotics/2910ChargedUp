@@ -46,7 +46,7 @@ public class Wrist extends SubsystemBase{
     }
 
     public void setCurrentPosition(){
-        desiredPosition = getPosition();
+        setDesiredPosition(getPosition());
         goToPosition();
     }
 

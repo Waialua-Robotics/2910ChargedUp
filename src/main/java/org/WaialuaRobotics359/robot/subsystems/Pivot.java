@@ -104,7 +104,7 @@ public class Pivot extends SubsystemBase{
 
 
     public void setCurrentPosition(){
-        desiredPosition = getPosition();
+        setDesiredPosition(getPosition());
         goToPosition();
     }
 

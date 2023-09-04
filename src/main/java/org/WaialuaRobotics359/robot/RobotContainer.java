@@ -280,6 +280,10 @@ public class RobotContainer {
         eventMap.put("Wait1", new AutoWait(1));
         eventMap.put("Wait1.5",new AutoWait(1.5));
 
+        /* Positions */
+        eventMap.put("HighPosition", new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("MidPosition", new MidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        
         /*Scoring commands*/
         eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
         eventMap.put("ScoreMid", new AutoMidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
