@@ -96,7 +96,7 @@ public final class Constants {
             public static final int standingPosition = 10;
             public static final int lowPosition = 0;
             public static final int frontLowPosition = 10;
-            public static final int midPosition = 19510;  //13225
+            public static final int midPosition = 18510;  //13225
             public static final int highPosition = 26525;
             public static final int feederPosition = 20200;
         }
@@ -415,5 +415,11 @@ public final class Constants {
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+        /* Auto Balance Const */
+        public static final double BalanceKp = 0.03; // P (Proportional) constant of a PID loop
+        public static final double BalanceGoal = 0;
+        public static final double BalanceThreshold = 3;
+        public static final double BalanceReverseMulti = .5;
     }
 }

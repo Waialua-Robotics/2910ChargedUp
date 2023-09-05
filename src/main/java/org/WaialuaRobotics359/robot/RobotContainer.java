@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.AutoBalance;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.HighPositionAuto;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.MidPositionAuto;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
@@ -288,6 +289,8 @@ public class RobotContainer {
         eventMap.put("LowPosition", new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
         eventMap.put("Stow", new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
+        /* Auto Balance */
+        eventMap.put("AutoBalance", new AutoBalance(s_Swerve));
 
         /*Scoring commands*/
         eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
@@ -318,6 +321,8 @@ public class RobotContainer {
           m_chooser.setDefaultOption("None", null);
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);
