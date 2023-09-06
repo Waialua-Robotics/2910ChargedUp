@@ -40,6 +40,7 @@ public class Leds extends SubsystemBase{
     public boolean lowBatteryAlert = false;
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
+    public boolean atZero = false; //conected
     //teleop
     public boolean isCube; //conected
     public boolean actionReady = false; //conected
@@ -187,7 +188,7 @@ public class Leds extends SubsystemBase{
         }
 
         //endgame alert
-        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 27, 30))){
+        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && ((Conversions.isBetween(DriverStation.getMatchTime(), 27, 30)) || (Conversions.isBetween(DriverStation.getMatchTime(), 13, 15)))){
             endgameAlert = true;
         }else{
             endgameAlert = false;

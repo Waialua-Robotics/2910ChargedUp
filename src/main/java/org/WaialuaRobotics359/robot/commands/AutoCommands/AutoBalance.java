@@ -99,9 +99,9 @@ public class AutoBalance extends CommandBase {
     }
 
     // Debugging Print Statments
-    System.out.println("Current Angle: " + currentAngle);
-    System.out.println("Error " + error);
-    System.out.println("Drive Power: " + drivePower);
+    //System.out.println("Current Angle: " + currentAngle);
+    //System.out.println("Error " + error);
+    //System.out.println("Drive Power: " + drivePower);
   }
 
 
