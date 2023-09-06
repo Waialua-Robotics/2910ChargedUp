@@ -1,5 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -49,6 +51,15 @@ public class Arm extends SubsystemBase{
         m_lArm.config_kI(0, 0);
         m_lArm.config_kD(0, 0);
         m_lArm.config_kF(0, 0);
+    }
+
+
+    public void autoPos(){
+        if (Math.abs(getPosition() - Constants.Arm.autoStart) < 2500) {
+            RobotContainer.armAutoStart = true;
+        } else {
+            RobotContainer.armAutoStart = false;
+        }
     }
 
     public void stowSpeed() {

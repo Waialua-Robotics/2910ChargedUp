@@ -72,6 +72,10 @@ public class Leds extends SubsystemBase{
     public void clearAnimation(int animationSlot){
         LED.clearAnimation(animationSlot);
     }
+
+    public void autoCheck(){
+        if(RobotContainer.pivotAutoStart){}
+    }
     
     /*LED Options */
     private void solid(Color color, Section section){

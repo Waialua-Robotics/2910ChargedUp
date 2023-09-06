@@ -46,9 +46,13 @@ public class RobotContainer {
     public static boolean isCube = true;
     public static boolean allowScore = true;
     public static boolean retractOnScore = false;
+    public static boolean pivotAutoStart = false;
+    public static boolean armAutoStart = false;
+    public static boolean wristAutoStart = false;
     public boolean toggleMode = true;
     public boolean brakeMode = false;
     public boolean zeroMode = true;
+
     
 
 
