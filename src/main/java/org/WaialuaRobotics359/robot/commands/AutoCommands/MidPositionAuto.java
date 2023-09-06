@@ -41,9 +41,9 @@ public class MidPositionAuto extends CommandBase {
             PivotPosition = Constants.Pivot.Cube.midPosition;
             WristPosition = Constants.Wrist.Cube.midPosition;
         } else {
-            ArmPosition = Constants.Arm.Cone.midPosition;
-            PivotPosition = Constants.Pivot.Cone.midPosition;
-            WristPosition = Constants.Wrist.Cone.midPosition;
+            ArmPosition = Constants.Arm.Cone.autoMidPosition;
+            PivotPosition = Constants.Pivot.Cone.autoMidPosition;
+            WristPosition = Constants.Wrist.Cone.autoMidPosition;
         }
         Timer.reset();
         Timer.start();

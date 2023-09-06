@@ -69,7 +69,7 @@ public class Pivot extends SubsystemBase{
     }
 
     public void autoPos(){
-        if (Math.abs(getPosition() - Constants.Arm.autoStart) < 2500) {
+        if (Math.abs(getPosition() - Constants.Arm.stowPosition) < 100) {
             RobotContainer.pivotAutoStart = true;
         } else {
             RobotContainer.pivotAutoStart = false;

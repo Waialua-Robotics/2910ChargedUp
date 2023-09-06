@@ -40,7 +40,7 @@ public class Wrist extends SubsystemBase{
     }
 
     public void autoPos(){
-        if (Math.abs(getPosition() - Constants.Arm.autoStart) < 2500) {
+        if (Math.abs(getPosition() - Constants.Arm.stowPosition) < 100) {
             RobotContainer.wristAutoStart = true;
         } else {
             RobotContainer.wristAutoStart = false;

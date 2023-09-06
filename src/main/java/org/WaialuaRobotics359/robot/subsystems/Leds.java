@@ -74,7 +74,11 @@ public class Leds extends SubsystemBase{
     }
 
     public void autoCheck(){
-        if(RobotContainer.pivotAutoStart){}
+        if(RobotContainer.pivotAutoStart && RobotContainer.armAutoStart && RobotContainer.wristAutoStart){
+            atZero = true;
+        } else {
+            atZero = false;
+        }
     }
     
     /*LED Options */
@@ -135,14 +139,16 @@ public class Leds extends SubsystemBase{
 
         /*Button Leds */
 
-        if(zeroButton){
+        if (zeroButton) {
             rainbow(Section.OnBoard, 1);
-            //solid(Color.GREEN, Section.OnBoard);
-        }else{
-            if(!inBrake){
-                solid(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED, Section.OnBoard);
-            }else{
-                strobe(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED , Section.OnBoard, 1);
+            // solid(Color.GREEN, Section.OnBoard);
+        }  else if (atZero) {
+            solid(Color.green, Section.All);
+        } else {
+            if (!inBrake) {
+                solid(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard);
+            } else {
+                strobe(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard, 1);
             }
         }
 
