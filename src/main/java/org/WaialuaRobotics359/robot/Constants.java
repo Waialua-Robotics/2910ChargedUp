@@ -108,6 +108,7 @@ public final class Constants {
         
         public static final class Cube {
             public static final int groundPosition = 5400;//5400
+            public static final int yoshiPosition = 21000;
             public static final int lowPosition = 0;
             public static final int frontLowPosition = 0;
             public static final int midPosition = 2790;
@@ -223,6 +224,7 @@ public final class Constants {
         public static final int feedPos = XboxController.Button.kX.value;
 
         public static final int stow = XboxController.Button.kStart.value;
+        public static final int autoZero = XboxController.Button.kBack.value;
 
         public static final double deadband = .1;
     }

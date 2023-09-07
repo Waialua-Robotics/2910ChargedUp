@@ -30,6 +30,8 @@ import org.WaialuaRobotics359.robot.commands.autonomous.*;
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoHighPosition;
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoMidPosition;
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.LowPickupStow;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.YoshiPickupStow;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoZero.AutoZeroAll;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.PIDConstants;
@@ -112,6 +114,7 @@ public class RobotContainer {
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
 
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
+    private final JoystickButton autoZero = new JoystickButton(driver, Constants.OI.autoZero);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -244,6 +247,7 @@ public class RobotContainer {
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
             stow.onTrue(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
     }   
 
     public Leds getLeds(){
@@ -280,6 +284,7 @@ public class RobotContainer {
 
        /* Pickup */
        eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
+       eventMap.put("Yoshi", new YoshiPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
        eventMap.put("Upright", new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
         /*Wait Times */
@@ -325,6 +330,7 @@ public class RobotContainer {
           m_chooser.setDefaultOption("None", null);
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
 

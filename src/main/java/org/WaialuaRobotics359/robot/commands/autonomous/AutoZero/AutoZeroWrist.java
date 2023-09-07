@@ -11,7 +11,7 @@ public class AutoZeroWrist extends CommandBase {
     private Wrist s_Wrist;
     private Timer Timer = new Timer();
 
-    private double currentLimit = 5;
+    private double currentLimit = 10;
     private double velocityChange = 50;
 
     public AutoZeroWrist(Wrist s_Wrist) {
@@ -30,7 +30,7 @@ public class AutoZeroWrist extends CommandBase {
 
     @Override
     public void execute() {
-        s_Wrist.setPercentOutput(-.01);
+        s_Wrist.setPercentOutput(-.1);
     }
     
     @Override
