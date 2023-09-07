@@ -40,7 +40,7 @@ public class Leds extends SubsystemBase{
     public boolean lowBatteryAlert = false;
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
-    public boolean atZero = false; //conected
+    //public boolean atZero = false; // not conected
     //teleop
     public boolean isCube; //conected
     public boolean actionReady = false; //conected
@@ -73,11 +73,11 @@ public class Leds extends SubsystemBase{
         LED.clearAnimation(animationSlot);
     }
 
-    public void autoCheck(){
+    public boolean autoCheck(){
         if(RobotContainer.pivotAutoStart && RobotContainer.armAutoStart && RobotContainer.wristAutoStart){
-            atZero = true;
+            return true;
         } else {
-            atZero = false;
+            return false;
         }
     }
     
@@ -142,8 +142,12 @@ public class Leds extends SubsystemBase{
         if (zeroButton) {
             rainbow(Section.OnBoard, 1);
             // solid(Color.GREEN, Section.OnBoard);
-        }  else if (atZero) {
-            solid(Color.green, Section.All);
+        } else if (autoCheck()) {
+            if (!inBrake) {
+                solid(Color.GREEN, Section.OnBoard);
+            } else {
+                strobe(Color.GREEN, Section.OnBoard, 1);
+            }
         } else {
             if (!inBrake) {
                 solid(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard);

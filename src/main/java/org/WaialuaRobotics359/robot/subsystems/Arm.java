@@ -54,11 +54,11 @@ public class Arm extends SubsystemBase{
     }
 
 
-    public void autoPos(){
+    public boolean autoPos(){
         if (Math.abs(getPosition() - Constants.Arm.stowPosition) < 100) {
-            RobotContainer.armAutoStart = true;
+            return RobotContainer.armAutoStart = true;
         } else {
-            RobotContainer.armAutoStart = false;
+            return RobotContainer.armAutoStart = false;
         }
     }
 

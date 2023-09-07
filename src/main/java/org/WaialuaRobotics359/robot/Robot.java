@@ -65,6 +65,10 @@ public class Robot extends TimedRobot {
     //m_robotContainer.getSwerve().resetModulesToAbsolute();
     m_robotContainer.getSwerve().setCurrentAngle();
 
+    m_robotContainer.getPivot().autoPos();
+    m_robotContainer.getArm().autoPos();
+    m_robotContainer.getWrist().autoPos();
+
     m_robotContainer.getArm().stop();
     m_robotContainer.getPivot().stop();
     m_robotContainer.getWrist().stop();

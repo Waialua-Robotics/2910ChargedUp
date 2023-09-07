@@ -68,11 +68,11 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.config_kF(0, 0);
     }
 
-    public void autoPos(){
-        if (Math.abs(getPosition() - Constants.Arm.stowPosition) < 100) {
-            RobotContainer.pivotAutoStart = true;
+    public boolean autoPos(){
+        if (Math.abs(getPosition() - Constants.Pivot.stowPosition) < 100) {
+            return RobotContainer.pivotAutoStart = true;
         } else {
-            RobotContainer.pivotAutoStart = false;
+            return RobotContainer.pivotAutoStart = false;
         }
     }
 
