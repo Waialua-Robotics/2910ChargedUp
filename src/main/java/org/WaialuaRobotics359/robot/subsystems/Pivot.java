@@ -53,8 +53,8 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.setSelectedSensorPosition(0);
         m_FlPivot.configForwardSoftLimitEnable(true);
         m_FlPivot.configReverseSoftLimitEnable(true);
-        m_FlPivot.configForwardSoftLimitThreshold(116000);
-        m_FlPivot.configReverseSoftLimitThreshold(0);
+        m_FlPivot.configForwardSoftLimitThreshold(Constants.Pivot.softMax);
+        m_FlPivot.configReverseSoftLimitThreshold(Constants.Pivot.softMin);
 
         m_FlPivot.configMotionCruiseVelocity(maxSpeed); //70000
         m_FlPivot.configMotionAcceleration(maxAcceleration); //40000

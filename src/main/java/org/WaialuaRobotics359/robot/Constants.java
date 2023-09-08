@@ -53,7 +53,7 @@ public final class Constants {
     }
 
     public static final class Wrist {
-        public static final int softMax = 0;
+        public static final int softMax = 42000;
         public static final int softMin = 0;
         public static final int WristID = 1;
 
@@ -67,7 +67,7 @@ public final class Constants {
             public static final int lowPosition = 2325;
             public static final int frontLowPosition = 32000; //18000
             public static final int autoMidPosition = 3825;
-            public static final int midPosition = 6730; // 6730
+            public static final int midPosition = 13025; // 6730
             public static final int highPosition = 13905;
             public static final int feederPosition = 300;
         }
@@ -85,7 +85,7 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int softMax = 0;
+        public static final int softMax = 26550;
         public static final int softMin = 0;
         public static final int lArmID = 5;
         public static final int rArmID = 6;
@@ -101,7 +101,7 @@ public final class Constants {
             public static final int lowPosition = 0;
             public static final int frontLowPosition = 10;
             public static final int autoMidPosition = 18510;
-            public static final int midPosition = 13225;  //13225
+            public static final int midPosition = 8350; 
             public static final int highPosition = 26525;
             public static final int feederPosition = 20200;
         }
@@ -120,7 +120,7 @@ public final class Constants {
     }
 
     public static final class Pivot {
-        public static final int softMax = 0;
+        public static final int softMax = 116000;
         public static final int softMin = 0;
         public static final int Fl_PivotID = 3;
         public static final int Bl_PivotID = 4;
@@ -141,7 +141,7 @@ public final class Constants {
             public static final int lowPosition = 21300;
             public static final int frontLowPosition = 12000;
             public static final int autoMidPosition = 85145; 
-            public static final int midPosition = 83290; 
+            public static final int midPosition = 83131; 
             public static final int highPosition = 87550;
             public static final int feederPosition = 68600;
 
@@ -215,8 +215,8 @@ public final class Constants {
 
 
 
-        public static final int lowPickup = XboxController.Button.kLeftBumper.value;
-        public static final int midPckup = XboxController.Button.kRightBumper.value;
+        public static final int upright = XboxController.Button.kLeftBumper.value;
+        public static final int pickup = XboxController.Button.kRightBumper.value;
 
         public static final int lowPos = XboxController.Button.kA.value;
         public static final int midPos = XboxController.Button.kB.value;

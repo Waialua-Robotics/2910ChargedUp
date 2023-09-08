@@ -38,6 +38,7 @@ public class MidPickupPosition extends CommandBase{
     private Timer Timer = new Timer();
 
     public void initialize(){
+        s_Leds.noPiece();
         if (RobotContainer.isCube){
             ArmPosition = Constants.Arm.Cube.groundPosition;
             PivotPosition = Constants.Pivot.Cube.groundPosition;

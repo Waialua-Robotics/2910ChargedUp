@@ -25,7 +25,7 @@ public class AutoZeroAll extends CommandBase {
     }
 
     public void initialize() {
-        CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
+        //CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
         CommandScheduler.getInstance().schedule(m_AutoZeroArm);
         CommandScheduler.getInstance().schedule(m_AutoZeroWrist);
     }

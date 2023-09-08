@@ -27,8 +27,8 @@ public class Wrist extends SubsystemBase{
         m_Wrist.configMotionSCurveStrength(0);
         m_Wrist.configForwardSoftLimitEnable(true);
         m_Wrist.configReverseSoftLimitEnable(true);
-        m_Wrist.configForwardSoftLimitThreshold(42000);
-        m_Wrist.configReverseSoftLimitThreshold(50);
+        m_Wrist.configForwardSoftLimitThreshold(Constants.Wrist.softMax);
+        m_Wrist.configReverseSoftLimitThreshold(Constants.Wrist.softMin);
         m_Wrist.configPeakOutputForward(1);
         m_Wrist.configPeakOutputReverse(-1);
 

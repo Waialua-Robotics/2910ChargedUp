@@ -11,7 +11,7 @@ public class AutoZeroArm extends CommandBase {
     private Arm s_Arm;
     private Timer Timer = new Timer();
 
-    private double currentLimit = 5;
+    private double currentLimit = 20;
     private double velocityChange = 50;
 
     public AutoZeroArm(Arm s_Arm) {
@@ -30,7 +30,7 @@ public class AutoZeroArm extends CommandBase {
 
     @Override
     public void execute() {
-        s_Arm.setPercentOutput(-.01);
+        s_Arm.setPercentOutput(-.1);
     }
     
     @Override

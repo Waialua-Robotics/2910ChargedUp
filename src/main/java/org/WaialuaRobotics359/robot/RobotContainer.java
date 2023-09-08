@@ -99,8 +99,8 @@ public class RobotContainer {
     private final POVButton intake = new POVButton(operator, Constants.OI.intake);
     private final POVButton outake = new POVButton(operator, Constants.OI.outake);
 
-    private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
-    private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
+    private final JoystickButton upright = new JoystickButton(operator, Constants.OI.upright);
+    private final JoystickButton pickup = new JoystickButton(operator, Constants.OI.pickup);
 
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
@@ -114,7 +114,7 @@ public class RobotContainer {
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
 
     private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
-    private final JoystickButton autoZero = new JoystickButton(driver, Constants.OI.autoZero);
+    private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -228,11 +228,10 @@ public class RobotContainer {
             kill.onFalse(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = true)));
 
-            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            lowPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            upright.onTrue(new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             
-            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            midPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            pickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            pickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
