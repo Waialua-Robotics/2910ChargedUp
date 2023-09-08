@@ -336,6 +336,7 @@ public class RobotContainer {
           m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);
