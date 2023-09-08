@@ -281,6 +281,7 @@ public class RobotContainer {
        /* Cone & Cube Modes */
        eventMap.put("ConeMode", new InstantCommand(() -> isCube = false));
        eventMap.put("CubeMode", new InstantCommand(() -> isCube = true));
+       eventMap.put("NoPiece", new InstantCommand(()-> getLeds().hasPiece = false));
 
        /* Pickup */
        eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
@@ -320,6 +321,7 @@ public class RobotContainer {
                 Constants.AutoConstants.rotationPID.kD),
             s_Swerve::setModuleStates,
             eventMap,
+            true,
             s_Swerve
         );
       }
@@ -331,6 +333,7 @@ public class RobotContainer {
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
 

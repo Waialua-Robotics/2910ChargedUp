@@ -115,6 +115,16 @@ public class Leds extends SubsystemBase{
         LED.animate(new ColorFlowAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), Direction.Forward, section.startTwo()),section.animationSlot());
     }
 
+    private void Fire(Section section, double speed){
+        LED.animate(new FireAnimation(1, speed, section.length(), 0, 0, false, section.startOne()), section.animationSlot());
+        LED.animate(new FireAnimation(1, speed, section.length(), 0, 0, false, section.startTwo()), section.animationSlot());
+    }
+
+    private void Larson(Color color, Section section, double speed){
+        LED.animate(new LarsonAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), BounceMode.Front, 7, section.startOne()), section.animationSlot());
+        LED.animate(new LarsonAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), BounceMode.Front, 7, section.startTwo()), section.animationSlot());
+    }
+
     public void hasPiece(){
         hasPiece = true;
     }
@@ -202,7 +212,7 @@ public class Leds extends SubsystemBase{
         }
 
         //endgame alert
-        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && ((Conversions.isBetween(DriverStation.getMatchTime(), 27, 30)) || (Conversions.isBetween(DriverStation.getMatchTime(), 13, 15)))){
+        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && ((Conversions.isBetween(DriverStation.getMatchTime(), 27, 30)) || (Conversions.isBetween(DriverStation.getMatchTime(), 8, 10)))){
             endgameAlert = true;
         }else{
             endgameAlert = false;
@@ -211,13 +221,16 @@ public class Leds extends SubsystemBase{
         /* Set Leds */
         if (estopped) {
             solid(Color.RED, Section.All);
+        } else if (DriverStation.isAutonomousEnabled()) {
+            //ColorFlow(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.All, .5);
+            Larson(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OffBoard, .1);
         } else if (endgameAlert) {
             rainbow(Section.OffBoard, 1);
-        }else if((!leftConected || !rightConected )&& strobePeriod()){
-            if(!rightConected){ 
+        } else if ((!leftConected || !rightConected) && strobePeriod()) {
+            if (!rightConected) {
                 solid(Color.WHITE, Section.Right);
             }
-            if(!leftConected){
+            if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
         } else if (DriverStation.isEnabled()) {

@@ -77,7 +77,8 @@
     {
       "position": 0.01,
       "names": [
-        "Stow"
+        "Stow",
+        "NoPiece"
       ]
     }
   ]

@@ -76,7 +76,7 @@ public final class Constants {
             public static final int groundPosition = 21500;//21500
             public static final int lowPosition = 155;
             public static final int frontLowPosition = 0;
-            public static final int midPosition = 5110;
+            public static final int midPosition = 1110;
             public static final int frontMidPosition = 9200;
             public static final int highPosition = 6880;
             public static final int frontHighPosition = 2580;
