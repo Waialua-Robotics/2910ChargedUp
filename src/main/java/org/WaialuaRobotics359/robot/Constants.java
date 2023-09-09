@@ -223,7 +223,7 @@ public final class Constants {
         public static final int highPos = XboxController.Button.kY.value;
         public static final int feedPos = XboxController.Button.kX.value;
 
-        public static final int stow = XboxController.Button.kStart.value;
+        public static final int justZero = XboxController.Button.kStart.value;
         public static final int autoZero = XboxController.Button.kBack.value;
 
         public static final double deadband = .1;

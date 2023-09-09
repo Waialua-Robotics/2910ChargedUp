@@ -35,7 +35,7 @@ public class AutoZeroWrist extends CommandBase {
     
     @Override
     public boolean isFinished(){
-        return s_Wrist.getCurrent() > currentLimit && Math.abs(s_Wrist.getVelocity()) < velocityChange && Timer.hasElapsed(.2);
+        return s_Wrist.getCurrent() > currentLimit && Math.abs(s_Wrist.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3);
     }
 
     @Override 

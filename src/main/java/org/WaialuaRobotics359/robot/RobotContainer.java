@@ -32,6 +32,7 @@ import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoMidPosit
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.LowPickupStow;
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.YoshiPickupStow;
 import org.WaialuaRobotics359.robot.commands.autonomous.AutoZero.AutoZeroAll;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoZero.JustZero;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.PIDConstants;
@@ -77,7 +78,8 @@ public class RobotContainer {
 
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kBack.value); 
+    private final POVButton ResetMods = new POVButton(driver, 180);
+    private final JoystickButton ZeroGyroBackwards = new JoystickButton(driver, XboxController.Button.kBack.value); 
     private final JoystickButton Angle0 = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton Angle180 = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton setDriveSlowMode = new JoystickButton(driver, XboxController.Button.kRightBumper.value); 
@@ -113,7 +115,7 @@ public class RobotContainer {
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
 
-    private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
+    private final JoystickButton justZero = new JoystickButton(operator, Constants.OI.justZero);
     private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
     /* Subsystems */
@@ -201,6 +203,7 @@ public class RobotContainer {
         /* Driver Buttons */
             /* Reset Gyro */
             zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+            ZeroGyroBackwards.onTrue(new InstantCommand(() -> s_Swerve.zeroGyroBackward()));
             /* Reset Swerve Modules */
             ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
             /* Snap-to Swerve Angle */
@@ -245,8 +248,8 @@ public class RobotContainer {
             highPos.whileTrue(new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
-            stow.onTrue(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
+            justZero.onTrue(new JustZero(s_Pivot, s_Arm, s_Wrist));
     }   
 
     public Leds getLeds(){

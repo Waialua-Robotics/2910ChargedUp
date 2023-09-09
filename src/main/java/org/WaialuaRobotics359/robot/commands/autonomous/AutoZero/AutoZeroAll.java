@@ -6,6 +6,7 @@ import org.WaialuaRobotics359.robot.subsystems.Pivot;
 import org.WaialuaRobotics359.robot.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -22,16 +23,21 @@ public class AutoZeroAll extends CommandBase {
         addRequirements(s_Pivot);
         addRequirements(s_Arm);
         addRequirements(s_Wrist);
+
+        private Timer = new Timer(); 
     }
 
     public void initialize() {
-        //CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
+        CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
         CommandScheduler.getInstance().schedule(m_AutoZeroArm);
         CommandScheduler.getInstance().schedule(m_AutoZeroWrist);
     }
 
+    public void execute() {
+
+    }
+
     public boolean isFinished() {
-        DriverStation.reportWarning("AutoZeroing", false);
         return true;
     }
     

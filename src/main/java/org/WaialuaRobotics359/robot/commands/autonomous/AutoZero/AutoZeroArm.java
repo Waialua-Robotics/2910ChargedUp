@@ -12,7 +12,7 @@ public class AutoZeroArm extends CommandBase {
     private Timer Timer = new Timer();
 
     private double currentLimit = 20;
-    private double velocityChange = 50;
+    private double velocityChange = 40;
 
     public AutoZeroArm(Arm s_Arm) {
         this.s_Arm = s_Arm;
@@ -35,7 +35,7 @@ public class AutoZeroArm extends CommandBase {
     
     @Override
     public boolean isFinished(){
-        return s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2);
+        return s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3);
     }
 
     @Override 

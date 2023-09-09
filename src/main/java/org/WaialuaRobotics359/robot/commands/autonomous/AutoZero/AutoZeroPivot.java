@@ -35,7 +35,7 @@ public class AutoZeroPivot extends CommandBase {
     
     @Override
     public boolean isFinished(){
-        return s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2);
+        return s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3);
     }
 
     @Override 
