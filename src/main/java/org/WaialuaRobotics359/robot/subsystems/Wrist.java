@@ -1,5 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -25,8 +27,8 @@ public class Wrist extends SubsystemBase{
         m_Wrist.configMotionSCurveStrength(0);
         m_Wrist.configForwardSoftLimitEnable(true);
         m_Wrist.configReverseSoftLimitEnable(true);
-        m_Wrist.configForwardSoftLimitThreshold(42000);
-        m_Wrist.configReverseSoftLimitThreshold(50);
+        m_Wrist.configForwardSoftLimitThreshold(Constants.Wrist.softMax);
+        m_Wrist.configReverseSoftLimitThreshold(Constants.Wrist.softMin);
         m_Wrist.configPeakOutputForward(1);
         m_Wrist.configPeakOutputReverse(-1);
 
@@ -35,6 +37,14 @@ public class Wrist extends SubsystemBase{
         m_Wrist.config_kD(0, 0);
         m_Wrist.config_kF(0, 0);
 
+    }
+
+    public boolean autoPos(){
+        if (Math.abs(getPosition() - Constants.Wrist.stowPosition) < 100) {
+            return RobotContainer.wristAutoStart = true;
+        } else {
+            return RobotContainer.wristAutoStart = false;
+        }
     }
 
     public void setCoast(){
@@ -46,8 +56,8 @@ public class Wrist extends SubsystemBase{
     }
 
     public void setCurrentPosition(){
-        double currentPosition = getPosition();
-        currentPosition = desiredPosition;
+        setDesiredPosition(getPosition());
+        goToPosition();
     }
 
     public void setPosition(double pos){
@@ -62,8 +72,16 @@ public class Wrist extends SubsystemBase{
         m_Wrist.set(ControlMode.MotionMagic, desiredPosition);
     }
 
+    public void setPercentOutput(double value){
+        m_Wrist.set(ControlMode.PercentOutput, value);
+    }
+
     public int getPosition(){
         return (int) m_Wrist.getSelectedSensorPosition();
+    }
+
+    public double getVelocity(){
+        return m_Wrist.getSelectedSensorVelocity();
     }
 
     public boolean inPosition(){
@@ -78,8 +96,8 @@ public class Wrist extends SubsystemBase{
         m_Wrist.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_Wrist.getStatorCurrent();
+    public double getCurrent(){
+        return m_Wrist.getStatorCurrent();
     } 
     
     public void stop() {
@@ -88,10 +106,9 @@ public class Wrist extends SubsystemBase{
 
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
-            SmartDashboard.putNumber("wDesiredPos", desiredPosition);
-            SmartDashboard.putNumber("wPosition", getPosition());
-            SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
-
+        //SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
+        //SmartDashboard.putNumber("wDesiredPos", desiredPosition);
+        SmartDashboard.putNumber("wPosition", getPosition());
+        //SmartDashboard.putNumber("wPercentOutput", m_Wrist.getMotorOutputPercent());
     }
 }

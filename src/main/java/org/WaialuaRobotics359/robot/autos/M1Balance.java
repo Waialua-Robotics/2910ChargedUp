@@ -11,16 +11,17 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class PurpleYellow extends SequentialCommandGroup {
+public class M1Balance extends SequentialCommandGroup {
 
-    public PurpleYellow (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
+    public M1Balance (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory ConeL1Dual = PathPlanner.loadPath("purpleYellow", new PathConstraints(1, 1)); 
-        Pose2d startpose = ConeL1Dual.getInitialHolonomicPose();
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M1Balance", new PathConstraints(1, 1)); 
+
+        Pose2d startpose = AutoPath.getInitialHolonomicPose();
 
         addCommands(new SequentialCommandGroup(
             new InstantCommand(()-> s_poseEstimator.resetPose(startpose)),
-            autoBuilder.fullAuto(ConeL1Dual)
+            autoBuilder.fullAuto(AutoPath)
         ));
     }
 }

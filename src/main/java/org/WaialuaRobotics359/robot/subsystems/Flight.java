@@ -25,8 +25,8 @@ public class Flight extends SubsystemBase {
     }
 
     public void periodic(){
-        SmartDashboard.putNumber("PWF Distance", getSensorRange());
-        SmartDashboard.putNumber("pid", m_Flight.pidGet());
-        SmartDashboard.putNumber("standerd deveation", m_Flight.getRangeSigma());
+        //SmartDashboard.putNumber("PWF Distance", getSensorRange());
+        //SmartDashboard.putNumber("pid", m_Flight.pidGet());
+        //SmartDashboard.putNumber("standerd deveation", m_Flight.getRangeSigma());
     }
 }

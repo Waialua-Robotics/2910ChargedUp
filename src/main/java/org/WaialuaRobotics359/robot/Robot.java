@@ -4,17 +4,13 @@
 
 package org.WaialuaRobotics359.robot;
 
-import org.WaialuaRobotics359.robot.subsystems.Leds;
 import org.WaialuaRobotics359.robot.util.CTREConfigs;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
-import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -40,7 +36,6 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     //PathPlannerServer.startServer(5811);
-    //PortForwarder.add(5800, "photonleft.local", 5800);
     }
 
   /**
@@ -70,6 +65,13 @@ public class Robot extends TimedRobot {
     //m_robotContainer.getSwerve().resetModulesToAbsolute();
     m_robotContainer.getSwerve().setCurrentAngle();
 
+    m_robotContainer.getPivot().autoPos();
+    m_robotContainer.getArm().autoPos();
+    m_robotContainer.getWrist().autoPos();
+
+    m_robotContainer.getArm().stop();
+    m_robotContainer.getPivot().stop();
+    m_robotContainer.getWrist().stop();
     m_robotContainer.getArm().setCurrentPosition();
     m_robotContainer.getPivot().setCurrentPosition();
     m_robotContainer.getWrist().setCurrentPosition();
@@ -97,6 +99,7 @@ public class Robot extends TimedRobot {
 
     if (!m_robotContainer.zero.get() && m_robotContainer.zeroMode) {
       m_robotContainer.zeroMode = false;
+      m_robotContainer.getSwerve().zeroGyro();
       m_robotContainer.getArm().setPosition(0);
       m_robotContainer.getArm().setDesiredPosition(0);
       m_robotContainer.getArm().goToPosition();

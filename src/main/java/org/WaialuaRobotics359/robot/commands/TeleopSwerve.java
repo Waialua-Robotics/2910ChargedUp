@@ -11,8 +11,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -59,12 +57,6 @@ public class TeleopSwerve extends CommandBase {
             strafeVal *= ControllerGain;
             omega *= ControllerGain;
 
-            /*Auto Align*/ 
-            /*if(AlignSup.getAsBoolean()){
-                translationVal = 0;
-                strafeVal = PoseEstimator.RetroReflectiveX();
-            }*/
-
             if (omega != 0 && !feedbackNode) {
                 s_Swerve.desiredAngle = s_Swerve.getYaw360();
                 feedbackNode = true;
@@ -75,15 +67,15 @@ public class TeleopSwerve extends CommandBase {
             s_Swerve.desiredAngle += omega * rotationalIncrement;
             s_Swerve.desiredAngle = (s_Swerve.desiredAngle + 360) % 360;
 
-            SmartDashboard.putNumber("desired", s_Swerve.desiredAngle);
-            SmartDashboard.putNumber("current", s_Swerve.getYaw360());
+            //SmartDashboard.putNumber("desired", s_Swerve.desiredAngle);
+            //SmartDashboard.putNumber("current", s_Swerve.getYaw360());
 
             double angleToDesired = Conversions.wrap(s_Swerve.getYaw360(), s_Swerve.desiredAngle);
             double rotationVal = angleToDesired / 90;
             if (rotationVal > 1) rotationVal = 1;
             if (rotationVal < -1) rotationVal = -1;
 
-            SmartDashboard.putNumber("rotationval", rotationVal);
+            //SmartDashboard.putNumber("rotationval", rotationVal);
 
             /* Drive */
             s_Swerve.drive(

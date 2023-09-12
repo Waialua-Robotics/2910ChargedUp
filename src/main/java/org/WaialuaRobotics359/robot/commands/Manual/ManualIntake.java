@@ -1,11 +1,8 @@
 package org.WaialuaRobotics359.robot.commands.Manual;
 import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.subsystems.Intake;
 import org.WaialuaRobotics359.robot.subsystems.Leds;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ManualIntake extends CommandBase{

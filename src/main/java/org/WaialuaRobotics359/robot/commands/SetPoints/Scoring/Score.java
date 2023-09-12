@@ -1,12 +1,10 @@
 package org.WaialuaRobotics359.robot.commands.SetPoints.Scoring;
 
 import org.WaialuaRobotics359.robot.Constants;
-import org.WaialuaRobotics359.robot.Robot;
 import org.WaialuaRobotics359.robot.RobotContainer;
 import org.WaialuaRobotics359.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Score extends CommandBase {
@@ -108,17 +106,17 @@ public class Score extends CommandBase {
 
                 s_Intake.outake();
 
-                if (RobotContainer.retractOnScore) {
+                if (RobotContainer.retractOnScore && Timer.hasElapsed(.1)) {
                     s_Pivot.setDesiredPosition(PivotPosition); // s_Pivot.backScoreRetract()
                     s_Pivot.goToPosition();
                 }
 
-                if (Timer.hasElapsed(.1)) {
+                if (Timer.hasElapsed(.2)) {
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
 
-                if (Timer.hasElapsed(.2)) { // timer.3
+                if (Timer.hasElapsed(.3)) { // timer.3
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                     s_Intake.stop();
@@ -138,17 +136,17 @@ public class Score extends CommandBase {
 
                 s_Intake.outake();
 
-                if (RobotContainer.retractOnScore) {
+                if (RobotContainer.retractOnScore && Timer.hasElapsed(.1)) {
                     s_Pivot.setDesiredPosition(PivotPosition); // s_Pivot.backScoreRetract()
                     s_Pivot.goToPosition();
                 }
 
-                if (Timer.hasElapsed(.1)) {
+                if (Timer.hasElapsed(.2)) {
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
                 }
 
-                if (Timer.hasElapsed(.2)) { // timer.3
+                if (Timer.hasElapsed(.3)) { // timer.3
                     s_Wrist.setDesiredPosition(WristPosition);
                     s_Wrist.goToPosition();
                     s_Intake.stop();

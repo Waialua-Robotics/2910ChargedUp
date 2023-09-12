@@ -53,8 +53,8 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.setSelectedSensorPosition(0);
         m_FlPivot.configForwardSoftLimitEnable(true);
         m_FlPivot.configReverseSoftLimitEnable(true);
-        m_FlPivot.configForwardSoftLimitThreshold(116000);
-        m_FlPivot.configReverseSoftLimitThreshold(0);
+        m_FlPivot.configForwardSoftLimitThreshold(Constants.Pivot.softMax);
+        m_FlPivot.configReverseSoftLimitThreshold(Constants.Pivot.softMin);
 
         m_FlPivot.configMotionCruiseVelocity(maxSpeed); //70000
         m_FlPivot.configMotionAcceleration(maxAcceleration); //40000
@@ -68,6 +68,14 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.config_kF(0, 0);
     }
 
+    public boolean autoPos(){
+        if (Math.abs(getPosition() - Constants.Pivot.stowPosition) < 100) {
+            return RobotContainer.pivotAutoStart = true;
+        } else {
+            return RobotContainer.pivotAutoStart = false;
+        }
+    }
+
     public void stowSpeed() {
         m_FlPivot.configMotionCruiseVelocity(50000);
         m_FlPivot.configMotionAcceleration(20000);
@@ -76,6 +84,10 @@ public class Pivot extends SubsystemBase{
     public void normSpeed() {
         m_FlPivot.configMotionCruiseVelocity(maxSpeed); // 70000
         m_FlPivot.configMotionAcceleration(maxAcceleration); // 40000
+    }
+
+    public void setPercentOutput(double speed){
+        m_FlPivot.set(ControlMode.PercentOutput, speed);
     }
 
     public int backScoreRetract(){
@@ -98,10 +110,10 @@ public class Pivot extends SubsystemBase{
         return getPosition() < 1000;
     }
 
-    public void setCurrentPosition(){
-        double currentPosition = getPosition();
 
-        currentPosition = desiredPosition;
+    public void setCurrentPosition(){
+        setDesiredPosition(getPosition());
+        goToPosition();
     }
 
     public void setCoast(){
@@ -155,9 +167,13 @@ public class Pivot extends SubsystemBase{
         m_FlPivot.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_FlPivot.getStatorCurrent();
+    public double getCurrent(){
+        return m_FlPivot.getStatorCurrent();
     } 
+
+    public double getVelocity(){
+        return m_FlPivot.getSelectedSensorVelocity();
+    }
     
     public void stop() {
         m_FlPivot.set(ControlMode.PercentOutput, 0);
@@ -166,10 +182,9 @@ public class Pivot extends SubsystemBase{
     @Override
     public void periodic(){
         SmartDashboard.putNumber("pPosition", getPosition());
-        SmartDashboard.putNumber("pDesired", desiredPosition);
-        SmartDashboard.putNumber("pPercentOutput", m_FlPivot.getMotorOutputPercent());
-        SmartDashboard.putBoolean("RetractOnScore", RobotContainer.retractOnScore);
-
+        //SmartDashboard.putNumber("pDesired", desiredPosition);
+        //SmartDashboard.putNumber("pPercentOutput", m_FlPivot.getMotorOutputPercent());
+        //SmartDashboard.putBoolean("RetractOnScore", RobotContainer.retractOnScore);
 
     }
 }

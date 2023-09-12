@@ -4,7 +4,6 @@ import org.WaialuaRobotics359.robot.Constants;
 import org.WaialuaRobotics359.robot.subsystems.Wrist;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -29,8 +28,8 @@ public class ManualWrist extends CommandBase {
         double lTrigger = MathUtil.applyDeadband(revWristAxis.getAsDouble(), Constants.OI.deadband);
         double rTrigger = MathUtil.applyDeadband(wristAxis.getAsDouble(), Constants.OI.deadband);
 
-        SmartDashboard.putNumber("lTriggerValue", lTrigger);
-        SmartDashboard.putNumber("rTriggerValue", rTrigger);
+        //SmartDashboard.putNumber("lTriggerValue", lTrigger);
+        //SmartDashboard.putNumber("rTriggerValue", rTrigger);
 
 
         if (Math.abs(rTrigger) > 0) {

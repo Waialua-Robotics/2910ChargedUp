@@ -40,6 +40,7 @@ public class Leds extends SubsystemBase{
     public boolean lowBatteryAlert = false;
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
+    //public boolean atZero = false; // not conected
     //teleop
     public boolean isCube; //conected
     public boolean actionReady = false; //conected
@@ -71,6 +72,14 @@ public class Leds extends SubsystemBase{
     public void clearAnimation(int animationSlot){
         LED.clearAnimation(animationSlot);
     }
+
+    public boolean autoCheck(){
+        if(RobotContainer.pivotAutoStart && RobotContainer.armAutoStart && RobotContainer.wristAutoStart){
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     /*LED Options */
     private void solid(Color color, Section section){
@@ -78,6 +87,9 @@ public class Leds extends SubsystemBase{
     }
 
     private void solid(int R, int G, int B, Section section){
+        if(section == section.All){
+            clearAnimation(1); 
+        }
         clearAnimation(section.animationSlot());
         LED.setLEDs(R, G, B, 0, section.startOne(), section.length());
         LED.setLEDs(R, G, B, 0, section.startTwo(), section.length());
@@ -103,6 +115,16 @@ public class Leds extends SubsystemBase{
         LED.animate(new ColorFlowAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), Direction.Forward, section.startTwo()),section.animationSlot());
     }
 
+    private void Fire(Section section, double speed){
+        LED.animate(new FireAnimation(1, speed, section.length(), 0, 0, false, section.startOne()), section.animationSlot());
+        LED.animate(new FireAnimation(1, speed, section.length(), 0, 0, false, section.startTwo()), section.animationSlot());
+    }
+
+    private void Larson(Color color, Section section, double speed){
+        LED.animate(new LarsonAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), BounceMode.Front, 7, section.startOne()), section.animationSlot());
+        LED.animate(new LarsonAnimation(color.getRed(), color.getGreen(), color.getBlue(), 0, speed, section.length(), BounceMode.Front, 7, section.startTwo()), section.animationSlot());
+    }
+
     public void hasPiece(){
         hasPiece = true;
     }
@@ -113,7 +135,7 @@ public class Leds extends SubsystemBase{
 
     public void DisabledLed(boolean zeroButton, boolean inBrake){
 
-        SmartDashboard.putBoolean("StrobeValue", strobePeriod());
+        //SmartDashboard.putBoolean("StrobeValue", strobePeriod());
 
         // update controller state
         if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)) {
@@ -127,14 +149,20 @@ public class Leds extends SubsystemBase{
 
         /*Button Leds */
 
-        if(zeroButton){
+        if (zeroButton) {
             rainbow(Section.OnBoard, 1);
-            //solid(Color.GREEN, Section.OnBoard);
-        }else{
-            if(!inBrake){
-                solid(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED, Section.OnBoard);
-            }else{
-                strobe(alliance == DriverStation.Alliance.Blue? Color.BLUE : Color.RED , Section.OnBoard, 1);
+            // solid(Color.GREEN, Section.OnBoard);
+        } else if (autoCheck()) {
+            if (!inBrake) {
+                solid(Color.GREEN, Section.OnBoard);
+            } else {
+                strobe(Color.GREEN, Section.OnBoard, 1);
+            }
+        } else {
+            if (!inBrake) {
+                solid(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard);
+            } else {
+                strobe(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard, 1);
             }
         }
 
@@ -159,6 +187,7 @@ public class Leds extends SubsystemBase{
         }
     }
 
+    @Override
     public void periodic() {
 
         //sync states
@@ -183,7 +212,7 @@ public class Leds extends SubsystemBase{
         }
 
         //endgame alert
-        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && (Conversions.isBetween(DriverStation.getMatchTime(), 20, 30))){
+        if (DriverStation.isTeleopEnabled() && (DriverStation.getMatchTime() >0.0) && ((Conversions.isBetween(DriverStation.getMatchTime(), 27, 30)) || (Conversions.isBetween(DriverStation.getMatchTime(), 8, 10)))){
             endgameAlert = true;
         }else{
             endgameAlert = false;
@@ -192,13 +221,16 @@ public class Leds extends SubsystemBase{
         /* Set Leds */
         if (estopped) {
             solid(Color.RED, Section.All);
+        } else if (DriverStation.isAutonomousEnabled()) {
+            //ColorFlow(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.All, .5);
+            Larson(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OffBoard, .1);
         } else if (endgameAlert) {
             rainbow(Section.OffBoard, 1);
-        }else if((!leftConected || !rightConected )&& strobePeriod()){
-            if(!rightConected){ 
+        } else if ((!leftConected || !rightConected) && strobePeriod()) {
+            if (!rightConected) {
                 solid(Color.WHITE, Section.Right);
             }
-            if(!leftConected){
+            if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
         } else if (DriverStation.isEnabled()) {

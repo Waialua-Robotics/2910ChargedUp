@@ -8,8 +8,10 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 
 import com.ctre.phoenix.sensors.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -74,7 +76,7 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredState(desiredStates[mod.moduleNumber], false); //false
+            mod.setDesiredStateAuto(desiredStates[mod.moduleNumber], true); //false #FIXME invert for closed loop finally fixed
         }
     }    
 
@@ -117,6 +119,11 @@ public class Swerve extends SubsystemBase {
     public void zeroGyro(){
         desiredAngle = 0;
         gyro.setYaw(0);
+    }
+
+    public void zeroGyroBackward(){
+        desiredAngle = 180;
+        gyro.setYaw(180);
     }
 
     public void setGyroYaw(double yaw){
@@ -188,6 +195,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber(("GyroValue"), GetGyroPitch());
         }
     }
 }

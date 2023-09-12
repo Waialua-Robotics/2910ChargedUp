@@ -1,5 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import org.WaialuaRobotics359.robot.Constants;
+import org.WaialuaRobotics359.robot.RobotContainer;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -39,8 +41,8 @@ public class Arm extends SubsystemBase{
         m_lArm.configMotionSCurveStrength(7);
         m_lArm.configForwardSoftLimitEnable(true);
         m_lArm.configReverseSoftLimitEnable(true);
-        m_lArm.configForwardSoftLimitThreshold(26550);
-        m_lArm.configReverseSoftLimitThreshold(0);
+        m_lArm.configForwardSoftLimitThreshold(Constants.Arm.softMax);
+        m_lArm.configReverseSoftLimitThreshold(Constants.Arm.softMin);
         m_lArm.configPeakOutputForward(1);
         m_lArm.configPeakOutputReverse(-1);
 
@@ -49,6 +51,15 @@ public class Arm extends SubsystemBase{
         m_lArm.config_kI(0, 0);
         m_lArm.config_kD(0, 0);
         m_lArm.config_kF(0, 0);
+    }
+
+
+    public boolean autoPos(){
+        if (Math.abs(getPosition() - Constants.Arm.stowPosition) < 100) {
+            return RobotContainer.armAutoStart = true;
+        } else {
+            return RobotContainer.armAutoStart = false;
+        }
     }
 
     public void stowSpeed() {
@@ -71,16 +82,17 @@ public class Arm extends SubsystemBase{
         m_rArm.setNeutralMode(NeutralMode.Brake);
     }
 
+    public void setPercentOutput(double value){
+        m_lArm.set(ControlMode.PercentOutput, value);
+    }
+
     public void setPosition(double pos){
         m_lArm.setSelectedSensorPosition(pos);
     }
 
     public void setCurrentPosition(){
-        double currentPosition = getPosition();
-        setDesiredPosition((int)currentPosition);
+        setDesiredPosition(getPosition());
         goToPosition();
-
-        currentPosition = desiredPosition;
     }
 
     public void setDesiredPosition (int position) {
@@ -89,6 +101,10 @@ public class Arm extends SubsystemBase{
 
     public int getPosition(){
         return (int) m_lArm.getSelectedSensorPosition();
+    }
+
+    public double getVelocity(){
+        return m_lArm.getSelectedSensorVelocity();
     }
 
     public boolean inPosition(){
@@ -111,8 +127,8 @@ public class Arm extends SubsystemBase{
         m_lArm.set(ControlMode.PercentOutput, value);
     }
 
-    public void getCurrent(){
-        m_lArm.getStatorCurrent();
+    public double getCurrent(){
+        return m_lArm.getStatorCurrent();
     } 
     
     public void stop() {
@@ -121,8 +137,8 @@ public class Arm extends SubsystemBase{
     
     @Override
     public void periodic(){
-        SmartDashboard.putNumber("aDesiredPos", desiredPosition);
+        //SmartDashboard.putNumber("aDesiredPos", desiredPosition);
         SmartDashboard.putNumber("aPosition", getPosition());
-        SmartDashboard.putNumber("aPercentOutput", m_lArm.getMotorOutputPercent());
+        //SmartDashboard.putNumber("aPercentOutput", m_lArm.getMotorOutputPercent());
     }
 }

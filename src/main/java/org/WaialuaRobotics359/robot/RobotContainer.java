@@ -1,19 +1,13 @@
 package org.WaialuaRobotics359.robot;
 
-import edu.wpi.first.hal.simulation.DIODataJNI;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -24,12 +18,21 @@ import java.util.HashMap;
 
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.AutoBalance;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.HighPositionAuto;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.MidPositionAuto;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
 import org.WaialuaRobotics359.robot.commands.Swerve.AutoAlignXApril;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Pickup.*;
 import org.WaialuaRobotics359.robot.commands.autonomous.*;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoHighPosition;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.AutoMidPosition;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.LowPickupStow;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoScoring.YoshiPickupStow;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoZero.AutoZeroAll;
+import org.WaialuaRobotics359.robot.commands.autonomous.AutoZero.JustZero;
 import org.WaialuaRobotics359.robot.subsystems.*;
 
 import com.pathplanner.lib.auto.PIDConstants;
@@ -46,9 +49,13 @@ public class RobotContainer {
     public static boolean isCube = true;
     public static boolean allowScore = true;
     public static boolean retractOnScore = false;
+    public static boolean pivotAutoStart = false;
+    public static boolean armAutoStart = false;
+    public static boolean wristAutoStart = false;
     public boolean toggleMode = true;
     public boolean brakeMode = false;
     public boolean zeroMode = true;
+
     
 
 
@@ -59,19 +66,16 @@ public class RobotContainer {
     public final DigitalInput brakeToggle = new DigitalInput(0);
     public final DigitalInput zero = new DigitalInput(1);
 
-
-
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-
     private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
     private final Trigger autoAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) >.5);
-
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
-    private final JoystickButton ResetMods = new JoystickButton(driver, XboxController.Button.kBack.value); 
+    private final POVButton ResetMods = new POVButton(driver, 180);
+    private final JoystickButton ZeroGyroBackwards = new JoystickButton(driver, XboxController.Button.kBack.value); 
     private final JoystickButton Angle0 = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton Angle180 = new JoystickButton(driver, XboxController.Button.kA.value);
     private final JoystickButton setDriveSlowMode = new JoystickButton(driver, XboxController.Button.kRightBumper.value); 
@@ -79,9 +83,8 @@ public class RobotContainer {
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  
     
-
+    
     /* Operator Controls */
     private final int wristAxis = (Constants.OI.wristAxis);
     private final int revWristAxis = (Constants.OI.revWristAxis);
@@ -89,24 +92,20 @@ public class RobotContainer {
     private final int arm = (Constants.OI.arm);
 
     /* Operator Buttons */
-
     private final POVButton intake = new POVButton(operator, Constants.OI.intake);
     private final POVButton outake = new POVButton(operator, Constants.OI.outake);
-
-    private final JoystickButton lowPickup = new JoystickButton(operator, Constants.OI.lowPickup);
-    private final JoystickButton midPickup = new JoystickButton(operator, Constants.OI.midPckup);
-
+    private final JoystickButton upright = new JoystickButton(operator, Constants.OI.upright);
+    private final JoystickButton pickup = new JoystickButton(operator, Constants.OI.pickup);
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
-
     private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
     private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
     private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
-
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
-
-    private final JoystickButton stow = new JoystickButton(operator, Constants.OI.stow);
+    private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
+    private final JoystickButton justZero = new JoystickButton(operator, Constants.OI.justZero);
+    private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
     /* Subsystems */
     private final Swerve s_Swerve = new Swerve();
@@ -151,7 +150,7 @@ public class RobotContainer {
         s_Intake.setDefaultCommand(
             new ManualIntake(
                 s_Intake, s_Leds,
-                () -> intake.getAsBoolean(),
+                () -> intakeTrigger.getAsBoolean(),
                 () -> outake.getAsBoolean()
             )
         );
@@ -193,6 +192,7 @@ public class RobotContainer {
         /* Driver Buttons */
             /* Reset Gyro */
             zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
+            ZeroGyroBackwards.onTrue(new InstantCommand(() -> s_Swerve.zeroGyroBackward()));
             /* Reset Swerve Modules */
             ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
             /* Snap-to Swerve Angle */
@@ -220,11 +220,10 @@ public class RobotContainer {
             kill.onFalse(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = true)));
 
-            lowPickup.whileTrue(new PickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            lowPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            upright.onTrue(new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             
-            midPickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
-            midPickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            pickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            pickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
@@ -238,7 +237,8 @@ public class RobotContainer {
             highPos.whileTrue(new HighPosition(s_Arm, s_Wrist, s_Pivot, s_Leds));
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
-            stow.onTrue(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+            autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
+            justZero.onTrue(new JustZero(s_Pivot, s_Arm, s_Wrist));
     }   
 
     public Leds getLeds(){
@@ -269,11 +269,34 @@ public class RobotContainer {
        //eventMap.put("SetCube", new InstantCommand(() -> isCube = true));
        //eventMap.put("SetCone", new InstantCommand(()-> isCube = false));
 
+       /* Cone & Cube Modes */
+       eventMap.put("ConeMode", new InstantCommand(() -> isCube = false));
+       eventMap.put("CubeMode", new InstantCommand(() -> isCube = true));
+       eventMap.put("NoPiece", new InstantCommand(()-> getLeds().hasPiece = false));
+
+       /* Pickup */
+       eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
+       eventMap.put("Yoshi", new YoshiPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
+       eventMap.put("Upright", new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));
         eventMap.put("Wait1", new AutoWait(1));
         eventMap.put("Wait1.5",new AutoWait(1.5));
+
+        /* Positions */
+        eventMap.put("HighPosition", new HighPositionAuto(s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("MidPosition", new MidPositionAuto(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("LowPosition", new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
+        eventMap.put("Stow", new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
+        /* Auto Balance */
+        eventMap.put("AutoBalance", new AutoBalance(s_Swerve));
+
+        /*Scoring commands*/
+        eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("ScoreMid", new AutoMidPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+        eventMap.put("Score", new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
         /* End Event Map */
 
@@ -289,6 +312,7 @@ public class RobotContainer {
                 Constants.AutoConstants.rotationPID.kD),
             s_Swerve::setModuleStates,
             eventMap,
+            true,
             s_Swerve
         );
       }
@@ -296,9 +320,15 @@ public class RobotContainer {
       public void configRoutine() {
 
           /* AutoChosser */
-          m_chooser.setDefaultOption("PurpleYellow", new PurpleYellow(autoBuilder, s_PoseEstimator));
+          m_chooser.setDefaultOption("None", null);
           m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("None", null);
+          m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);
