@@ -200,6 +200,8 @@ public final class Constants {
 
     public static final class OI {
 
+        public static final boolean useStandard = true;
+
         public static final int wristAxis = XboxController.Axis.kRightTrigger.value;
         public static final int revWristAxis = XboxController.Axis.kLeftTrigger.value;
 
@@ -417,7 +419,7 @@ public final class Constants {
 
         /*Auto Builder Const */
         public static final PIDConstants translationPID = new PIDConstants(.7, 0, 0);
-        public static final PIDConstants rotationPID = new PIDConstants(1.3, 0, 0); //d.05 i .05
+        public static final PIDConstants rotationPID = new PIDConstants(1.5, 0, 0); //d.05 i .05
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =

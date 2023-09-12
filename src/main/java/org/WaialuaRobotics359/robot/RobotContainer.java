@@ -66,16 +66,12 @@ public class RobotContainer {
     public final DigitalInput brakeToggle = new DigitalInput(0);
     public final DigitalInput zero = new DigitalInput(1);
 
-
-
     /* Drive Controls */
     private final int translationAxis = XboxController.Axis.kLeftY.value;
     private final int strafeAxis = XboxController.Axis.kLeftX.value;
     private final int rotationAxis = XboxController.Axis.kRightX.value;
-
     private final Trigger snapRightAngle = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
     private final Trigger autoAlign = new Trigger(() -> driver.getRawAxis(XboxController.Axis.kRightTrigger.value) >.5);
-
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final POVButton ResetMods = new POVButton(driver, 180);
@@ -87,9 +83,8 @@ public class RobotContainer {
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
     private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
-  
     
-
+    
     /* Operator Controls */
     private final int wristAxis = (Constants.OI.wristAxis);
     private final int revWristAxis = (Constants.OI.revWristAxis);
@@ -97,24 +92,18 @@ public class RobotContainer {
     private final int arm = (Constants.OI.arm);
 
     /* Operator Buttons */
-
     private final POVButton intake = new POVButton(operator, Constants.OI.intake);
     private final POVButton outake = new POVButton(operator, Constants.OI.outake);
-
     private final JoystickButton upright = new JoystickButton(operator, Constants.OI.upright);
     private final JoystickButton pickup = new JoystickButton(operator, Constants.OI.pickup);
-
     private final JoystickButton setCube = new JoystickButton(operator, Constants.OI.isCube);
     private final JoystickButton setCone = new JoystickButton(operator, Constants.OI.isCone);
-
     private final JoystickButton lowPos = new JoystickButton(operator, Constants.OI.lowPos);
     private final JoystickButton midPos = new JoystickButton(operator, Constants.OI.midPos);
     private final JoystickButton highPos = new JoystickButton(operator, Constants.OI.highPos);
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
-
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
-
     private final JoystickButton justZero = new JoystickButton(operator, Constants.OI.justZero);
     private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
@@ -339,6 +328,7 @@ public class RobotContainer {
           m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);

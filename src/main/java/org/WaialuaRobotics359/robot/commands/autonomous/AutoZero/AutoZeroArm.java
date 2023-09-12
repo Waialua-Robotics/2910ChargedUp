@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoZeroArm extends CommandBase {
+    private boolean finished = false;
+
     private Arm s_Arm;
     private Timer Timer = new Timer();
 
@@ -21,6 +23,8 @@ public class AutoZeroArm extends CommandBase {
 
     @Override
     public void initialize() {
+        finished = false;
+
         s_Arm.setPosition(Constants.Pivot.softMax +1000);
           
         Timer.reset();
@@ -30,18 +34,18 @@ public class AutoZeroArm extends CommandBase {
 
     @Override
     public void execute() {
-        s_Arm.setPercentOutput(-.1);
+        if(s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3)){
+            s_Arm.stop();
+            s_Arm.setPosition(0);
+            finished = true;
+        }else{
+            s_Arm.setPercentOutput(-.1);
+        }
     }
     
     @Override
     public boolean isFinished(){
-        return s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3);
+        return finished;
     }
 
-    @Override 
-    public void end(boolean interupted) {
-        s_Arm.stop();
-        s_Arm.setPosition(0);
-        s_Arm.setDesiredPosition(0);
-    }
 }

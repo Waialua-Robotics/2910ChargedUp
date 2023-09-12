@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class AutoZeroPivot extends CommandBase {
+    private boolean finished = false;
+
     private Pivot s_Pivot;
     private Timer Timer = new Timer();
 
@@ -30,18 +32,18 @@ public class AutoZeroPivot extends CommandBase {
 
     @Override
     public void execute() {
-        s_Pivot.setPercentOutput(-.01);
+        if(s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3)){
+            s_Pivot.stop();
+            s_Pivot.setPosition(0);
+            s_Pivot.setDesiredPosition(0);
+        }else{
+            s_Pivot.setPercentOutput(-.01);
+        }
     }
     
     @Override
     public boolean isFinished(){
-        return s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3);
+        return finished;
     }
 
-    @Override 
-    public void end(boolean interupted) {
-        s_Pivot.stop();
-        s_Pivot.setPosition(0);
-        s_Pivot.setDesiredPosition(0);
-    }
 }
