@@ -53,13 +53,13 @@ public final class Constants {
     }
 
     public static final class Wrist {
-        public static final int softMax = 42000;
+        public static final int softMax = 42900;
         public static final int softMin = 0;
         public static final int WristID = 1;
 
         public static final int stowPosition = 0;
         public static final int middleStowPosition = 0;
-        public static final int autoStart = 0;
+        public static final int autoStart = 42670;
 
         public static final class Cone {
             public static final int groundPosition = 32620;
@@ -126,10 +126,10 @@ public final class Constants {
         public static final int Bl_PivotID = 4;
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
-        public static final int lowStart = 10000;
         
         public static final int stowPosition = 0;
         public static final int middleStowPosition = 58000;
+        public static final int autoStart = 68800;
 
         public static final double kTicksPerDegree = 636.4;
 

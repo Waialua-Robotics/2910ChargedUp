@@ -52,6 +52,9 @@ public class RobotContainer {
     public static boolean pivotAutoStart = false;
     public static boolean armAutoStart = false;
     public static boolean wristAutoStart = false;
+    public static boolean armUprightStart = false;
+    public static boolean wristUprightStart = false;
+    public static boolean pivotUprightStart = false;
     public boolean toggleMode = true;
     public boolean brakeMode = false;
     public boolean zeroMode = true;

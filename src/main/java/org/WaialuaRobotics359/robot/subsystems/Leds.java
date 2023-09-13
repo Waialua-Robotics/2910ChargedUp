@@ -80,6 +80,14 @@ public class Leds extends SubsystemBase{
             return false;
         }
     }
+
+    public boolean autoStart(){
+        if(RobotContainer.pivotUprightStart && RobotContainer.armUprightStart && RobotContainer.wristUprightStart){
+            return true;
+        } else {
+            return false;
+        }
+    }
     
     /*LED Options */
     private void solid(Color color, Section section){
@@ -154,11 +162,17 @@ public class Leds extends SubsystemBase{
             // solid(Color.GREEN, Section.OnBoard);
         } else if (autoCheck()) {
             if (!inBrake) {
+                solid(Color.WHITE, Section.OnBoard);
+            } else {
+                strobe(Color.WHITE, Section.OnBoard, 1);
+            }
+        } else if (autoStart()){
+            if(!inBrake) {
                 solid(Color.GREEN, Section.OnBoard);
             } else {
                 strobe(Color.GREEN, Section.OnBoard, 1);
             }
-        } else {
+        } else { 
             if (!inBrake) {
                 solid(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard);
             } else {

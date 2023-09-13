@@ -76,6 +76,14 @@ public class Pivot extends SubsystemBase{
         }
     }
 
+    public boolean autoStart(){
+        if (Math.abs(getPosition() - Constants.Pivot.autoStart) < 1000) {
+            return RobotContainer.pivotUprightStart = true;
+        } else {
+            return RobotContainer.pivotUprightStart = false;
+        }
+    }
+
     public void stowSpeed() {
         m_FlPivot.configMotionCruiseVelocity(50000);
         m_FlPivot.configMotionAcceleration(20000);

@@ -47,6 +47,14 @@ public class Wrist extends SubsystemBase{
         }
     }
 
+    public boolean autoStart(){
+        if (Math.abs(getPosition() - Constants.Wrist.autoStart) < 1000) {
+            return RobotContainer.wristUprightStart = true;
+        } else {
+            return RobotContainer.wristUprightStart = false;
+        }
+    }
+
     public void setCoast(){
         m_Wrist.setNeutralMode(NeutralMode.Coast);
     }
