@@ -32,7 +32,7 @@ public class AutoZeroPivot extends CommandBase {
 
     @Override
     public void execute() {
-        if(s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3)){
+        if(s_Pivot.getCurrent() > currentLimit && Math.abs(s_Pivot.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(1)){
             s_Pivot.stop();
             s_Pivot.setPosition(0);
             s_Pivot.setDesiredPosition(0);

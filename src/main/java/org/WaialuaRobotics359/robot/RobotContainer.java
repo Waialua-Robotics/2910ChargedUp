@@ -241,7 +241,8 @@ public class RobotContainer {
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
-            justZero.onTrue(new JustZero(s_Pivot, s_Arm, s_Wrist));
+            autoZero.onFalse(new JustZero(s_Pivot, s_Arm, s_Wrist));
+            justZero.onTrue(new InstantCommand(() -> getFlight().toggleWorking()));
     }   
 
     public Leds getLeds(){
@@ -262,6 +263,10 @@ public class RobotContainer {
 
     public Swerve getSwerve(){
         return s_Swerve;
+    }
+
+    public Flight getFlight(){
+        return s_Flight;
     }
 
 

@@ -127,7 +127,7 @@ public final class Constants {
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
         
-        public static final int stowPosition = 0;
+        public static final int stowPosition = 800;
         public static final int middleStowPosition = 58000;
         public static final int autoStart = 68800;
 

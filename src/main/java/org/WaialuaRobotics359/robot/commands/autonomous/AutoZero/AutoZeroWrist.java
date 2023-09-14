@@ -33,7 +33,7 @@ public class AutoZeroWrist extends CommandBase {
 
     @Override
     public void execute() {
-        if(s_Wrist.getCurrent() > currentLimit && Math.abs(s_Wrist.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3)){
+        if(s_Wrist.getCurrent() > currentLimit && Math.abs(s_Wrist.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(1.5)){
             s_Wrist.stop();
             s_Wrist.setPosition(0);
             s_Wrist.setDesiredPosition(0);

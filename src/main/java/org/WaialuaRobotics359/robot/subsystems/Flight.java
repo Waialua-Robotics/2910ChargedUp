@@ -23,6 +23,12 @@ public class Flight extends SubsystemBase {
         flightWorking = false;
     }
 
+    public void toggleWorking(){
+
+        flightWorking =! flightWorking;
+
+    }
+
     public boolean connected(){
         if(m_Flight.getAmbientLightLevel() == 0){
             return false; 
