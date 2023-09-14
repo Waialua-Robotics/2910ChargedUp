@@ -39,6 +39,7 @@ public class FeederPosition extends CommandBase {
     private Timer Timer = new Timer();
 
     public void initialize(){
+        s_Leds.hasPiece = false;
         if (RobotContainer.isCube){
             ArmPosition = Constants.Arm.Cube.feederPosition;
             WristPosition = Constants.Wrist.Cube.feederPosition;
