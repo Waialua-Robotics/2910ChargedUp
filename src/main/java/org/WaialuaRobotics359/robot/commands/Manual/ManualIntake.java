@@ -28,16 +28,13 @@ public class ManualIntake extends CommandBase{
         boolean inValue = intake.getAsBoolean();
         boolean outValue = outake.getAsBoolean();
 
-        if(inValue || outValue && !manualMode){
-            s_Intake.stop();
-        }
 
         if (inValue) {
-            s_Intake.intake();
+            s_Intake.intakeFull();
             manualMode = true;
             setIdle = true;
         } else if (outValue) {
-            s_Intake.outake();
+            s_Intake.outakeFull();
             s_Leds.hasPiece = false;
             manualMode = true;
             setIdle = false;
@@ -49,6 +46,7 @@ public class ManualIntake extends CommandBase{
             }
             manualMode = false; 
         }
+        
     }
 
     @Override

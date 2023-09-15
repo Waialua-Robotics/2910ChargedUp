@@ -375,12 +375,12 @@ public final class Constants {
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.82, Units.inchesToMeters(295.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(251.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(229.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(185.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(163.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(119.56), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(196.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(152.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(130.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(86.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(64.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(20.19), new Rotation2d(0)));
                 }
             };
         }
@@ -398,15 +398,16 @@ public final class Constants {
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.82, Units.inchesToMeters(273.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(207.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(141.56), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(174.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(108.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(42.19), new Rotation2d(0)));
                 }
             };
         }
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+        public static final double inPosisionError = Units.inchesToMeters(2);
         public static final boolean VisionInAuto = false;
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;

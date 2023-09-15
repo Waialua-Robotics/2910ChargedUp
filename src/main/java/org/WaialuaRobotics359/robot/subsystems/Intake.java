@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase{
 
     public Intake (){
         m_Intake = new TalonFX(Constants.Intake.IntakeID);
-        m_Intake.setNeutralMode(NeutralMode.Brake);
+        m_Intake.setNeutralMode(NeutralMode.Coast);
 
         //Motion magic
         m_Intake.setSelectedSensorPosition(0);
@@ -68,6 +68,14 @@ public class Intake extends SubsystemBase{
 
     public void outake(){
         m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -.5 : .5);
+    }
+
+    public void intakeFull(){
+        m_Intake.set(ControlMode.PercentOutput, RobotContainer.isCube ? 1 : -.1);
+    }
+
+    public void outakeFull(){
+        m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -1 : 1);
     }
 
     public void getCurrent(){

@@ -48,6 +48,7 @@ public class RobotContainer {
 
     public static boolean isCube = true;
     public static boolean allowScore = true;
+    public static boolean inScoringPose = false;
     public static boolean retractOnScore = false;
     public static boolean pivotAutoStart = false;
     public static boolean armAutoStart = false;
@@ -119,7 +120,7 @@ public class RobotContainer {
     private final Pivot s_Pivot = new Pivot();
     private final Leds s_Leds = new Leds();
     private final PhotonVision s_PhotonVision = new PhotonVision();
-    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision);
+    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision, s_Flight);
 
     /* Auto Builder */
     private SwerveAutoBuilder autoBuilder;

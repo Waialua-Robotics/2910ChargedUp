@@ -40,7 +40,6 @@ public class Leds extends SubsystemBase{
     public boolean lowBatteryAlert = false;
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
-    //public boolean atZero = false; // not conected
     //teleop
     public boolean isCube; //conected
     public boolean actionReady = false; //conected
@@ -232,6 +231,9 @@ public class Leds extends SubsystemBase{
             endgameAlert = false;
         }
 
+        //In scorring pose
+        autoScore = RobotContainer.inScoringPose;
+
         /* Set Leds */
         if (estopped) {
             solid(Color.RED, Section.All);
@@ -247,6 +249,8 @@ public class Leds extends SubsystemBase{
             if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
+        }else if(DriverStation.isEnabled() && autoScore){
+            solid(Color.GREEN, Section.OffBoard);
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {

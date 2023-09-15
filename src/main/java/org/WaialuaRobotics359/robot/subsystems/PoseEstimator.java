@@ -32,6 +32,7 @@ public class PoseEstimator extends SubsystemBase {
 
   private final Swerve s_Swerve;
   private final PhotonVision s_PhotonVision;
+  private final Flight s_Flight;
 
   EstimatedRobotPose cam1Pose;
   EstimatedRobotPose cam2Pose;
@@ -50,7 +51,8 @@ public class PoseEstimator extends SubsystemBase {
   /* Logging */
 
 
-  public PoseEstimator(Swerve s_Swerve, PhotonVision s_PhotonVision) {
+  public PoseEstimator(Swerve s_Swerve, PhotonVision s_PhotonVision, Flight s_Flight) {
+    this.s_Flight = s_Flight;
     this.s_Swerve = s_Swerve;
     this.s_PhotonVision = s_PhotonVision;
 
@@ -95,6 +97,7 @@ public class PoseEstimator extends SubsystemBase {
       return cam2Pose.estimatedPose.getX();
     }
   }
+  
 
   public void resetPoseToZero(){
     Pose2d pose = new Pose2d(0,0, new Rotation2d(0));
@@ -130,8 +133,20 @@ public class PoseEstimator extends SubsystemBase {
     return angle > 0 ? false : true;
   }
 
+  public boolean inScoringPose(){
+    double allowableError = Constants.AutoConstants.inPosisionError;
+
+    if(Math.abs(getXtoClosestSelectedNode() + s_Flight.offsetFromCenterIn())<allowableError && Math.abs(getYtoClosestSelectedNode())< allowableError){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   public void periodic(){
+
+    RobotContainer.inScoringPose = inScoringPose();
 
     //CameraLeft
     Optional<EstimatedRobotPose> result1 = s_PhotonVision.getEstimatedPose(0);
