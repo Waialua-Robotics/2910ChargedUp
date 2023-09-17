@@ -81,7 +81,7 @@ public class AutoAlignXApril extends CommandBase {
        //SmartDashboard.putNumber("xDistance", controllerY.calculate(xDistance, 0));
        
         s_swerve.drive(
-            translation, rotationVal * Constants.Swerve.maxAngularVelocity, true, true //open loop?
+            translation, rotationVal * Constants.Swerve.maxAngularVelocity, true, true, s_swerve.getYaw() //open loop?
         ); 
 
         //System.out.println(translation.getY());

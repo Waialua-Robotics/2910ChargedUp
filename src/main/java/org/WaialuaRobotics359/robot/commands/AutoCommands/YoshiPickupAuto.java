@@ -78,7 +78,7 @@ public class YoshiPickupAuto extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Intake.current() > 70 && Timer.hasElapsed(1)|| Timer.hasElapsed(3)){
+                if(s_Intake.current() > 80 && Timer.hasElapsed(1)|| Timer.hasElapsed(3)){
                     s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
                     s_Wrist.goToPosition();
                     s_Arm.setDesiredPosition(0);

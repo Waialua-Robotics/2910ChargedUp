@@ -28,6 +28,15 @@ public class ManualIntake extends CommandBase{
         boolean inValue = intake.getAsBoolean();
         boolean outValue = outake.getAsBoolean();
 
+        if (manualMode && (!inValue || !outValue)) {
+            if (setIdle) {
+                s_Intake.intakeIdle();
+                
+            } else {
+                s_Intake.stop();
+            }
+            manualMode = false;
+        }
 
         if (inValue) {
             s_Intake.intakeFull();
@@ -38,14 +47,11 @@ public class ManualIntake extends CommandBase{
             s_Leds.hasPiece = false;
             manualMode = true;
             setIdle = false;
-        } else if (manualMode) {
-            if (setIdle) {
-                s_Intake.intakeIdle();
-            } else {
-                s_Intake.stop();
-            }
-            manualMode = false; 
         }
+
+
+
+
         
     }
 

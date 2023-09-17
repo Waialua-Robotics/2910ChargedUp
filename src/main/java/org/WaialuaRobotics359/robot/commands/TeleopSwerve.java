@@ -2,7 +2,7 @@ package org.WaialuaRobotics359.robot.commands;
 
 import org.WaialuaRobotics359.lib.math.Conversions;
 import org.WaialuaRobotics359.robot.Constants;
-
+import org.WaialuaRobotics359.robot.subsystems.PoseEstimator;
 import org.WaialuaRobotics359.robot.subsystems.Swerve;
 
 import java.util.function.BooleanSupplier;
@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TeleopSwerve extends CommandBase {    
     private Swerve s_Swerve;    
+    private PoseEstimator s_PoseEstimator;
     private DoubleSupplier translationSup;
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
@@ -25,8 +26,11 @@ public class TeleopSwerve extends CommandBase {
     private double ControllerGain = 1;
     private Boolean feedbackNode = false;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
+    private Boolean usePoseEstimator = false; 
+
+    public TeleopSwerve(Swerve s_Swerve, PoseEstimator s_PoseEstimator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup) {
         this.s_Swerve = s_Swerve;
+        this.s_PoseEstimator = s_PoseEstimator;
         addRequirements(s_Swerve);
 
         this.translationSup = translationSup;
@@ -82,7 +86,8 @@ public class TeleopSwerve extends CommandBase {
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
                 rotationVal * Constants.Swerve.maxAngularVelocity, 
                 !robotCentricSup.getAsBoolean(), 
-                true
+                true,
+                usePoseEstimator ? s_PoseEstimator.getYaw() : s_Swerve.getYaw() //what gyro to use
             );
         }
     }

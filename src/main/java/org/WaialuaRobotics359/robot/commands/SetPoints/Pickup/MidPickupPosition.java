@@ -35,6 +35,10 @@ public class MidPickupPosition extends CommandBase{
 
     private boolean finished = false;
 
+    private boolean disqalifyTOF = false; 
+
+    private double flightValue;
+
     private Timer Timer = new Timer();
 
     public void initialize(){
@@ -49,6 +53,12 @@ public class MidPickupPosition extends CommandBase{
             WristPosition = Constants.Wrist.Cone.groundPosition;
         }
 
+        if(s_Flight.getSensorRange() < 300){
+            disqalifyTOF = true;
+        }else{
+            disqalifyTOF = false;
+        }
+
         Timer.reset();
         Timer.start();
 
@@ -57,6 +67,12 @@ public class MidPickupPosition extends CommandBase{
 
     @Override
     public void execute(){
+
+        if(disqalifyTOF){
+          flightValue = 400;
+        }else{
+          flightValue = s_Flight.getSensorRange();
+        }
 
         if(RobotContainer.isCube){
             s_Pivot.setDesiredPosition(PivotPosition);
@@ -108,18 +124,16 @@ public class MidPickupPosition extends CommandBase{
             s_Intake.intake();
         }
 
-        if(s_Flight.getSensorRange() < 200){
+        if(flightValue < 300){
             s_Intake.intakeIdle();
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
             finished = true;
 
         }
+
     }                        
 }
-
-        
-
     
     
     @Override

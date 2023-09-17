@@ -42,8 +42,8 @@ public class PoseEstimator extends SubsystemBase {
   // "trust" the estimate from that particular component more than the others. 
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
-  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.01)); //.1,.1 .01
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(1));
+  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.1)); //.1,.1 .01
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(.1));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -112,6 +112,10 @@ public class PoseEstimator extends SubsystemBase {
     return SwerveposeEstimator.getEstimatedPosition();
   }
 
+  public Rotation2d getYaw(){
+    return getPose().getRotation();
+  }
+
   public Pose2d ClosestSelectedNode(){
     if(DriverStation.getAlliance() == Alliance.Red){
      return RobotContainer.isCube ? getPose().nearest(Constants.ScoringPoses.Cube.RedPoses) : getPose().nearest(Constants.ScoringPoses.Cone.RedPoses);
@@ -157,7 +161,7 @@ public class PoseEstimator extends SubsystemBase {
       //SmartDashboard.putNumber("cam1Result3dZ", cam1Pose.estimatedPose.getZ());
       //SmartDashboard.putNumber("cam1Result3dX", cam1Pose.estimatedPose.getX());
       //SmartDashboard.putNumber("cam1Result3dY", cam1Pose.estimatedPose.getY());
-      //SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
@@ -171,7 +175,7 @@ public class PoseEstimator extends SubsystemBase {
       //SmartDashboard.putNumber("cam2Result3dZ", cam2Pose.estimatedPose.getZ());
       //SmartDashboard.putNumber("cam2Result3dX", cam2Pose.estimatedPose.getX());
       //SmartDashboard.putNumber("cam2Result3dY", cam2Pose.estimatedPose.getY());
-      //SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }

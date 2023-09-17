@@ -52,14 +52,14 @@ public class Swerve extends SubsystemBase {
         }
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, Rotation2d robotYaw) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
-                                    getYaw()
+                                    robotYaw
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(),
@@ -87,7 +87,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void stop(){
-        drive(new Translation2d(0,0), .001, true, false);
+        drive(new Translation2d(0,0), .001, true, false, getYaw());
     }
 
     public void setCurrentAngle(){
@@ -146,7 +146,7 @@ public class Swerve extends SubsystemBase {
     //Boolean function if pitch value has changed since last call
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw()); //gyro.getYaw()
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw()); 
     }
 
     public Rotation2d getYawflip(){

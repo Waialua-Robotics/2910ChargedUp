@@ -135,6 +135,7 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
             s_Swerve, 
+            s_PoseEstimator,
             () -> driver.getRawAxis(translationAxis), 
             () -> driver.getRawAxis(strafeAxis), 
             () -> driver.getRawAxis(rotationAxis), 
@@ -201,7 +202,7 @@ public class RobotContainer {
             ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
             /* Snap-to Swerve Angle */
             snapRightAngle.onTrue(new InstantCommand(() -> s_Swerve.snapRightAngle()));
-            setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.setCurrentAngle()));
+            setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
             Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
             Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
             Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));

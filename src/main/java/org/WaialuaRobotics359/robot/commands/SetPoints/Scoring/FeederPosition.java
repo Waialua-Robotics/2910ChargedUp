@@ -35,6 +35,9 @@ public class FeederPosition extends CommandBase {
     }
 
     private boolean finished = false;
+    private boolean disqalifyTOF = false; 
+
+    private double flightValue;
 
     private Timer Timer = new Timer();
 
@@ -50,6 +53,12 @@ public class FeederPosition extends CommandBase {
             PivotPosition = Constants.Pivot.Cone.feederPosition;
         }
 
+        if(s_Flight.getSensorRange() < 300){
+            disqalifyTOF = true;
+        }else{
+            disqalifyTOF = false;
+        }
+
         Timer.reset();
         Timer.start();
 
@@ -58,6 +67,12 @@ public class FeederPosition extends CommandBase {
 
     @Override
     public void execute(){
+
+        if (disqalifyTOF) {
+            flightValue = 400;
+        } else {
+            flightValue = s_Flight.getSensorRange();
+        }
 
             if(RobotContainer.isCube){
 
@@ -109,7 +124,7 @@ public class FeederPosition extends CommandBase {
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 200){
+                if(flightValue < 300){
                     s_Intake.intakeIdle();
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     s_Leds.hasPiece = true;
