@@ -75,7 +75,7 @@ public final class Constants {
         public static final class Cube {
             public static final int groundPosition = 21500;//21500
             public static final int lowPosition = 155;
-            public static final int frontLowPosition = 0;
+            public static final int frontLowPosition = 8000;
             public static final int midPosition = 1110;
             public static final int frontMidPosition = 9200;
             public static final int highPosition = 6880;
@@ -268,8 +268,8 @@ public final class Constants {
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 35;
-        public static final int drivePeakCurrentLimit = 60;
+        public static final int driveContinuousCurrentLimit = 33;
+        public static final int drivePeakCurrentLimit = 40;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 

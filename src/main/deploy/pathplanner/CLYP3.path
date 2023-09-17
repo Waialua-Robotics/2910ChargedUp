@@ -57,6 +57,18 @@
       "names": [
         "Upright"
       ]
+    },
+    {
+      "position": 0.0,
+      "names": [
+        "Stow"
+      ]
+    },
+    {
+      "position": 0.07,
+      "names": [
+        "Stow"
+      ]
     }
   ]
 }
