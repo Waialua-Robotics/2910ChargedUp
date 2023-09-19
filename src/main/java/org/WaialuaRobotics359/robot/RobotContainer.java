@@ -118,7 +118,7 @@ public class RobotContainer {
     private final Arm s_Arm = new Arm();
     private final Flight s_Flight = new Flight();
     private final Pivot s_Pivot = new Pivot();
-    private final Leds s_Leds = new Leds();
+    private final Leds s_Leds = new Leds(s_Flight);
     private final PhotonVision s_PhotonVision = new PhotonVision();
     private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision, s_Flight);
 

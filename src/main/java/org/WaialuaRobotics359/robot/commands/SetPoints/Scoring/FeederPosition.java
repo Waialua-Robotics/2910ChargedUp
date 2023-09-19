@@ -40,6 +40,7 @@ public class FeederPosition extends CommandBase {
     private double flightValue;
 
     private Timer Timer = new Timer();
+    private Timer IntakeingTimer = new Timer();
 
     public void initialize(){
         s_Leds.hasPiece = false;
@@ -61,6 +62,9 @@ public class FeederPosition extends CommandBase {
 
         Timer.reset();
         Timer.start();
+
+        IntakeingTimer.reset();
+        IntakeingTimer.stop();
 
         finished = false;
     }
@@ -125,11 +129,15 @@ public class FeederPosition extends CommandBase {
                 }
 
                 if(flightValue < 300){
-                    s_Intake.intakeIdle();
+                    IntakeingTimer.start();
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     s_Leds.hasPiece = true;
                     finished = true;
 
+                }
+
+                if(IntakeingTimer.hasElapsed(.5)){
+                    s_Intake.intakeIdle();
                 }
             }
         }

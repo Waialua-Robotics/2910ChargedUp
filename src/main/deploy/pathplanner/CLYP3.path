@@ -47,7 +47,7 @@
   ],
   "markers": [
     {
-      "position": 0.3818181818181819,
+      "position": 0.34,
       "names": [
         "Pickup"
       ]
@@ -65,7 +65,7 @@
       ]
     },
     {
-      "position": 0.07,
+      "position": 0.04545454545454544,
       "names": [
         "Stow"
       ]

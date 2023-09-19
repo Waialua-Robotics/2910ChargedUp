@@ -24,9 +24,11 @@ public class Flight extends SubsystemBase {
     }
 
     public void toggleWorking(){
-
         flightWorking =! flightWorking;
+    }
 
+    public boolean getFlightWorking(){
+        return flightWorking;
     }
 
     public boolean connected(){

@@ -40,6 +40,7 @@ public class MidPickupPosition extends CommandBase{
     private double flightValue;
 
     private Timer Timer = new Timer();
+    private Timer IntakeingTimer = new Timer();
 
     public void initialize(){
         s_Leds.noPiece();
@@ -61,6 +62,9 @@ public class MidPickupPosition extends CommandBase{
 
         Timer.reset();
         Timer.start();
+
+        IntakeingTimer.reset();
+        IntakeingTimer.stop();
 
         finished = false;
     }
@@ -125,11 +129,14 @@ public class MidPickupPosition extends CommandBase{
         }
 
         if(flightValue < 300){
-            s_Intake.intakeIdle();
+            IntakeingTimer.start();
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
             finished = true;
+        }
 
+        if(IntakeingTimer.hasElapsed(.5)){
+            s_Intake.intakeIdle();
         }
 
     }                        

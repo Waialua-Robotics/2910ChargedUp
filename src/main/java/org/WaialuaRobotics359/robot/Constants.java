@@ -69,6 +69,7 @@ public final class Constants {
             public static final int autoMidPosition = 3825;
             public static final int midPosition = 13025; // 6730
             public static final int highPosition = 13905;
+            public static final int highPositionAlternate = 16000;
             public static final int feederPosition = 300;
         }
         
@@ -143,6 +144,7 @@ public final class Constants {
             public static final int autoMidPosition = 85145; 
             public static final int midPosition = 83131; 
             public static final int highPosition = 87550;
+            public static final int highPositionAlternate = 85550;
             public static final int feederPosition = 68600;
 
         }
