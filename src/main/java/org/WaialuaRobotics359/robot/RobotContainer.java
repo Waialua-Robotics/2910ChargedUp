@@ -48,10 +48,14 @@ public class RobotContainer {
 
     public static boolean isCube = true;
     public static boolean allowScore = true;
+    public static boolean inScoringPose = false;
     public static boolean retractOnScore = false;
     public static boolean pivotAutoStart = false;
     public static boolean armAutoStart = false;
     public static boolean wristAutoStart = false;
+    public static boolean armUprightStart = false;
+    public static boolean wristUprightStart = false;
+    public static boolean pivotUprightStart = false;
     public boolean toggleMode = true;
     public boolean brakeMode = false;
     public boolean zeroMode = true;
@@ -114,9 +118,9 @@ public class RobotContainer {
     private final Arm s_Arm = new Arm();
     private final Flight s_Flight = new Flight();
     private final Pivot s_Pivot = new Pivot();
-    private final Leds s_Leds = new Leds();
+    private final Leds s_Leds = new Leds(s_Flight);
     private final PhotonVision s_PhotonVision = new PhotonVision();
-    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision);
+    private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision, s_Flight);
 
     /* Auto Builder */
     private SwerveAutoBuilder autoBuilder;
@@ -131,6 +135,7 @@ public class RobotContainer {
         s_Swerve.setDefaultCommand(
             new TeleopSwerve(
             s_Swerve, 
+            s_PoseEstimator,
             () -> driver.getRawAxis(translationAxis), 
             () -> driver.getRawAxis(strafeAxis), 
             () -> driver.getRawAxis(rotationAxis), 
@@ -197,7 +202,7 @@ public class RobotContainer {
             ResetMods.onTrue(new InstantCommand(() -> s_Swerve.resetModulesToAbsolute()));
             /* Snap-to Swerve Angle */
             snapRightAngle.onTrue(new InstantCommand(() -> s_Swerve.snapRightAngle()));
-            setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.setCurrentAngle()));
+            setCurrentAngle.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
             Angle0.onTrue(new InstantCommand(() -> s_Swerve.setDesired(0)));
             Angle90.onTrue(new InstantCommand(() -> s_Swerve.setDesired(90)));
             Angle180.onTrue(new InstantCommand(() -> s_Swerve.setDesired(180)));
@@ -238,7 +243,8 @@ public class RobotContainer {
             highPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
-            justZero.onTrue(new JustZero(s_Pivot, s_Arm, s_Wrist));
+            autoZero.onFalse(new JustZero(s_Pivot, s_Arm, s_Wrist));
+            justZero.onTrue(new InstantCommand(() -> getFlight().toggleWorking()));
     }   
 
     public Leds getLeds(){
@@ -259,6 +265,10 @@ public class RobotContainer {
 
     public Swerve getSwerve(){
         return s_Swerve;
+    }
+
+    public Flight getFlight(){
+        return s_Flight;
     }
 
 

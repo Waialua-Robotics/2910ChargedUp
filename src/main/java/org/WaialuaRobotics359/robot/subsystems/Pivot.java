@@ -69,10 +69,18 @@ public class Pivot extends SubsystemBase{
     }
 
     public boolean autoPos(){
-        if (Math.abs(getPosition() - Constants.Pivot.stowPosition) < 100) {
+        if (Math.abs(getPosition() - 0) < 100) { //Constants.Pivot.stowPosition
             return RobotContainer.pivotAutoStart = true;
         } else {
             return RobotContainer.pivotAutoStart = false;
+        }
+    }
+
+    public boolean autoStart(){
+        if (Math.abs(getPosition() - Constants.Pivot.autoStart) < 1000) {
+            return RobotContainer.pivotUprightStart = true;
+        } else {
+            return RobotContainer.pivotUprightStart = false;
         }
     }
 

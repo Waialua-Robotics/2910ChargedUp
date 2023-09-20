@@ -38,9 +38,15 @@ public class HighPosition extends CommandBase {
             PivotPosition = Constants.Pivot.Cube.highPosition;
             WristPosition = Constants.Wrist.Cube.highPosition;
         } else {
-            ArmPosition = Constants.Arm.Cone.highPosition;
-            PivotPosition = Constants.Pivot.Cone.highPosition;
-            WristPosition = Constants.Wrist.Cone.highPosition;
+            if (s_Leds.flightWorking) {
+                ArmPosition = Constants.Arm.Cone.highPosition;
+                PivotPosition = Constants.Pivot.Cone.highPosition;
+                WristPosition = Constants.Wrist.Cone.highPosition;
+            } else {
+                ArmPosition = Constants.Arm.Cone.highPosition;
+                PivotPosition = Constants.Pivot.Cone.highPositionAlternate;
+                WristPosition = Constants.Wrist.Cone.highPositionAlternate;
+            }
         }
         
         Timer.reset();

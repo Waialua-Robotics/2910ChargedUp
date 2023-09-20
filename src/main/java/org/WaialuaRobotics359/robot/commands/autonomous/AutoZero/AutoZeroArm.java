@@ -34,7 +34,7 @@ public class AutoZeroArm extends CommandBase {
 
     @Override
     public void execute() {
-        if(s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(3)){
+        if(s_Arm.getCurrent() > currentLimit && Math.abs(s_Arm.getVelocity()) < velocityChange && Timer.hasElapsed(.2) || Timer.hasElapsed(1.5)){
             s_Arm.stop();
             s_Arm.setPosition(0);
             finished = true;

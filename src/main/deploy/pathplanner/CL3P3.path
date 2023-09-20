@@ -58,6 +58,12 @@
         "event",
         "Pickup"
       ]
+    },
+    {
+      "position": 0.01,
+      "names": [
+        "Upright"
+      ]
     }
   ]
 }

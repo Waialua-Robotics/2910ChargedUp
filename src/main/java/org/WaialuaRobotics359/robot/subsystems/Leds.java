@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.awt.Color;
 
 public class Leds extends SubsystemBase{
+
+    private Flight s_Flight;
     
     private CANdle LED;
     private int animationSlot;
@@ -40,14 +42,14 @@ public class Leds extends SubsystemBase{
     public boolean lowBatteryAlert = false;
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
-    //public boolean atZero = false; // not conected
     //teleop
     public boolean isCube; //conected
     public boolean actionReady = false; //conected
-    public boolean autoScore = false; 
+    public boolean autoScore = false; //conected
     public boolean distraction = false;
     public boolean endgameAlert = false; //conected
     public boolean hasPiece = false; //coneccted
+    public boolean flightWorking  = true; //conected
 
     //auto Maybe?
     public boolean autoFinished = false;
@@ -61,7 +63,8 @@ public class Leds extends SubsystemBase{
     public static boolean rightConected = false; //conected
     
 
-    public Leds(){
+    public Leds(Flight s_Flight){
+        this.s_Flight = s_Flight;
         LED = new CANdle(8);
     }
 
@@ -75,6 +78,14 @@ public class Leds extends SubsystemBase{
 
     public boolean autoCheck(){
         if(RobotContainer.pivotAutoStart && RobotContainer.armAutoStart && RobotContainer.wristAutoStart){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean autoStart(){
+        if(RobotContainer.pivotUprightStart && RobotContainer.armUprightStart && RobotContainer.wristUprightStart){
             return true;
         } else {
             return false;
@@ -154,11 +165,17 @@ public class Leds extends SubsystemBase{
             // solid(Color.GREEN, Section.OnBoard);
         } else if (autoCheck()) {
             if (!inBrake) {
+                solid(Color.WHITE, Section.OnBoard);
+            } else {
+                strobe(Color.WHITE, Section.OnBoard, 1);
+            }
+        } else if (autoStart()){
+            if(!inBrake) {
                 solid(Color.GREEN, Section.OnBoard);
             } else {
                 strobe(Color.GREEN, Section.OnBoard, 1);
             }
-        } else {
+        } else { 
             if (!inBrake) {
                 solid(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OnBoard);
             } else {
@@ -218,7 +235,13 @@ public class Leds extends SubsystemBase{
             endgameAlert = false;
         }
 
-        /* Set Leds */
+        //In scorring pose
+        autoScore = RobotContainer.inScoringPose;
+
+        //Flight Working
+        flightWorking = s_Flight.getFlightWorking();
+
+        ////////////////////////* Set Leds *////////////////////////
         if (estopped) {
             solid(Color.RED, Section.All);
         } else if (DriverStation.isAutonomousEnabled()) {
@@ -233,6 +256,10 @@ public class Leds extends SubsystemBase{
             if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
+        }else if(DriverStation.isEnabled() && !flightWorking && strobePeriod()){
+            solid(Color.RED, Section.OnBoard);
+        }else if(DriverStation.isEnabled() && autoScore){
+            solid(Color.GREEN, Section.OffBoard);
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {

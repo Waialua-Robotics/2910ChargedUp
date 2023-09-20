@@ -62,6 +62,14 @@ public class Arm extends SubsystemBase{
         }
     }
 
+    public boolean autoStart(){
+        if (Math.abs(getPosition() - Constants.Arm.autoStart) < 1000) {
+            return RobotContainer.armUprightStart = true;
+        } else {
+            return RobotContainer.armUprightStart = false;
+        }
+    }
+
     public void stowSpeed() {
         m_lArm.configMotionCruiseVelocity(85000);
         m_lArm.configMotionAcceleration(85000);

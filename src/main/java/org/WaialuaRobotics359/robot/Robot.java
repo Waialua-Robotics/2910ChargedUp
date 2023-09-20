@@ -69,6 +69,10 @@ public class Robot extends TimedRobot {
     m_robotContainer.getArm().autoPos();
     m_robotContainer.getWrist().autoPos();
 
+    m_robotContainer.getPivot().autoStart();
+    m_robotContainer.getArm().autoStart();
+    m_robotContainer.getWrist().autoStart();
+
     m_robotContainer.getArm().stop();
     m_robotContainer.getPivot().stop();
     m_robotContainer.getWrist().stop();

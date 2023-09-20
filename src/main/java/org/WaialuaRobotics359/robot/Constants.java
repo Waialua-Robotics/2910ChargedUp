@@ -53,13 +53,13 @@ public final class Constants {
     }
 
     public static final class Wrist {
-        public static final int softMax = 42000;
+        public static final int softMax = 42900;
         public static final int softMin = 0;
         public static final int WristID = 1;
 
         public static final int stowPosition = 0;
         public static final int middleStowPosition = 0;
-        public static final int autoStart = 0;
+        public static final int autoStart = 42670;
 
         public static final class Cone {
             public static final int groundPosition = 32620;
@@ -69,13 +69,14 @@ public final class Constants {
             public static final int autoMidPosition = 3825;
             public static final int midPosition = 13025; // 6730
             public static final int highPosition = 13905;
+            public static final int highPositionAlternate = 15000;
             public static final int feederPosition = 300;
         }
         
         public static final class Cube {
             public static final int groundPosition = 21500;//21500
             public static final int lowPosition = 155;
-            public static final int frontLowPosition = 0;
+            public static final int frontLowPosition = 8000;
             public static final int midPosition = 1110;
             public static final int frontMidPosition = 9200;
             public static final int highPosition = 6880;
@@ -85,7 +86,7 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int softMax = 26550;
+        public static final int softMax = 27750;
         public static final int softMin = 0;
         public static final int lArmID = 5;
         public static final int rArmID = 6;
@@ -102,7 +103,7 @@ public final class Constants {
             public static final int frontLowPosition = 10;
             public static final int autoMidPosition = 18510;
             public static final int midPosition = 8350; 
-            public static final int highPosition = 26525;
+            public static final int highPosition = 27525;
             public static final int feederPosition = 20200;
         }
         
@@ -126,10 +127,10 @@ public final class Constants {
         public static final int Bl_PivotID = 4;
         public static final int Fr_PivotID = 7;
         public static final int Br_PivotID = 8;
-        public static final int lowStart = 10000;
         
-        public static final int stowPosition = 0;
+        public static final int stowPosition = 800;
         public static final int middleStowPosition = 58000;
+        public static final int autoStart = 68800;
 
         public static final double kTicksPerDegree = 636.4;
 
@@ -143,6 +144,7 @@ public final class Constants {
             public static final int autoMidPosition = 85145; 
             public static final int midPosition = 83131; 
             public static final int highPosition = 87550;
+            public static final int highPositionAlternate = 85550;
             public static final int feederPosition = 68600;
 
         }
@@ -268,8 +270,8 @@ public final class Constants {
         public static final double anglePeakCurrentDuration = 0.1;
         public static final boolean angleEnableCurrentLimit = true;
 
-        public static final int driveContinuousCurrentLimit = 35;
-        public static final int drivePeakCurrentLimit = 60;
+        public static final int driveContinuousCurrentLimit = 33;
+        public static final int drivePeakCurrentLimit = 40;
         public static final double drivePeakCurrentDuration = 0.1;
         public static final boolean driveEnableCurrentLimit = true;
 
@@ -375,12 +377,12 @@ public final class Constants {
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.82, Units.inchesToMeters(295.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(251.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(229.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(185.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(163.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(119.56), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(196.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(152.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(130.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(86.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(64.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(20.19), new Rotation2d(0)));
                 }
             };
         }
@@ -398,15 +400,16 @@ public final class Constants {
             public static final List<Pose2d> RedPoses =
             new ArrayList<>() {
                 {
-                add(new Pose2d(1.82, Units.inchesToMeters(273.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(207.56), new Rotation2d(0)));
-                add(new Pose2d(1.82, Units.inchesToMeters(141.56), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(174.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(108.19), new Rotation2d(0)));
+                add(new Pose2d(14.68, Units.inchesToMeters(42.19), new Rotation2d(0)));
                 }
             };
         }
     }
 
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
+        public static final double inPosisionError = Units.inchesToMeters(2);
         public static final boolean VisionInAuto = false;
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;

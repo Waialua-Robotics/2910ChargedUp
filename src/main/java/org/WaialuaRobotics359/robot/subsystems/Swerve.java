@@ -19,11 +19,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Swerve extends SubsystemBase {
     //public SwerveDriveOdometry swerveOdometry;
+
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
-
+    
+    
     public double desiredAngle;
     public double PreviousPitch;
+    private Twist2d fieldVelocity = new Twist2d();
 
     public Boolean slowMode = false;
 
@@ -43,21 +46,19 @@ public class Swerve extends SubsystemBase {
         Timer.delay(1.0);
         resetModulesToAbsolute();
 
-        //swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
-
         for(SwerveModule mod : mSwerveMods){
             System.out.println("CANcoder on Module " + mod.moduleNumber + " took " + mod.CANcoderInitTime + " ms to be ready.");
         }
     }
 
-    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop) {
+    public void drive(Translation2d translation, double rotation, boolean fieldRelative, boolean isOpenLoop, Rotation2d robotYaw) {
         SwerveModuleState[] swerveModuleStates =
             Constants.Swerve.swerveKinematics.toSwerveModuleStates(
                 fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
                                     translation.getX(), 
                                     translation.getY(), 
                                     rotation, 
-                                    getYaw()
+                                    robotYaw
                                 )
                                 : new ChassisSpeeds(
                                     translation.getX(),
@@ -69,7 +70,17 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+
+        // Update field velocity
+        ChassisSpeeds chassisSpeeds = Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+        Translation2d linearFieldVelocity = new Translation2d(chassisSpeeds.vxMetersPerSecond,
+                chassisSpeeds.vyMetersPerSecond)
+                .rotateBy(getYaw());
+        fieldVelocity = new Twist2d(
+                linearFieldVelocity.getX(),
+                linearFieldVelocity.getY(),
+                chassisSpeeds.omegaRadiansPerSecond);
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -85,7 +96,7 @@ public class Swerve extends SubsystemBase {
     }
 
     public void stop(){
-        drive(new Translation2d(0,0), .001, true, false);
+        drive(new Translation2d(0,0), .001, true, false, getYaw());
     }
 
     public void setCurrentAngle(){
@@ -144,7 +155,7 @@ public class Swerve extends SubsystemBase {
     //Boolean function if pitch value has changed since last call
 
     public Rotation2d getYaw() {
-        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw());
+        return (Constants.Swerve.invertGyro) ? Rotation2d.fromDegrees(360 - gyro.getYaw()) : Rotation2d.fromDegrees(gyro.getYaw()); 
     }
 
     public Rotation2d getYawflip(){
@@ -153,6 +164,15 @@ public class Swerve extends SubsystemBase {
 
     public double getYaw360() {
         return ( (getYaw().getDegrees() % 360) + 360 ) % 360;
+    }
+
+    /**
+     * Returns the measured X, Y, and theta field velocities in meters per sec. The
+     * components of the
+     * twist are velocities and NOT changes in position.
+     */
+    public Twist2d getFieldVelocity() {
+        return fieldVelocity;
     }
 
     public void setDesired( double desired ) {
@@ -190,6 +210,9 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+
+        SmartDashboard.putNumber("xspeed", getFieldVelocity().dx);
+        SmartDashboard.putNumber("yspeed", getFieldVelocity().dy);
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

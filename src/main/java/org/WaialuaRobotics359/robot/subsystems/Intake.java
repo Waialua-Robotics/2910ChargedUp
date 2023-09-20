@@ -70,6 +70,14 @@ public class Intake extends SubsystemBase{
         m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -.5 : .5);
     }
 
+    public void intakeFull(){
+        m_Intake.set(ControlMode.PercentOutput, RobotContainer.isCube ? 1 : -1);
+    }
+
+    public void outakeFull(){
+        m_Intake.set(ControlMode.PercentOutput,  RobotContainer.isCube ? -1 : 1);
+    }
+
     public void getCurrent(){
         m_Intake.getStatorCurrent();
     } 

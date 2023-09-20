@@ -1,6 +1,7 @@
 package org.WaialuaRobotics359.robot.subsystems;
 
 
+import java.sql.Driver;
 import java.util.Optional;
 
 import org.WaialuaRobotics359.lib.math.Conversions;
@@ -31,6 +32,7 @@ public class PoseEstimator extends SubsystemBase {
 
   private final Swerve s_Swerve;
   private final PhotonVision s_PhotonVision;
+  private final Flight s_Flight;
 
   EstimatedRobotPose cam1Pose;
   EstimatedRobotPose cam2Pose;
@@ -40,8 +42,8 @@ public class PoseEstimator extends SubsystemBase {
   // "trust" the estimate from that particular component more than the others. 
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
-  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.01)); //.1,.1 .01
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(1));
+  private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.1)); //.1,.1 .01
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(25));
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();
@@ -49,7 +51,8 @@ public class PoseEstimator extends SubsystemBase {
   /* Logging */
 
 
-  public PoseEstimator(Swerve s_Swerve, PhotonVision s_PhotonVision) {
+  public PoseEstimator(Swerve s_Swerve, PhotonVision s_PhotonVision, Flight s_Flight) {
+    this.s_Flight = s_Flight;
     this.s_Swerve = s_Swerve;
     this.s_PhotonVision = s_PhotonVision;
 
@@ -94,6 +97,7 @@ public class PoseEstimator extends SubsystemBase {
       return cam2Pose.estimatedPose.getX();
     }
   }
+  
 
   public void resetPoseToZero(){
     Pose2d pose = new Pose2d(0,0, new Rotation2d(0));
@@ -108,6 +112,10 @@ public class PoseEstimator extends SubsystemBase {
     return SwerveposeEstimator.getEstimatedPosition();
   }
 
+  public Rotation2d getYaw(){
+    return getPose().getRotation();
+  }
+
   public Pose2d ClosestSelectedNode(){
     if(DriverStation.getAlliance() == Alliance.Red){
      return RobotContainer.isCube ? getPose().nearest(Constants.ScoringPoses.Cube.RedPoses) : getPose().nearest(Constants.ScoringPoses.Cone.RedPoses);
@@ -116,12 +124,12 @@ public class PoseEstimator extends SubsystemBase {
     }
   }
 
-  public double getXtoClosestSelectedNode(){
-    return ClosestSelectedNode().getY() - getPose().getY();
+  public double getXtoClosestSelectedNode(Pose2d desiredNode){
+    return desiredNode.getY() - getPose().getY();
   }
 
-  public double getYtoClosestSelectedNode(){
-    return ClosestSelectedNode().getX() - getPose().getX();
+  public double getYtoClosestSelectedNode(Pose2d desiredNode){
+    return desiredNode.getX() - getPose().getX();
   }
 
   public boolean isFrontScore(){
@@ -129,8 +137,20 @@ public class PoseEstimator extends SubsystemBase {
     return angle > 0 ? false : true;
   }
 
+  public boolean inScoringPose(){
+    double allowableError = Constants.AutoConstants.inPosisionError;
+
+    if(Math.abs(getXtoClosestSelectedNode(ClosestSelectedNode()) + s_Flight.offsetFromCenterIn())<allowableError && Math.abs(getYtoClosestSelectedNode(ClosestSelectedNode()))< allowableError){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
 
   public void periodic(){
+
+    RobotContainer.inScoringPose = inScoringPose();
 
     //CameraLeft
     Optional<EstimatedRobotPose> result1 = s_PhotonVision.getEstimatedPose(0);
@@ -141,7 +161,7 @@ public class PoseEstimator extends SubsystemBase {
       //SmartDashboard.putNumber("cam1Result3dZ", cam1Pose.estimatedPose.getZ());
       //SmartDashboard.putNumber("cam1Result3dX", cam1Pose.estimatedPose.getX());
       //SmartDashboard.putNumber("cam1Result3dY", cam1Pose.estimatedPose.getY());
-      //SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam1Result2dRot", Units.radiansToDegrees(cam1Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamLeft Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
@@ -155,7 +175,7 @@ public class PoseEstimator extends SubsystemBase {
       //SmartDashboard.putNumber("cam2Result3dZ", cam2Pose.estimatedPose.getZ());
       //SmartDashboard.putNumber("cam2Result3dX", cam2Pose.estimatedPose.getX());
       //SmartDashboard.putNumber("cam2Result3dY", cam2Pose.estimatedPose.getY());
-      //SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
+      SmartDashboard.putNumber("cam2Result2dRot", Units.radiansToDegrees(cam2Pose.estimatedPose.getRotation().getAngle()));
     }else{
       field2d.getObject("CamRight Est Pos").setPose(new Pose2d(-100, -100, new Rotation2d()));
     }
