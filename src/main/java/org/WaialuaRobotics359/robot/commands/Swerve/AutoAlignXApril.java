@@ -11,6 +11,7 @@ import org.WaialuaRobotics359.robot.subsystems.PoseEstimator;
 import org.WaialuaRobotics359.robot.subsystems.Swerve;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
@@ -34,7 +35,11 @@ public class AutoAlignXApril extends CommandBase {
 
     private double xDistance;
     private double yDistance;
+    private double xSpeed;
+    private double ySpeed;
     private Timer  Timer;
+
+    private Pose2d scoreNode;
 
     public AutoAlignXApril(PoseEstimator s_poseEstimator, Swerve s_swerve, Flight s_Flight, BooleanSupplier alignButton ) {
         this.s_PoseEstimator = s_poseEstimator;
@@ -51,30 +56,34 @@ public class AutoAlignXApril extends CommandBase {
         controllerY.setTolerance(0.0);//.01
     }
 
-    private void fetchValues() {
-       xDistance = s_PoseEstimator.getXtoClosestSelectedNode()+ s_Flight.offsetFromCenterIn();
-       yDistance = s_PoseEstimator.getYtoClosestSelectedNode();
+    private void fetchValues(Pose2d scoreNode) {
+        xDistance = s_PoseEstimator.getXtoClosestSelectedNode(scoreNode)+ s_Flight.offsetFromCenterIn();
+        yDistance = s_PoseEstimator.getYtoClosestSelectedNode(scoreNode);
+        xSpeed = s_swerve.getFieldVelocity().dy;
+        ySpeed = s_swerve.getFieldVelocity().dx;
+       
     }
 
     @Override
     public void initialize() {
-        fetchValues();
+        scoreNode = s_PoseEstimator.ClosestSelectedNode();
+        fetchValues(scoreNode);
         Timer.reset();
         Timer.start();
-        controllerX.reset(xDistance);
-        controllerY.reset(yDistance);
+        controllerX.reset(xDistance, xSpeed);
+        controllerY.reset(yDistance, ySpeed);
     }
 
     @Override
     public void execute() {
 
-        double angleToDesired = Conversions.wrap(s_swerve.getYaw360(), 0);
+        double angleToDesired = Conversions.wrap(s_swerve.getYaw360(), 0); //s_swerve.getYaw360()
         double rotationVal = angleToDesired / 90;
         if (rotationVal > 1) rotationVal = 1;
         if (rotationVal < -1) rotationVal = -1;
         s_swerve.setDesired(0);
         
-       fetchValues();
+       fetchValues(scoreNode);
        
        Translation2d translation = new Translation2d(controllerY.calculate(yDistance, 0), controllerX.calculate(xDistance, 0)); // only drive y value
        //SmartDashboard.putNumber("xDistance", controllerX.calculate(xDistance, 0));

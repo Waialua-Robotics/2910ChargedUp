@@ -45,7 +45,7 @@ public class HighPosition extends CommandBase {
             } else {
                 ArmPosition = Constants.Arm.Cone.highPosition;
                 PivotPosition = Constants.Pivot.Cone.highPositionAlternate;
-                WristPosition = Constants.Wrist.Cone.highPosition;
+                WristPosition = Constants.Wrist.Cone.highPositionAlternate;
             }
         }
         

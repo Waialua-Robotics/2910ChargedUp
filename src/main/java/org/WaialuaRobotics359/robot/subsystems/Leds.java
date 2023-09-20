@@ -257,7 +257,7 @@ public class Leds extends SubsystemBase{
                 solid(Color.WHITE, Section.Left);
             }
         }else if(DriverStation.isEnabled() && !flightWorking && strobePeriod()){
-            solid(Color.RED, Section.OffBoard);
+            solid(Color.RED, Section.OnBoard);
         }else if(DriverStation.isEnabled() && autoScore){
             solid(Color.GREEN, Section.OffBoard);
         } else if (DriverStation.isEnabled()) {

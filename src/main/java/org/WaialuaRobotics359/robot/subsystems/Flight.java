@@ -40,12 +40,13 @@ public class Flight extends SubsystemBase {
     }
 
     public double getSensorRange(){
-        return flightWorking ? m_Flight.getRange(): 400;
+        return m_Flight.getRange(); //flightWorking ? m_Flight.getRange(): 400; #FIXME temp change
     }
 
     public double offsetFromCenterIn(){
-        if(getSensorRange()<365){
-            return -1*((getSensorRange()-160)/1000);
+        double scale = 1;
+        if(getSensorRange()<360){
+            return -1*(((getSensorRange()-140)*scale)/1000);
         }else{
             return 0;
         }

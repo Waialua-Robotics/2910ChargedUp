@@ -23,9 +23,10 @@ public class Swerve extends SubsystemBase {
     public SwerveModule[] mSwerveMods;
     public Pigeon2 gyro;
     
-
+    
     public double desiredAngle;
     public double PreviousPitch;
+    private Twist2d fieldVelocity = new Twist2d();
 
     public Boolean slowMode = false;
 
@@ -44,8 +45,6 @@ public class Swerve extends SubsystemBase {
 
         Timer.delay(1.0);
         resetModulesToAbsolute();
-
-        //swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getYaw(), getModulePositions());
 
         for(SwerveModule mod : mSwerveMods){
             System.out.println("CANcoder on Module " + mod.moduleNumber + " took " + mod.CANcoderInitTime + " ms to be ready.");
@@ -71,7 +70,17 @@ public class Swerve extends SubsystemBase {
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
         }
-    }    
+
+        // Update field velocity
+        ChassisSpeeds chassisSpeeds = Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+        Translation2d linearFieldVelocity = new Translation2d(chassisSpeeds.vxMetersPerSecond,
+                chassisSpeeds.vyMetersPerSecond)
+                .rotateBy(getYaw());
+        fieldVelocity = new Twist2d(
+                linearFieldVelocity.getX(),
+                linearFieldVelocity.getY(),
+                chassisSpeeds.omegaRadiansPerSecond);
+    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -157,6 +166,15 @@ public class Swerve extends SubsystemBase {
         return ( (getYaw().getDegrees() % 360) + 360 ) % 360;
     }
 
+    /**
+     * Returns the measured X, Y, and theta field velocities in meters per sec. The
+     * components of the
+     * twist are velocities and NOT changes in position.
+     */
+    public Twist2d getFieldVelocity() {
+        return fieldVelocity;
+    }
+
     public void setDesired( double desired ) {
         desiredAngle = desired;
     }
@@ -192,6 +210,9 @@ public class Swerve extends SubsystemBase {
 
     @Override
     public void periodic(){
+
+        SmartDashboard.putNumber("xspeed", getFieldVelocity().dx);
+        SmartDashboard.putNumber("yspeed", getFieldVelocity().dy);
 
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());

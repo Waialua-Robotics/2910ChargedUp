@@ -69,7 +69,7 @@ public final class Constants {
             public static final int autoMidPosition = 3825;
             public static final int midPosition = 13025; // 6730
             public static final int highPosition = 13905;
-            public static final int highPositionAlternate = 16000;
+            public static final int highPositionAlternate = 15000;
             public static final int feederPosition = 300;
         }
         
@@ -86,7 +86,7 @@ public final class Constants {
     }
 
     public static final class Arm {
-        public static final int softMax = 26550;
+        public static final int softMax = 27750;
         public static final int softMin = 0;
         public static final int lArmID = 5;
         public static final int rArmID = 6;
@@ -103,7 +103,7 @@ public final class Constants {
             public static final int frontLowPosition = 10;
             public static final int autoMidPosition = 18510;
             public static final int midPosition = 8350; 
-            public static final int highPosition = 26525;
+            public static final int highPosition = 27525;
             public static final int feederPosition = 20200;
         }
         
