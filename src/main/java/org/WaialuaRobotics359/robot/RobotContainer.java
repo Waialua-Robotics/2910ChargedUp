@@ -122,6 +122,8 @@ public class RobotContainer {
     private final PhotonVision s_PhotonVision = new PhotonVision();
     private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision, s_Flight);
 
+    private final BNO s_BNO =   new BNO();
+
     /* Auto Builder */
     private SwerveAutoBuilder autoBuilder;
 
