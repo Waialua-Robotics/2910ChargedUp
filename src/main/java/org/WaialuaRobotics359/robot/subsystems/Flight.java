@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Flight extends SubsystemBase {
     private TimeOfFlight m_Flight;
 
-    private boolean flightWorking = true;
+    private boolean flightWorking = false; //was true
 
     public Flight () {
         m_Flight = new TimeOfFlight(1);
@@ -54,6 +54,7 @@ public class Flight extends SubsystemBase {
 
     public void periodic(){
         SmartDashboard.putNumber("PWF Distance", getSensorRange());
+        SmartDashboard.putBoolean("FlightWorking", flightWorking);
         //SmartDashboard.putNumber("pid", m_Flight.pidGet());
         //SmartDashboard.putNumber("standerd deveation", m_Flight.getRangeSigma());
     }
