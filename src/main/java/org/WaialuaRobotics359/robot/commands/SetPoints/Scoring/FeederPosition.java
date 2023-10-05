@@ -90,7 +90,7 @@ public class FeederPosition extends CommandBase {
                     IntakeingTimer.reset();
                 }
 
-                if(IntakeingTimer.hasElapsed(.2)){
+                if(IntakeingTimer.hasElapsed(.1)){
                     s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
                     s_Wrist.goToPosition();
                     s_Leds.hasPiece = true;
