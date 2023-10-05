@@ -49,7 +49,6 @@ public class Leds extends SubsystemBase{
     public boolean distraction = false;
     public boolean endgameAlert = false; //conected
     public boolean hasPiece = false; //coneccted
-    public boolean flightWorking  = true; //conected
 
     //auto Maybe?
     public boolean autoFinished = false;
@@ -238,9 +237,6 @@ public class Leds extends SubsystemBase{
         //In scorring pose
         autoScore = RobotContainer.inScoringPose;
 
-        //Flight Working
-        flightWorking = s_Flight.getFlightWorking();
-
         ////////////////////////* Set Leds *////////////////////////
         if (estopped) {
             solid(Color.RED, Section.All);
@@ -256,8 +252,6 @@ public class Leds extends SubsystemBase{
             if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
-        }else if(DriverStation.isEnabled() && !flightWorking && strobePeriod()){
-            solid(Color.RED, Section.OnBoard);
         }else if(DriverStation.isEnabled() && autoScore){
             solid(Color.GREEN, Section.OffBoard);
         } else if (DriverStation.isEnabled()) {
