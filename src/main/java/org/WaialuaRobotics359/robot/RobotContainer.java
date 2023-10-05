@@ -227,7 +227,7 @@ public class RobotContainer {
 
             upright.onTrue(new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             
-            pickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            pickup.whileTrue(new GroundPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             pickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));

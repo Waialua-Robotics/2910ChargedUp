@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
-public class MidPickupPosition extends CommandBase{
+public class GroundPickupPosition extends CommandBase{
     private Arm s_Arm;
     private Intake s_Intake;
     private Pivot s_Pivot;
@@ -19,7 +19,7 @@ public class MidPickupPosition extends CommandBase{
     private static int PivotPosition;
     private static int WristPosition;
 
-    public MidPickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
+    public GroundPickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
