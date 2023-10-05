@@ -108,7 +108,7 @@ public class RobotContainer {
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
-    private final JoystickButton justZero = new JoystickButton(operator, Constants.OI.justZero);
+    private final JoystickButton startButton = new JoystickButton(operator, Constants.OI.startButton);
     private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
     /* Subsystems */
@@ -244,7 +244,6 @@ public class RobotContainer {
 
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
             autoZero.onFalse(new JustZero(s_Pivot, s_Arm, s_Wrist));
-            justZero.onTrue(new InstantCommand(() -> getFlight().toggleWorking()));
     }   
 
     public Leds getLeds(){

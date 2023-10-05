@@ -57,8 +57,8 @@ public class HighPosition extends CommandBase {
 
             if(RobotContainer.isCube){
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.3)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -78,8 +78,8 @@ public class HighPosition extends CommandBase {
 
             } else {
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.3)){
                     s_Arm.setDesiredPosition(ArmPosition);

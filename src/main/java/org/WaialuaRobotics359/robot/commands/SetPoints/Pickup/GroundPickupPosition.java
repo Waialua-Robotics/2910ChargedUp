@@ -35,10 +35,6 @@ public class GroundPickupPosition extends CommandBase{
 
     private boolean finished = false;
 
-    private boolean disqalifyTOF = false; 
-
-    private double flightValue;
-
     private Timer Timer = new Timer();
     private Timer IntakeingTimer = new Timer();
 
@@ -54,12 +50,6 @@ public class GroundPickupPosition extends CommandBase{
             WristPosition = Constants.Wrist.Cone.groundPosition;
         }
 
-        if(s_Flight.getSensorRange() < 300){
-            disqalifyTOF = true;
-        }else{
-            disqalifyTOF = false;
-        }
-
         Timer.reset();
         Timer.start();
 
@@ -71,12 +61,6 @@ public class GroundPickupPosition extends CommandBase{
 
     @Override
     public void execute(){
-
-        if(disqalifyTOF){
-          flightValue = 400;
-        }else{
-          flightValue = s_Flight.getSensorRange();
-        }
 
         if(RobotContainer.isCube){
             s_Pivot.setDesiredPosition(PivotPosition);
@@ -128,15 +112,10 @@ public class GroundPickupPosition extends CommandBase{
             s_Intake.intake();
         }
 
-        if(flightValue < 300){
-            IntakeingTimer.start();
+        if(s_Flight.getSensorRange() < 300){
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
             finished = true;
-        }
-
-        if(IntakeingTimer.hasElapsed(.5)){
-            s_Intake.intakeIdle();
         }
 
     }                        

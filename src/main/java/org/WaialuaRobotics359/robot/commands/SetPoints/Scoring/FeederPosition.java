@@ -35,9 +35,6 @@ public class FeederPosition extends CommandBase {
     }
 
     private boolean finished = false;
-    private boolean disqalifyTOF = false; 
-
-    private double flightValue;
 
     private Timer Timer = new Timer();
     private Timer IntakeingTimer = new Timer();
@@ -54,12 +51,6 @@ public class FeederPosition extends CommandBase {
             PivotPosition = Constants.Pivot.Cone.feederPosition;
         }
 
-        if(s_Flight.getSensorRange() < 300){
-            disqalifyTOF = true;
-        }else{
-            disqalifyTOF = false;
-        }
-
         Timer.reset();
         Timer.start();
 
@@ -72,16 +63,10 @@ public class FeederPosition extends CommandBase {
     @Override
     public void execute(){
 
-        if (disqalifyTOF) {
-            flightValue = 400;
-        } else {
-            flightValue = s_Flight.getSensorRange();
-        }
-
             if(RobotContainer.isCube){
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
 
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -99,7 +84,7 @@ public class FeederPosition extends CommandBase {
                     //finished = true;
                 }
 
-                if(s_Intake.current() > 40 && Timer.hasElapsed(.8)){
+                if(s_Intake.current() > 40 && Timer.hasElapsed(.9)){
                     //s_Intake.intakeIdle();
                     s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
                     s_Wrist.goToPosition();
@@ -110,9 +95,9 @@ public class FeederPosition extends CommandBase {
 
             } else {
 
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-                    RobotContainer.retractOnScore = true;
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+                RobotContainer.retractOnScore = true;
 
                 if(Timer.hasElapsed(.075)){
                     s_Arm.setDesiredPosition(ArmPosition);
@@ -128,17 +113,13 @@ public class FeederPosition extends CommandBase {
                     s_Intake.intake();
                 }
 
-                if(flightValue < 300){
-                    IntakeingTimer.start();
+                if(s_Flight.getSensorRange() < 300){
                     new InstantCommand(()-> s_Leds.actionReady = true);
                     s_Leds.hasPiece = true;
                     finished = true;
 
                 }
 
-                if(IntakeingTimer.hasElapsed(.5)){
-                    s_Intake.intakeIdle();
-                }
             }
         }
 

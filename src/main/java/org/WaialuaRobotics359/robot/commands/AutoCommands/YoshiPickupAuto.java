@@ -108,7 +108,7 @@ public class YoshiPickupAuto extends CommandBase{
                     s_Intake.intake();
                 }
 
-                if(s_Flight.getSensorRange() < 200){
+                if(s_Flight.getSensorRange() < 300){
                     s_Intake.intakeIdle();
                     s_Leds.hasPiece();
                     new InstantCommand(()-> s_Leds.actionReady = false);
