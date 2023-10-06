@@ -18,9 +18,12 @@ import com.ctre.phoenix.led.LarsonAnimation.BounceMode;
 import com.ctre.phoenix.led.TwinkleAnimation.TwinklePercent;
 import com.ctre.phoenix.led.TwinkleOffAnimation.TwinkleOffPercent;
 
+import edu.wpi.first.hal.PowerDistributionFaults;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -31,6 +34,7 @@ public class Leds extends SubsystemBase{
     private Flight s_Flight;
     
     private CANdle LED;
+    private PowerDistribution m_PDH;
     private int animationSlot;
 
     //Const
@@ -65,6 +69,8 @@ public class Leds extends SubsystemBase{
     public Leds(Flight s_Flight){
         this.s_Flight = s_Flight;
         LED = new CANdle(8);
+        m_PDH = new PowerDistribution(1, ModuleType.kRev);
+        m_PDH.clearStickyFaults();
     }
 
     public void allOff(){
@@ -145,8 +151,6 @@ public class Leds extends SubsystemBase{
 
     public void DisabledLed(boolean zeroButton, boolean inBrake){
 
-        //SmartDashboard.putBoolean("StrobeValue", strobePeriod());
-
         // update controller state
         if (DriverStation.isJoystickConnected(0) && DriverStation.isJoystickConnected(1)) {
             bothControllers = true;
@@ -154,14 +158,19 @@ public class Leds extends SubsystemBase{
             bothControllers = false;
         }
 
+        //update battery 
+        if(m_PDH.getVoltage()<12){
+            lowBatteryAlert = true;
+        }else{
+            lowBatteryAlert = false;
+        }
+
         // Update alliance color
         alliance = DriverStation.getAlliance();
 
         /*Button Leds */
-
         if (zeroButton) {
             rainbow(Section.OnBoard, 1);
-            // solid(Color.GREEN, Section.OnBoard);
         } else if (autoCheck()) {
             if (!inBrake) {
                 solid(Color.WHITE, Section.OnBoard);
@@ -182,6 +191,7 @@ public class Leds extends SubsystemBase{
             }
         }
 
+        /*Off board Leds*/
         if((!leftConected || !rightConected) && strobePeriod()){
             if(!rightConected){ 
                 solid(Color.WHITE, Section.Right);
@@ -189,6 +199,8 @@ public class Leds extends SubsystemBase{
             if(!leftConected){
                 solid(Color.WHITE, Section.Left);
             }
+        }else if(lowBatteryAlert){
+            Larson(Color.YELLOW, Section.OffBoard, .5);
         }else if(alliance == DriverStation.Alliance.Invalid){
             ColorFlow(Color.DARK_GRAY, Section.OffBoard, .3);
         } else if (!bothControllers) {
@@ -223,7 +235,7 @@ public class Leds extends SubsystemBase{
         }
 
         // Update estop state
-        if (DriverStation.isEStopped()) {
+        if (DriverStation.isEStopped() || DriverStation.isDisabled()) {
             estopped = true;
         }
 
@@ -240,11 +252,13 @@ public class Leds extends SubsystemBase{
         ////////////////////////* Set Leds *////////////////////////
         if (estopped) {
             solid(Color.RED, Section.All);
+            /*Auto Animation*/
         } else if (DriverStation.isAutonomousEnabled()) {
-            //ColorFlow(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.All, .5);
-            Larson(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OffBoard, .1);
+            Larson(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OffBoard, .2);
+            /*Ranbow Time Warning*/
         } else if (endgameAlert) {
             rainbow(Section.OffBoard, 1);
+            /*Photon Vision Disconnected*/
         } else if ((!leftConected || !rightConected) && strobePeriod()) {
             if (!rightConected) {
                 solid(Color.WHITE, Section.Right);
@@ -252,27 +266,26 @@ public class Leds extends SubsystemBase{
             if (!leftConected) {
                 solid(Color.WHITE, Section.Left);
             }
+            /*Green LED For Auto Score*/
         }else if(DriverStation.isEnabled() && autoScore){
             solid(Color.GREEN, Section.OffBoard);
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {
-                    strobe(Color.MAGENTA, Section.All, .3);
+                    strobe(Color.MAGENTA, Section.OffBoard, .1);
                 } else {
-                    solid(Color.MAGENTA, Section.All);
+                    solid(Color.MAGENTA, Section.OffBoard);
                 }
             } else {
                 if (hasPiece) {
-                    strobe(Color.ORANGE, Section.All, .3);
+                    strobe(Color.ORANGE, Section.OffBoard, .1);
                 } else {
-                    solid(Color.ORANGE, Section.All);
+                    solid(Color.ORANGE, Section.OffBoard);
                 }
             }
         }
     }
-
-        /*End Periodic */
-
+    /*End Periodic */
 
     /*Sections*/
     enum Section {
