@@ -43,7 +43,7 @@ public class Leds extends SubsystemBase{
 
     // States
     //disabled
-    public boolean lowBatteryAlert = false;
+    public boolean lowBatteryAlert = false; //connected
     public boolean bothControllers = false; //conected
     private Alliance alliance = Alliance.Invalid; //conected
     //teleop
@@ -159,7 +159,7 @@ public class Leds extends SubsystemBase{
         }
 
         //update battery 
-        if(m_PDH.getVoltage()<12){
+        if(m_PDH.getVoltage()<12.3){
             lowBatteryAlert = true;
         }else{
             lowBatteryAlert = false;
@@ -235,7 +235,7 @@ public class Leds extends SubsystemBase{
         }
 
         // Update estop state
-        if (DriverStation.isEStopped() || DriverStation.isDisabled()) {
+        if (DriverStation.isEStopped()) {
             estopped = true;
         }
 
@@ -272,15 +272,15 @@ public class Leds extends SubsystemBase{
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {
-                    strobe(Color.MAGENTA, Section.OffBoard, .1);
+                    strobe(Color.MAGENTA, Section.All, .3);
                 } else {
-                    solid(Color.MAGENTA, Section.OffBoard);
+                    solid(Color.MAGENTA, Section.All);
                 }
             } else {
                 if (hasPiece) {
-                    strobe(Color.ORANGE, Section.OffBoard, .1);
+                    strobe(Color.ORANGE, Section.All, .3);
                 } else {
-                    solid(Color.ORANGE, Section.OffBoard);
+                    solid(Color.ORANGE, Section.All);
                 }
             }
         }

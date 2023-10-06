@@ -86,7 +86,7 @@ public class TeleopSwerve extends CommandBase {
                 new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
                 rotationVal * Constants.Swerve.maxAngularVelocity, 
                 !robotCentricSup.getAsBoolean(), 
-                true,
+                true, 
                 usePoseEstimator ? s_PoseEstimator.getYaw() : s_Swerve.getYaw() //what gyro to use
             );
         }

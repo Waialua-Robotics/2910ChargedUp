@@ -233,6 +233,9 @@ public class RobotContainer {
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
 
+            startButton.onTrue(new BirdPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            startButton.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
             lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
             lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
 
@@ -244,6 +247,7 @@ public class RobotContainer {
 
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
             autoZero.onFalse(new JustZero(s_Pivot, s_Arm, s_Wrist));
+
     }   
 
     public Leds getLeds(){
@@ -338,6 +342,7 @@ public class RobotContainer {
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("SYS",  new SYSTest(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);

@@ -25,8 +25,8 @@ public class JustZero extends CommandBase {
         s_Arm.stop();
         s_Arm.setPosition(0);
 
-        s_Pivot.stop();
-        s_Pivot.setPosition(0);
+        //s_Pivot.stop();
+        //s_Pivot.setPosition(0);
 
         s_Wrist.stop();
         s_Wrist.setPosition(0);
