@@ -175,6 +175,11 @@ public final class Constants {
         public static final double nodeHeight = Units.inchesToMeters(15.13);
         public static final double cameraHeight = Units.inchesToMeters(9.195);
 
+        public static final double AmbiguityThreshold = 0.04;
+        // The latency of the camera, in seconds
+        // divide by 1000 since it is in milliseconds.
+        public static final double Latency = 13.0/1000.0;       
+
         public static final class CameraLeft {
             public static final double xOffset = Units.inchesToMeters(-2.875); //-2.875
             public static final double yOffset = Units.inchesToMeters(-5.726); //- 5.726

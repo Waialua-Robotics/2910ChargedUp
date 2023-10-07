@@ -31,7 +31,6 @@ import java.awt.Color;
 
 public class Leds extends SubsystemBase{
 
-    private Flight s_Flight;
     
     private CANdle LED;
     private PowerDistribution m_PDH;
@@ -61,13 +60,14 @@ public class Leds extends SubsystemBase{
     private double lastEnabledTime = 0.0;   
 
     //Both
+    public boolean trackApril = false; //connected !!WARNING!! This only indicates seeing targets not nessisarly adding to pose
+    public boolean usingApril = false; //connected
     private boolean estopped = false; //conected
     public static boolean leftConected = false; //conected
     public static boolean rightConected = false; //conected
     
 
-    public Leds(Flight s_Flight){
-        this.s_Flight = s_Flight;
+    public Leds(){
         LED = new CANdle(8);
         m_PDH = new PowerDistribution(1, ModuleType.kRev);
         m_PDH.clearStickyFaults();
@@ -250,8 +250,10 @@ public class Leds extends SubsystemBase{
         autoScore = RobotContainer.inScoringPose;
 
         ////////////////////////* Set Leds *////////////////////////
+
+        /*OFF Board */
         if (estopped) {
-            solid(Color.RED, Section.All);
+            solid(Color.RED, Section.OffBoard);
             /*Auto Animation*/
         } else if (DriverStation.isAutonomousEnabled()) {
             Larson(alliance == DriverStation.Alliance.Blue ? Color.BLUE : Color.RED, Section.OffBoard, .2);
@@ -272,18 +274,46 @@ public class Leds extends SubsystemBase{
         } else if (DriverStation.isEnabled()) {
             if (isCube) {
                 if (hasPiece) {
-                    strobe(Color.MAGENTA, Section.All, .3);
+                    strobe(Color.MAGENTA, Section.OffBoard, .3);
                 } else {
-                    solid(Color.MAGENTA, Section.All);
+                    solid(Color.MAGENTA, Section.OffBoard);
                 }
             } else {
                 if (hasPiece) {
-                    strobe(Color.ORANGE, Section.All, .3);
+                    strobe(Color.ORANGE, Section.OffBoard, .3);
                 } else {
-                    solid(Color.ORANGE, Section.All);
+                    solid(Color.ORANGE, Section.OffBoard);
                 }
             }
         }
+
+        /* ON Board */
+        if (estopped) {
+            solid(Color.RED, Section.OnBoard);
+        } else if (DriverStation.isEnabled()) {
+            // Display Tag Status
+            if (trackApril && usingApril) {
+                Larson(Color.GREEN, Section.OffBoard, .5);
+            } else if (trackApril && !usingApril) {
+                Larson(Color.ORANGE, Section.OffBoard, .5);
+            } else {
+                //No tags currenly seen show game peice status
+                if (isCube) {
+                    if (hasPiece) {
+                        strobe(Color.MAGENTA, Section.OffBoard, .3);
+                    } else {
+                        solid(Color.MAGENTA, Section.OffBoard);
+                    }
+                } else {
+                    if (hasPiece) {
+                        strobe(Color.ORANGE, Section.OffBoard, .3);
+                    } else {
+                        solid(Color.ORANGE, Section.OffBoard);
+                    }
+                }
+            }
+        }
+
     }
     /*End Periodic */
 
