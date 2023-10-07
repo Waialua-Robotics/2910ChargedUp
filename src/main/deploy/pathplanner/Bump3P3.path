@@ -2,15 +2,15 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 6.52,
-        "y": 3.69
+        "x": 1.69,
+        "y": 1.15
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.388272070829856,
-        "y": 4.618179904931239
+        "x": 3.1026343481258394,
+        "y": 0.9488845749120074
       },
-      "holonomicAngle": -32.54,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -24,16 +24,16 @@
     },
     {
       "anchorPoint": {
-        "x": 3.8613157226314456,
-        "y": 4.723865162016039
+        "x": 4.6629413258826515,
+        "y": 0.6155339453536053
       },
       "prevControl": {
-        "x": 4.820403497949854,
-        "y": 4.695235676185638
+        "x": 3.6629413258826515,
+        "y": 0.6155339453536053
       },
       "nextControl": {
-        "x": 3.3876244064443255,
-        "y": 4.7380052013052065
+        "x": 5.662941325882649,
+        "y": 0.6155339453536053
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -49,15 +49,15 @@
     },
     {
       "anchorPoint": {
-        "x": 1.7713632570122286,
-        "y": 4.22
+        "x": 6.480913676113066,
+        "y": 1.588936463587213
       },
       "prevControl": {
-        "x": 2.7590805181610363,
-        "y": 4.864163431184005
+        "x": 5.82243550201386,
+        "y": 0.9304582894880076
       },
       "nextControl": null,
-      "holonomicAngle": 0,
+      "holonomicAngle": 41.90594194108288,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -72,24 +72,17 @@
   ],
   "markers": [
     {
-      "position": 0.20000000000000095,
+      "position": 0.9636363636363636,
       "names": [
         "event",
-        "Upright"
+        "Yoshi"
       ]
     },
     {
-      "position": 1.4727272727272707,
+      "position": 0.01818181818181821,
       "names": [
         "event",
-        "MidPosition"
-      ]
-    },
-    {
-      "position": 1.99,
-      "names": [
-        "event",
-        "Score"
+        "Stow"
       ]
     }
   ]
