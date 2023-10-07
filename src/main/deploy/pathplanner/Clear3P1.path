@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.7,
-        "y": 5.0
+        "x": 1.7570485140970284,
+        "y": 5.024474763235241
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.700000000000001,
-        "y": 5.0
+        "x": 4.40527595340905,
+        "y": 4.766809390761639
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -16,23 +16,27 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "ConeMode",
+          "ScoreHigh",
+          "CubeMode"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 7.125077107297073,
-        "y": 5.0
+        "x": 6.22,
+        "y": 4.57
       },
       "prevControl": {
-        "x": 6.125077107297073,
-        "y": 5.0
+        "x": 5.160709024275191,
+        "y": 4.713147429152001
       },
       "nextControl": null,
-      "holonomicAngle": 90.0,
+      "holonomicAngle": 0,
       "isReversal": false,
       "velOverride": null,
       "isLocked": false,
@@ -45,8 +49,13 @@
       }
     }
   ],
-  "maxVelocity": 4.0,
-  "maxAcceleration": null,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.21818181818181814,
+      "names": [
+        "event",
+        "Yoshi"
+      ]
+    }
+  ]
 }

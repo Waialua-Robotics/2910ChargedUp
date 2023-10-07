@@ -15,6 +15,7 @@ import org.WaialuaRobotics359.lib.util.SwerveModuleConstants;
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
@@ -96,7 +97,7 @@ public class SwerveModule {
         }
         else {
             double velocity = Conversions.MPSToFalcon(-desiredState.speedMetersPerSecond, Constants.Swerve.wheelCircumference, Constants.Swerve.driveGearRatio);
-            mDriveMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(desiredState.speedMetersPerSecond));
+            mDriveMotor.set(ControlMode.Velocity, velocity, DemandType.ArbitraryFeedForward, feedforward.calculate(-desiredState.speedMetersPerSecond));
         }
     }
 
@@ -117,6 +118,10 @@ public class SwerveModule {
 
     public Rotation2d getCanCoder(){
         return Rotation2d.fromDegrees(angleEncoder.getAbsolutePosition());
+    }
+
+    public double getPercentOut(){
+        return mDriveMotor.getMotorOutputPercent();
     }
 
     private void waitForCanCoder(){

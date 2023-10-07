@@ -15,7 +15,7 @@ public class SYSTest extends SequentialCommandGroup {
 
     public SYSTest (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("SYSTest1", new PathConstraints(3, 3)); 
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("SYSTest1", new PathConstraints(4, 3)); 
 
 
         Pose2d startpose = AutoPath.getInitialHolonomicPose();

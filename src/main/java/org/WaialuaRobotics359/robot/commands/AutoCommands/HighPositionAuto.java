@@ -39,8 +39,8 @@ public class HighPositionAuto extends CommandBase {
             WristPosition = Constants.Wrist.Cube.highPosition;
         } else {
             ArmPosition = Constants.Arm.Cone.highPosition;
-            PivotPosition = Constants.Pivot.Cone.highPosition;
-            WristPosition = Constants.Wrist.Cone.highPosition;
+            PivotPosition = Constants.Pivot.Cone.highPositionAlternate;
+            WristPosition = Constants.Wrist.Cone.highPositionAlternate;
         }
         
         Timer.reset();
@@ -95,7 +95,7 @@ public class HighPositionAuto extends CommandBase {
                     s_Wrist.goToPosition();
                 }
 
-                if(Timer.hasElapsed(2)){ // .6
+                if(Timer.hasElapsed(1)){ //.6 (optimal cone shooting time)
                     s_Pivot.normSpeed();
                     s_Arm.normSpeed();
                     new InstantCommand(()-> s_Leds.actionReady = true);
