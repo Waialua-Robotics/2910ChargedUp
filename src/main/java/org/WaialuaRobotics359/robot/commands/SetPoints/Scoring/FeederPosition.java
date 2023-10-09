@@ -84,6 +84,14 @@ public class FeederPosition extends CommandBase {
                 }
 
                 if(s_Intake.current() > 60 && Timer.hasElapsed(.9)){
+                    s_Wrist.setDesiredPosition(Constants.Wrist.stowPosition);
+                    s_Wrist.goToPosition();
+                    s_Leds.hasPiece = true;
+                    finished = true;
+                }
+
+                /* 
+                if(s_Intake.current() > 60 && Timer.hasElapsed(.9)){
                     IntakeingTimer.start();
                 }else{
                     IntakeingTimer.stop();
@@ -96,6 +104,7 @@ public class FeederPosition extends CommandBase {
                     s_Leds.hasPiece = true;
                     finished = true;
                 }
+                */
 
             } else {
 

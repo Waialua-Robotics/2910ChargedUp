@@ -159,7 +159,7 @@ public class Leds extends SubsystemBase{
         }
 
         //update battery 
-        if(m_PDH.getVoltage()<12.3){
+        if(m_PDH.getVoltage()<12.1){
             lowBatteryAlert = true;
         }else{
             lowBatteryAlert = false;
@@ -293,24 +293,14 @@ public class Leds extends SubsystemBase{
         } else if (DriverStation.isEnabled()) {
             // Display Tag Status
             if (trackApril && usingApril) {
-                Larson(Color.GREEN, Section.OffBoard, .5);
+                solid(Color.GREEN, Section.OnBoard);
             } else if (trackApril && !usingApril) {
-                Larson(Color.ORANGE, Section.OffBoard, .5);
+                solid(Color.ORANGE, Section.OnBoard);
             } else {
                 //No tags currenly seen show game peice status
-                if (isCube) {
-                    if (hasPiece) {
-                        strobe(Color.MAGENTA, Section.OffBoard, .3);
-                    } else {
-                        solid(Color.MAGENTA, Section.OffBoard);
-                    }
-                } else {
-                    if (hasPiece) {
-                        strobe(Color.ORANGE, Section.OffBoard, .3);
-                    } else {
-                        solid(Color.ORANGE, Section.OffBoard);
-                    }
-                }
+                solid(Color.RED, Section.OnBoard);
+
+
             }
         }
 
