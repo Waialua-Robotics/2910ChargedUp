@@ -15,7 +15,7 @@ public class M1Balance extends SequentialCommandGroup {
 
     public M1Balance (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M1Balance", new PathConstraints(2, 1)); 
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M1Balance", new PathConstraints(1.5, 1)); 
 
         Pose2d startpose = AutoPath.getInitialHolonomicPose();
 

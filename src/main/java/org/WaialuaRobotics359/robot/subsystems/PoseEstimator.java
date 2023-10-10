@@ -41,7 +41,7 @@ public class PoseEstimator extends SubsystemBase {
   // This in turn means the particualr component will have a stronger influence
   // on the final pose estimate.
   private static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(.01, .01, Units.degreesToRadians(.1)); //.1,.1 .01
-  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(50)); //25
+  private static final Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(.05, .05, Units.degreesToRadians(.1)); //25
   private final SwerveDrivePoseEstimator SwerveposeEstimator;
 
   private final Field2d field2d = new Field2d();

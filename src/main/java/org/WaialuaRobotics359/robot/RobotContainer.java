@@ -212,13 +212,13 @@ public class RobotContainer {
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
-            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean()));
+            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean(), () -> driver.getRawAxis(rotationAxis)));
 
         /* Operator Buttons */
-        setCone.whileTrue(
-            new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
-        setCube.onFalse(
-            new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
+            setCone.whileTrue(
+                new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
+            setCube.onFalse(
+                new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
 
             kill.whileTrue(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = false)));
@@ -337,14 +337,16 @@ public class RobotContainer {
           //m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("SYS",  new SYSTest(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Clear3", new Clear3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Bump3", new Bump3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Bump3Balance", new Bump3Balance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Clear3Balance", new Clear3Balance(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("Clear2Cone", new Clear2Cone(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)

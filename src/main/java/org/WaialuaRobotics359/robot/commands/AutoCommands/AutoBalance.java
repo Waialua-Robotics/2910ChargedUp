@@ -40,7 +40,7 @@ public class AutoBalance extends CommandBase {
     error = Constants.AutoConstants.BalanceGoal - currentAngle;
 
     // if first time, use second condition. if second time, use first condition
-    if (Math.abs(error) < (balancing ? Constants.AutoConstants.BalanceThreshold : 13) ) {
+    if (Math.abs(error) < (balancing ? Constants.AutoConstants.BalanceStartThreshold : 13) ) {
 
         /* 
          * if the balancing sequence has begun and the pitch is in range,
@@ -72,14 +72,18 @@ public class AutoBalance extends CommandBase {
 
         timebalaced =0;
 
-        drivePower = .1 * error;
+        drivePower = Constants.AutoConstants.BalanceKp * error;
 
-        if(Math.abs(error)<8) drivePower = 0;
+        if(Math.abs(error)< Constants.AutoConstants.BalanceThreshold) drivePower = 0; //was 8
         //if (Math.abs(error)< 12) drivePower = 0;
 
         // Our robot needed an extra push to drive up in reverse, probably due to weight imbalances
         if (drivePower > 0) {
           drivePower *= Constants.AutoConstants.BalanceReverseMulti;
+        }
+
+        if (drivePower < 0) {
+          drivePower *= Constants.AutoConstants.BalanceForwardMulti;
         }
 
         // Limit the max power

@@ -67,7 +67,7 @@ public final class Constants {
             public static final int lowPosition = 2325;
             public static final int frontLowPosition = 32000; //18000
             public static final int autoMidPosition = 3825;
-            public static final int midPosition = 13025; // 6730
+            public static final int midPosition = 14025; // 13025
             public static final int highPosition = 13905;
             public static final int highPositionAlternate = 15000;
             public static final int feederPosition = 300;
@@ -441,9 +441,11 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
         /* Auto Balance Const */
-        public static final double BalanceKp = 0.03; // P (Proportional) constant of a PID loop
+        public static final double BalanceKp = 0.1; // was .1
         public static final double BalanceGoal = 0;
-        public static final double BalanceThreshold = 3;
-        public static final double BalanceReverseMulti = .5;
+        public static final double BalanceStartThreshold = 3;
+        public static final double BalanceThreshold = 10; //was 8
+        public static final double BalanceReverseMulti = .5; //when drives back
+        public static final double BalanceForwardMulti = .75; //drives forward
     }
 }
