@@ -19,8 +19,10 @@ import java.util.HashMap;
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.AutoBalance;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.ForwardAutoBalance;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.HighPositionAuto;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.MidPositionAuto;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.Ram;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
@@ -291,6 +293,7 @@ public class RobotContainer {
        eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
        eventMap.put("Yoshi", new YoshiPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
        eventMap.put("Upright", new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+       eventMap.put("Ram", new Ram(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));
@@ -305,6 +308,8 @@ public class RobotContainer {
 
         /* Auto Balance */
         eventMap.put("AutoBalance", new AutoBalance(s_Swerve));
+        eventMap.put("ForwardAutoBalance", new ForwardAutoBalance(s_Swerve));
+
 
         /*Scoring commands*/
         eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
@@ -347,6 +352,7 @@ public class RobotContainer {
           m_chooser.addOption("Bump3", new Bump3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Bump3Balance", new Bump3Balance(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Clear3Balance", new Clear3Balance(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("M2BumpBalance", new M2BumpBalance(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("Clear2Cone", new Clear2Cone(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)

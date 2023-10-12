@@ -120,5 +120,6 @@ public class AutoAlignXApril extends CommandBase {
     @Override 
     public void end(boolean interupted) {
         s_swerve.stop();
+        s_swerve.setCurrentAngle();
     }
 }

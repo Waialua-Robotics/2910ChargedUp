@@ -2,38 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8286222286730291,
-        "y": 3.292390870496027
+        "x": 1.9001959432490299,
+        "y": 2.1901556660256185
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4850683987082265,
-        "y": 3.278076127580827
-      },
-      "holonomicAngle": 0.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.280507275300264,
-        "y": 3.29
-      },
-      "prevControl": {
-        "x": 6.538172647773865,
-        "y": 3.368731086033602
-      },
-      "nextControl": {
-        "x": 6.022841902826663,
-        "y": 3.211268913966398
+        "x": 2.900195943249032,
+        "y": 2.1901556660256185
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -41,6 +16,35 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
+        "names": [
+          "ConeMode",
+          "ScoreHigh",
+          "CubeMode"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.9472041801226463,
+        "y": 2.2044704089408182
+      },
+      "prevControl": {
+        "x": 2.9472041801226445,
+        "y": 2.2044704089408182
+      },
+      "nextControl": {
+        "x": 4.763646643472677,
+        "y": 2.2044704089408182
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
         "names": [],
         "executionBehavior": "parallel",
         "waitBehavior": "none",
@@ -49,12 +53,12 @@
     },
     {
       "anchorPoint": {
-        "x": 6.102941504128624,
-        "y": 0.743553066053501
+        "x": 7.85,
+        "y": 2.15
       },
       "prevControl": {
-        "x": 6.0098956751798225,
-        "y": 0.3033747214110971
+        "x": 6.6240579337888965,
+        "y": 2.15
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -70,8 +74,18 @@
       }
     }
   ],
-  "maxVelocity": 3.0,
-  "maxAcceleration": null,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.01,
+      "names": [
+        "Ram"
+      ]
+    },
+    {
+      "position": 1.65,
+      "names": [
+        "Pickup"
+      ]
+    }
+  ]
 }

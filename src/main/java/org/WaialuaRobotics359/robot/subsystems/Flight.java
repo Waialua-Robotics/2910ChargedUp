@@ -1,6 +1,9 @@
 package org.WaialuaRobotics359.robot.subsystems;
 import com.playingwithfusion.TimeOfFlight;
 import com.playingwithfusion.TimeOfFlight.RangingMode;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,7 +32,12 @@ public class Flight extends SubsystemBase {
     public double offsetFromCenterIn(){
         double scale = 1;
         if(getSensorRange()<360){
-            return -1*(((getSensorRange()-140)*scale)/1000);
+            if(DriverStation.getAlliance() == Alliance.Red){
+                return 1*(((getSensorRange()-140)*scale)/1000);
+            }else{
+                return -1*(((getSensorRange()-140)*scale)/1000);
+            }
+
         }else{
             return 0;
         }

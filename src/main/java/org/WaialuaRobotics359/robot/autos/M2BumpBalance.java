@@ -11,17 +11,19 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class M1Balance extends SequentialCommandGroup {
+public class M2BumpBalance extends SequentialCommandGroup {
 
-    public M1Balance (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
+    public M2BumpBalance (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M1Balance", new PathConstraints(1, 1)); 
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M2BumpBalanceP1", new PathConstraints(3.5, 1)); 
+        PathPlannerTrajectory AutoPath2 = PathPlanner.loadPath("M2BumpBalanceP2", new PathConstraints(3.5, 2));
 
         Pose2d startpose = AutoPath.getInitialHolonomicPose();
 
         addCommands(new SequentialCommandGroup(
             new InstantCommand(()-> s_poseEstimator.resetPose(startpose)),
-            autoBuilder.fullAuto(AutoPath)
+            autoBuilder.fullAuto(AutoPath),
+            autoBuilder.fullAuto(AutoPath2)
         ));
     }
 }
