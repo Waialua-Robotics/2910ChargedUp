@@ -64,8 +64,8 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 32620;
             public static final int standingPosition = 42900;
-            public static final int lowPosition = 2325;
-            public static final int frontLowPosition = 32000; //18000
+            public static final int lowPosition = 2325; //2325
+            public static final int frontLowPosition = 35160; //32000
             public static final int autoMidPosition = 3825;
             public static final int midPosition = 14025; // 13025
             public static final int highPosition = 13905;
@@ -144,7 +144,7 @@ public final class Constants {
             public static final int groundPosition = 790;
             public static final int standingPosition = 20000;//19150
             public static final int lowPosition = 21300;
-            public static final int frontLowPosition = 12000;
+            public static final int frontLowPosition = 7000; //12000
             public static final int autoMidPosition = 85145; 
             public static final int midPosition = 83131; 
             public static final int highPosition = 87550;

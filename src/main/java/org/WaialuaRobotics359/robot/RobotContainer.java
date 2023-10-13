@@ -81,6 +81,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final POVButton ResetMods = new POVButton(driver, 180);
+    private final POVButton robotCentric = new POVButton(driver, 0);
     private final JoystickButton ZeroGyroBackwards = new JoystickButton(driver, XboxController.Button.kBack.value); 
     private final JoystickButton Angle0 = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton Angle180 = new JoystickButton(driver, XboxController.Button.kA.value);
@@ -88,7 +89,7 @@ public class RobotContainer {
     private final JoystickButton Angle90 = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton ramPosition = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     
     
     /* Operator Controls */
@@ -213,6 +214,10 @@ public class RobotContainer {
             /* Toggle Swerve Slow Mode */
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
+
+            /*Ram Position */
+            ramPosition.onTrue(new Ram(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+            ramPosition.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean(), () -> driver.getRawAxis(rotationAxis)));
 
@@ -352,7 +357,7 @@ public class RobotContainer {
           m_chooser.addOption("Bump3", new Bump3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Bump3Balance", new Bump3Balance(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("Clear3Balance", new Clear3Balance(autoBuilder, s_PoseEstimator));
-          //m_chooser.addOption("M2BumpBalance", new M2BumpBalance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("M2BumpBalance", new M2BumpBalance(autoBuilder, s_PoseEstimator));
           //m_chooser.addOption("Clear2Cone", new Clear2Cone(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)

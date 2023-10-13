@@ -15,8 +15,8 @@ public class M2BumpBalance extends SequentialCommandGroup {
 
     public M2BumpBalance (SwerveAutoBuilder autoBuilder, PoseEstimator s_poseEstimator) {
 
-        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M2BumpBalanceP1", new PathConstraints(3.5, 1)); 
-        PathPlannerTrajectory AutoPath2 = PathPlanner.loadPath("M2BumpBalanceP2", new PathConstraints(3.5, 2));
+        PathPlannerTrajectory AutoPath = PathPlanner.loadPath("M2BumpBalanceP1", new PathConstraints(2, 1)); 
+        PathPlannerTrajectory AutoPath2 = PathPlanner.loadPath("M2BumpBalanceP2", new PathConstraints(2.5, 2));
 
         Pose2d startpose = AutoPath.getInitialHolonomicPose();
 

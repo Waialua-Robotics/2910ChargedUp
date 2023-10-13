@@ -36,15 +36,9 @@ public class Ram extends CommandBase {
     private Timer Timer = new Timer();
 
     public void initialize(){
-        if (RobotContainer.isCube){
-            ArmPosition = Constants.Arm.Cube.groundPosition;
-            PivotPosition = Constants.Pivot.Cube.groundPosition;
-            WristPosition = Constants.Wrist.Cube.groundPosition;
-        } else {
-            ArmPosition = Constants.Arm.Cone.groundPosition;
-            PivotPosition = Constants.Pivot.Cone.groundPosition;
-            WristPosition = Constants.Wrist.Cone.groundPosition;
-        }
+        ArmPosition = Constants.Arm.Cube.groundPosition;
+        PivotPosition = Constants.Pivot.Cube.groundPosition;
+        WristPosition = Constants.Wrist.Cube.groundPosition;
         Timer.reset();
         Timer.start();
 
@@ -56,10 +50,9 @@ public class Ram extends CommandBase {
     @Override
     public void execute(){
 
-            if(RobotContainer.isCube){
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-
+                s_Pivot.setDesiredPosition(PivotPosition);
+                s_Pivot.goToPosition();
+                
                 if(Timer.hasElapsed(.2)){
                     s_Arm.setDesiredPosition(ArmPosition);
                     s_Arm.goToPosition();
@@ -71,23 +64,6 @@ public class Ram extends CommandBase {
                     finished = true;
                 }
  
-
-            } else {
-                    s_Pivot.setDesiredPosition(PivotPosition);
-                    s_Pivot.goToPosition();
-    
-                if(Timer.hasElapsed(.2)){
-                    s_Arm.setDesiredPosition(ArmPosition);
-                    s_Arm.goToPosition();
-                }
-
-                if(Timer.hasElapsed(.4)){
-                    s_Wrist.setDesiredPosition(WristPosition);
-                    s_Wrist.goToPosition();
-                    finished = true;
-                }
-
-                }
             }                        
 
     
