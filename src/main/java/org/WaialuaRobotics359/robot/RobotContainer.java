@@ -153,7 +153,7 @@ public class RobotContainer {
                 () -> -operator.getRawAxis(revWristAxis)
             )
         );
-        */
+    */
 
         s_Intake.setDefaultCommand(
             new ManualIntake(
@@ -169,13 +169,15 @@ public class RobotContainer {
                 () -> -operator.getRawAxis(pivot)
             )
         );
-
+*/
+/* 
         s_Arm.setDefaultCommand(
             new ManualArm(
                 s_Arm,
                 () -> -operator.getRawAxis(arm)
             )
-        );*/
+        );
+    */
 
 
         // Configure the button bindings

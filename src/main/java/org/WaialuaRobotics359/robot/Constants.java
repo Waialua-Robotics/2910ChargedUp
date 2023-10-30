@@ -229,7 +229,6 @@ public final class Constants {
         public static final int arm = XboxController.Axis.kRightY.value;
 
 
-
         public static final int upright = XboxController.Button.kLeftBumper.value;
         public static final int pickup = XboxController.Button.kRightBumper.value;
 
