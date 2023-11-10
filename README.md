@@ -1,4 +1,7 @@
 # 2910ChargedUp
+Aloha to 2910 for an amazing robot! 🤙
+Code is not cleaned up or should be used as a guide on how to write FRC java code. -Bowen
+
 <h2> Controller Binding </h2>
 
  **Controller** | **Operation** | **Control** |
