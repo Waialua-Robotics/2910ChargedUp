@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.Timer;
 
-public class MidPickupPosition extends CommandBase{
+public class BirdPickupPosition extends CommandBase{
     private Arm s_Arm;
     private Intake s_Intake;
     private Pivot s_Pivot;
@@ -19,7 +19,7 @@ public class MidPickupPosition extends CommandBase{
     private static int PivotPosition;
     private static int WristPosition;
 
-    public MidPickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
+    public BirdPickupPosition(Arm s_Arm, Intake s_Intake, Flight s_Flight, Wrist s_Wrist, Leds s_Leds, Pivot s_Pivot){
         this.s_Arm = s_Arm;
         this.s_Intake = s_Intake;
         this.s_Flight = s_Flight;
@@ -35,29 +35,21 @@ public class MidPickupPosition extends CommandBase{
 
     private boolean finished = false;
 
-    private boolean disqalifyTOF = false; 
-
-    private double flightValue;
-
     private Timer Timer = new Timer();
     private Timer IntakeingTimer = new Timer();
 
     public void initialize(){
-        s_Leds.noPiece();
-        if (RobotContainer.isCube){
-            ArmPosition = Constants.Arm.Cube.groundPosition;
-            PivotPosition = Constants.Pivot.Cube.groundPosition;
-            WristPosition = Constants.Wrist.Cube.groundPosition;
-        } else {
-            ArmPosition = Constants.Arm.Cone.groundPosition;
-            PivotPosition = Constants.Pivot.Cone.groundPosition;
-            WristPosition = Constants.Wrist.Cone.groundPosition;
-        }
 
-        if(s_Flight.getSensorRange() < 300){
-            disqalifyTOF = true;
-        }else{
-            disqalifyTOF = false;
+        s_Leds.noPiece();
+
+        if (RobotContainer.isCube){
+            ArmPosition = Constants.Arm.Cube.birdPosition;
+            PivotPosition = Constants.Pivot.Cube.birdPosition;
+            WristPosition = Constants.Wrist.Cube.birdPosition;
+        } else {
+            ArmPosition = Constants.Arm.Cone.birdPosition;
+            PivotPosition = Constants.Pivot.Cone.birdPosition;
+            WristPosition = Constants.Wrist.Cone.birdPosition;
         }
 
         Timer.reset();
@@ -71,12 +63,6 @@ public class MidPickupPosition extends CommandBase{
 
     @Override
     public void execute(){
-
-        if(disqalifyTOF){
-          flightValue = 400;
-        }else{
-          flightValue = s_Flight.getSensorRange();
-        }
 
         if(RobotContainer.isCube){
             s_Pivot.setDesiredPosition(PivotPosition);
@@ -98,13 +84,11 @@ public class MidPickupPosition extends CommandBase{
         }
 
         if(s_Intake.current() > 80 && Timer.hasElapsed(1)){
-            s_Wrist.setDesiredPosition(0);
-            s_Wrist.goToPosition();
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
         }
 
-        if(s_Leds.hasPiece && s_Wrist.getPosition()<100){
+        if(s_Leds.hasPiece){
             s_Intake.intakeIdle();
             finished = true;
         }
@@ -128,15 +112,10 @@ public class MidPickupPosition extends CommandBase{
             s_Intake.intake();
         }
 
-        if(flightValue < 300){
-            IntakeingTimer.start();
+        if(s_Flight.getSensorRange() < 300){
             s_Leds.hasPiece();
             new InstantCommand(()-> s_Leds.actionReady = false);
             finished = true;
-        }
-
-        if(IntakeingTimer.hasElapsed(.5)){
-            s_Intake.intakeIdle();
         }
 
     }                        

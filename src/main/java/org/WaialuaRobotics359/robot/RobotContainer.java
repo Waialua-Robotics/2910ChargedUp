@@ -19,8 +19,10 @@ import java.util.HashMap;
 import org.WaialuaRobotics359.robot.autos.*;
 import org.WaialuaRobotics359.robot.commands.*;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.AutoBalance;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.ForwardAutoBalance;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.HighPositionAuto;
 import org.WaialuaRobotics359.robot.commands.AutoCommands.MidPositionAuto;
+import org.WaialuaRobotics359.robot.commands.AutoCommands.Ram;
 import org.WaialuaRobotics359.robot.commands.Manual.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.*;
 import org.WaialuaRobotics359.robot.commands.SetPoints.Scoring.*;
@@ -79,6 +81,7 @@ public class RobotContainer {
     /* Driver Buttons */
     private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kStart.value);
     private final POVButton ResetMods = new POVButton(driver, 180);
+    private final POVButton robotCentric = new POVButton(driver, 0);
     private final JoystickButton ZeroGyroBackwards = new JoystickButton(driver, XboxController.Button.kBack.value); 
     private final JoystickButton Angle0 = new JoystickButton(driver, XboxController.Button.kY.value);
     private final JoystickButton Angle180 = new JoystickButton(driver, XboxController.Button.kA.value);
@@ -86,7 +89,7 @@ public class RobotContainer {
     private final JoystickButton Angle90 = new JoystickButton(driver, XboxController.Button.kX.value);
     private final JoystickButton Angle270 = new JoystickButton(driver, XboxController.Button.kB.value);
     private final JoystickButton setCurrentAngle = new JoystickButton(driver, XboxController.Button.kRightStick.value);
-    private final JoystickButton robotCentric = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
+    private final JoystickButton ramPosition = new JoystickButton(driver, XboxController.Button.kLeftBumper.value);
     
     
     /* Operator Controls */
@@ -108,7 +111,7 @@ public class RobotContainer {
     private final JoystickButton feedPos = new JoystickButton(operator, Constants.OI.feedPos);
     private final Trigger kill = new Trigger(() -> operator.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.5);
     private final Trigger intakeTrigger = new Trigger(()-> operator.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.5);
-    private final JoystickButton justZero = new JoystickButton(operator, Constants.OI.justZero);
+    private final JoystickButton startButton = new JoystickButton(operator, Constants.OI.startButton);
     private final JoystickButton autoZero = new JoystickButton(operator, Constants.OI.autoZero);
 
     /* Subsystems */
@@ -118,8 +121,8 @@ public class RobotContainer {
     private final Arm s_Arm = new Arm();
     private final Flight s_Flight = new Flight();
     private final Pivot s_Pivot = new Pivot();
-    private final Leds s_Leds = new Leds(s_Flight);
-    private final PhotonVision s_PhotonVision = new PhotonVision();
+    private final Leds s_Leds = new Leds();
+    private final PhotonVision s_PhotonVision = new PhotonVision(s_Leds);
     private final PoseEstimator s_PoseEstimator = new PoseEstimator(s_Swerve, s_PhotonVision, s_Flight);
 
     /* Auto Builder */
@@ -150,7 +153,7 @@ public class RobotContainer {
                 () -> -operator.getRawAxis(revWristAxis)
             )
         );
-        */
+    */
 
         s_Intake.setDefaultCommand(
             new ManualIntake(
@@ -166,13 +169,15 @@ public class RobotContainer {
                 () -> -operator.getRawAxis(pivot)
             )
         );
-
+*/
+/* 
         s_Arm.setDefaultCommand(
             new ManualArm(
                 s_Arm,
                 () -> -operator.getRawAxis(arm)
             )
-        );*/
+        );
+    */
 
 
         // Configure the button bindings
@@ -212,13 +217,17 @@ public class RobotContainer {
             setDriveSlowMode.onTrue(new InstantCommand(()-> s_Swerve.slowMode =true ));
             setDriveSlowMode.onFalse(new InstantCommand(() -> s_Swerve.slowMode = false));
 
-            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean()));
+            /*Ram Position */
+            ramPosition.onTrue(new Ram(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
+            ramPosition.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+
+            autoAlign.onTrue(new AutoAlignXApril(s_PoseEstimator, s_Swerve, s_Flight, ()-> autoAlign.getAsBoolean(), () -> driver.getRawAxis(rotationAxis)));
 
         /* Operator Buttons */
-        setCone.whileTrue(
-            new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
-        setCube.onFalse(
-            new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
+            setCone.whileTrue(
+                new ParallelCommandGroup( new InstantCommand(() -> isCube = false)));
+            setCube.onFalse(
+                new ParallelCommandGroup( new InstantCommand(() -> isCube = true)));
 
             kill.whileTrue(
                 new ParallelCommandGroup( new InstantCommand(() -> allowScore = false)));
@@ -227,11 +236,14 @@ public class RobotContainer {
 
             upright.onTrue(new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
             
-            pickup.whileTrue(new MidPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            pickup.whileTrue(new GroundPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             pickup.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             feedPos.whileTrue(new FeederPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
             feedPos.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist,s_Pivot));
+
+            startButton.onTrue(new BirdPickupPosition(s_Arm, s_Intake, s_Flight, s_Wrist, s_Leds, s_Pivot));
+            startButton.onFalse(new StowPosition(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
 
             lowPos.whileTrue(new LowPosition(s_Arm, s_Wrist, s_Pivot, s_Leds, s_PoseEstimator));
             lowPos.onFalse(new Score(s_Arm, s_Intake, s_Pivot, s_Wrist, s_Leds));
@@ -244,7 +256,7 @@ public class RobotContainer {
 
             autoZero.onTrue(new AutoZeroAll(s_Pivot, s_Arm, s_Wrist));
             autoZero.onFalse(new JustZero(s_Pivot, s_Arm, s_Wrist));
-            justZero.onTrue(new InstantCommand(() -> getFlight().toggleWorking()));
+
     }   
 
     public Leds getLeds(){
@@ -288,6 +300,7 @@ public class RobotContainer {
        eventMap.put("Pickup", new LowPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
        eventMap.put("Yoshi", new YoshiPickupStow(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds, s_Flight));
        eventMap.put("Upright", new Upright(s_Intake, s_Arm, s_Leds, s_Flight, s_Wrist, s_Pivot));
+       eventMap.put("Ram", new Ram(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
 
         /*Wait Times */
         eventMap.put("Wait5", new AutoWait(5));
@@ -302,6 +315,8 @@ public class RobotContainer {
 
         /* Auto Balance */
         eventMap.put("AutoBalance", new AutoBalance(s_Swerve));
+        eventMap.put("ForwardAutoBalance", new ForwardAutoBalance(s_Swerve));
+
 
         /*Scoring commands*/
         eventMap.put("ScoreHigh", new AutoHighPosition(s_Intake, s_Arm, s_Wrist, s_Pivot, s_Leds));
@@ -331,14 +346,21 @@ public class RobotContainer {
 
           /* AutoChosser */
           m_chooser.setDefaultOption("None", null);
-          m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("LineAuto", new LINEAuto(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CL3", new CL3(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CLY", new CLY(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CLB", new CLB(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CR3", new CR3(autoBuilder, s_PoseEstimator));
           m_chooser.addOption("M1Balance", new M1Balance(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
-          m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CRY", new CRY(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("CRB", new CRB(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("SYS",  new SYSTest(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Clear3", new Clear3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Bump3", new Bump3(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Bump3Balance", new Bump3Balance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("Clear3Balance", new Clear3Balance(autoBuilder, s_PoseEstimator));
+          m_chooser.addOption("M2BumpBalance", new M2BumpBalance(autoBuilder, s_PoseEstimator));
+          //m_chooser.addOption("Clear2Cone", new Clear2Cone(autoBuilder, s_PoseEstimator));
 
           Shuffleboard.getTab("Autonmous").add(m_chooser).withWidget(BuiltInWidgets.kComboBoxChooser).withPosition(0, 0)
                   .withSize(2, 1);

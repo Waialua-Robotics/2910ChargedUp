@@ -4,6 +4,7 @@ import org.WaialuaRobotics359.robot.RobotContainer;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,12 +20,21 @@ public class Arm extends SubsystemBase{
     private int maxSpeed = 85000;
     private int maxAcceleration = 85000;
 
+    SupplyCurrentLimitConfiguration currentLimit = new SupplyCurrentLimitConfiguration(
+        true, 
+        40, 
+        60, 
+        .1);
+
     public Arm(){
         m_lArm = new TalonFX(Constants.Arm.lArmID);
         m_rArm = new TalonFX(Constants.Arm.rArmID);
 
         m_lArm.setNeutralMode(NeutralMode.Brake);
         m_rArm.setNeutralMode(NeutralMode.Brake);
+
+        m_lArm.configSupplyCurrentLimit(currentLimit);
+        m_rArm.configSupplyCurrentLimit(currentLimit);
 
         m_lArm.configFactoryDefault();
         m_rArm.configFactoryDefault();
@@ -45,7 +55,6 @@ public class Arm extends SubsystemBase{
         m_lArm.configReverseSoftLimitThreshold(Constants.Arm.softMin);
         m_lArm.configPeakOutputForward(1);
         m_lArm.configPeakOutputReverse(-1);
-
 
         m_lArm.config_kP(0, .25);
         m_lArm.config_kI(0, 0);

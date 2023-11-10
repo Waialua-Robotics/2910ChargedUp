@@ -2,38 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 1.8286222286730291,
-        "y": 3.292390870496027
+        "x": 6.73,
+        "y": 4.58
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.4850683987082265,
-        "y": 3.278076127580827
-      },
-      "holonomicAngle": 0.0,
-      "isReversal": false,
-      "velOverride": null,
-      "isLocked": false,
-      "isStopPoint": false,
-      "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
-        "waitBehavior": "none",
-        "waitTime": 0
-      }
-    },
-    {
-      "anchorPoint": {
-        "x": 6.280507275300264,
-        "y": 3.29
-      },
-      "prevControl": {
-        "x": 6.538172647773865,
-        "y": 3.368731086033602
-      },
-      "nextControl": {
-        "x": 6.022841902826663,
-        "y": 3.211268913966398
+        "x": 3.489132406836242,
+        "y": 4.86701259116804
       },
       "holonomicAngle": 0,
       "isReversal": false,
@@ -49,12 +24,37 @@
     },
     {
       "anchorPoint": {
-        "x": 6.102941504128624,
-        "y": 0.743553066053501
+        "x": 2.7018215465002364,
+        "y": 4.680920933270438
       },
       "prevControl": {
-        "x": 6.0098956751798225,
-        "y": 0.3033747214110971
+        "x": 3.0261287802195267,
+        "y": 4.848305311964266
+      },
+      "nextControl": {
+        "x": 2.258064516129033,
+        "y": 4.451885046627236
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.85,
+        "y": 3.8506658441888315
+      },
+      "prevControl": {
+        "x": 2.050406400812802,
+        "y": 4.237163902899234
       },
       "nextControl": null,
       "holonomicAngle": 0,
@@ -63,15 +63,22 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "ScoreHigh"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     }
   ],
-  "maxVelocity": 3.0,
-  "maxAcceleration": null,
-  "isReversed": null,
-  "markers": []
+  "markers": [
+    {
+      "position": 0.0727272727272727,
+      "names": [
+        "event",
+        "Upright"
+      ]
+    }
+  ]
 }

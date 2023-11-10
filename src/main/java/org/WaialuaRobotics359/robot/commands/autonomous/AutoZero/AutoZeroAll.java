@@ -20,7 +20,7 @@ public class AutoZeroAll extends CommandBase {
     private JustZero m_JustZero;
 
     public AutoZeroAll(Pivot s_Pivot, Arm s_Arm, Wrist s_Wrist) {
-        this.m_AutoZeroPivot = new AutoZeroPivot(s_Pivot);
+        //this.m_AutoZeroPivot = new AutoZeroPivot(s_Pivot);
         this.m_AutoZeroArm = new AutoZeroArm(s_Arm);
         this.m_AutoZeroWrist = new AutoZeroWrist(s_Wrist);
         this.m_JustZero = new JustZero(s_Pivot, s_Arm, s_Wrist);
@@ -34,7 +34,7 @@ public class AutoZeroAll extends CommandBase {
         //finished = false;
         //Timer.reset();
         //Timer.start();
-        CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
+        //CommandScheduler.getInstance().schedule(m_AutoZeroPivot);
         CommandScheduler.getInstance().schedule(m_AutoZeroArm);
         CommandScheduler.getInstance().schedule(m_AutoZeroWrist);
     }

@@ -7,7 +7,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class AutoBalance extends CommandBase {
+public class ForwardAutoBalance extends CommandBase {
   private Swerve s_Swerve;    
 
   private boolean balancing = false;
@@ -19,7 +19,7 @@ public class AutoBalance extends CommandBase {
   private double pitchOffset;
   private int timebalaced = 0;
   
-  public AutoBalance(Swerve s_Swerve) {
+  public ForwardAutoBalance(Swerve s_Swerve) {
     this.s_Swerve = s_Swerve;
     addRequirements(s_Swerve);
   }
@@ -57,10 +57,10 @@ public class AutoBalance extends CommandBase {
         if(!balancing){
           s_Swerve.setModuleStates(
             new SwerveModuleState[] {
-              new SwerveModuleState(-1, Rotation2d.fromDegrees(0)),
-              new SwerveModuleState(-1, Rotation2d.fromDegrees(0)),
-              new SwerveModuleState(-1, Rotation2d.fromDegrees(0)),
-              new SwerveModuleState(-1, Rotation2d.fromDegrees(0))
+              new SwerveModuleState(1, Rotation2d.fromDegrees(0)),
+              new SwerveModuleState(1, Rotation2d.fromDegrees(0)),
+              new SwerveModuleState(1, Rotation2d.fromDegrees(0)),
+              new SwerveModuleState(1, Rotation2d.fromDegrees(0))
             }
         );
         }

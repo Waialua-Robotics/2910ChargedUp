@@ -69,6 +69,7 @@ public class Swerve extends SubsystemBase {
 
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(swerveModuleStates[mod.moduleNumber], isOpenLoop);
+            //SmartDashboard.putNumber("Mod "+ mod.moduleNumber + " desiredVel", swerveModuleStates[mod.moduleNumber].speedMetersPerSecond);
         }
 
         // Update field velocity
@@ -87,7 +88,8 @@ public class Swerve extends SubsystemBase {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
-            mod.setDesiredStateAuto(desiredStates[mod.moduleNumber], true); //false #FIXME invert for closed loop finally fixed
+            mod.setDesiredStateAuto(desiredStates[mod.moduleNumber], false); //false #FIXME invert for closed loop finally fixed StateAuto
+            SmartDashboard.putNumber("Mod "+ mod.moduleNumber + " desiredVel", desiredStates[mod.moduleNumber].speedMetersPerSecond);
         }
     }    
 
@@ -218,6 +220,7 @@ public class Swerve extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Percent", mod.getPercentOut());
             SmartDashboard.putNumber(("GyroValue"), GetGyroPitch());
         }
     }

@@ -64,13 +64,14 @@ public final class Constants {
         public static final class Cone {
             public static final int groundPosition = 32620;
             public static final int standingPosition = 42900;
-            public static final int lowPosition = 2325;
-            public static final int frontLowPosition = 32000; //18000
+            public static final int lowPosition = 2325; //2325
+            public static final int frontLowPosition = 35160; //32000
             public static final int autoMidPosition = 3825;
-            public static final int midPosition = 13025; // 6730
+            public static final int midPosition = 14025; // 13025
             public static final int highPosition = 13905;
             public static final int highPositionAlternate = 15000;
             public static final int feederPosition = 300;
+            public static final int birdPosition = 40105;
         }
         
         public static final class Cube {
@@ -82,6 +83,7 @@ public final class Constants {
             public static final int highPosition = 6880;
             public static final int frontHighPosition = 2580;
             public static final int feederPosition = 37200;
+            public static final int birdPosition = 8360;
         }
     }
 
@@ -105,6 +107,7 @@ public final class Constants {
             public static final int midPosition = 8350; 
             public static final int highPosition = 27525;
             public static final int feederPosition = 20200;
+            public static final int birdPosition = 0;
         }
         
         public static final class Cube {
@@ -117,6 +120,7 @@ public final class Constants {
             public static final int highPosition = 25020;
             public static final int frontHighPosition = 26470;
             public static final int feederPosition = 13360;
+            public static final int birdPosition = 0;
         }
     }
 
@@ -140,12 +144,13 @@ public final class Constants {
             public static final int groundPosition = 790;
             public static final int standingPosition = 20000;//19150
             public static final int lowPosition = 21300;
-            public static final int frontLowPosition = 12000;
+            public static final int frontLowPosition = 7000; //12000
             public static final int autoMidPosition = 85145; 
             public static final int midPosition = 83131; 
             public static final int highPosition = 87550;
             public static final int highPositionAlternate = 85550;
             public static final int feederPosition = 68600;
+            public static final int birdPosition = 36750;
 
         }
         
@@ -158,6 +163,7 @@ public final class Constants {
             public static final int highPosition = 88410;
             public static final int frontHighPosition = 22000;
             public static final int feederPosition = 40600;
+            public static final int birdPosition = 22522;
         }
     }
 
@@ -168,6 +174,11 @@ public final class Constants {
     public static final class PhotonConstants {
         public static final double nodeHeight = Units.inchesToMeters(15.13);
         public static final double cameraHeight = Units.inchesToMeters(9.195);
+
+        public static final double AmbiguityThreshold = 0.04;
+        // The latency of the camera, in seconds
+        // divide by 1000 since it is in milliseconds.
+        public static final double Latency = 13.0/1000.0;       
 
         public static final class CameraLeft {
             public static final double xOffset = Units.inchesToMeters(-2.875); //-2.875
@@ -218,7 +229,6 @@ public final class Constants {
         public static final int arm = XboxController.Axis.kRightY.value;
 
 
-
         public static final int upright = XboxController.Button.kLeftBumper.value;
         public static final int pickup = XboxController.Button.kRightBumper.value;
 
@@ -227,7 +237,7 @@ public final class Constants {
         public static final int highPos = XboxController.Button.kY.value;
         public static final int feedPos = XboxController.Button.kX.value;
 
-        public static final int justZero = XboxController.Button.kStart.value;
+        public static final int startButton = XboxController.Button.kStart.value;
         public static final int autoZero = XboxController.Button.kBack.value;
 
         public static final double deadband = .1;
@@ -278,7 +288,7 @@ public final class Constants {
         /* These values are used by the drive falcon to ramp in open loop and closed loop driving.
          * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc */
         public static final double openLoopRamp = 0.25;
-        public static final double closedLoopRamp = 0.0;
+        public static final double closedLoopRamp = 0;
 
         /* Angle Motor PID Values */
         public static final double angleKP = chosenModule.angleKP;
@@ -294,13 +304,13 @@ public final class Constants {
 
         /* Drive Motor Characterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.32 / 12); //FIXME: This must be tuned to robot
-        public static final double driveKV = (1.51 / 12);
-        public static final double driveKA = (0.27 / 12);
+        public static final double driveKS = (0.036591 / 12);//0.036591 //.22468
+        public static final double driveKV = (1.972 / 12); //1.972 //1.9426
+        public static final double driveKA = (0.77703 / 12); //0.77703 //.28178
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 4.6; //TODO: This must be tuned to robot//
+        public static final double maxSpeed = 4.6; //TODO: This must be tuned to robot// //4.6
         /** Radians per Second */
         public static final double maxAngularVelocity = 10; //TODO: This must be tuned to robot
 
@@ -411,8 +421,8 @@ public final class Constants {
     public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
         public static final double inPosisionError = Units.inchesToMeters(2);
         public static final boolean VisionInAuto = false;
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxSpeedMetersPerSecond = 4.6;
+        public static final double kMaxAccelerationMetersPerSecondSquared = 4.6;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
     
@@ -421,8 +431,8 @@ public final class Constants {
         public static final double kPThetaController = 1;
 
         /*Auto Builder Const */
-        public static final PIDConstants translationPID = new PIDConstants(.7, 0, 0);
-        public static final PIDConstants rotationPID = new PIDConstants(1.5, 0, 0); //d.05 i .05
+        public static final PIDConstants translationPID = new PIDConstants(1.5, 0, 0);
+        public static final PIDConstants rotationPID = new PIDConstants(2, 0, 0); //d.05 i .05 i=1.5
     
         /* Constraint for the motion profilied robot angle controller */
         public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
@@ -430,9 +440,11 @@ public final class Constants {
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
 
         /* Auto Balance Const */
-        public static final double BalanceKp = 0.03; // P (Proportional) constant of a PID loop
+        public static final double BalanceKp = 0.1; // was .1
         public static final double BalanceGoal = 0;
-        public static final double BalanceThreshold = 3;
-        public static final double BalanceReverseMulti = .5;
+        public static final double BalanceStartThreshold = 3;
+        public static final double BalanceThreshold = 10; //was 8
+        public static final double BalanceReverseMulti = .5; //when drives back
+        public static final double BalanceForwardMulti = .75; //drives forward
     }
 }
